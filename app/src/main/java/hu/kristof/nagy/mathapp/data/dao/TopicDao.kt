@@ -5,15 +5,16 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import hu.kristof.nagy.mathapp.data.entity.Topic
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TopicDao {
     @Query("SELECT * FROM topic")
-    fun getAll(): List<Topic>
+    fun loadTopics(): Flow<Topic>
 
     @Insert
-    fun create(topic: Topic)
+    suspend fun create(topic: Topic)
 
     @Delete
-    fun delete(topic: Topic)
+    suspend fun delete(topic: Topic)
 }
