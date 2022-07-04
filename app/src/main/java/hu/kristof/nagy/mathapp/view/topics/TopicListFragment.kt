@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.databinding.FragmentTopicListBinding
+import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.toList
@@ -35,11 +36,24 @@ class TopicListFragment : Fragment() {
 
         initList(listItemViewModel, listViewModel, binding)
 
-        binding.topicCreateBtn.setOnClickListener {
-            // TODO: show dialog and ask for name
-        }
+        createTopic(binding, listViewModel)
 
         return binding.root
+    }
+
+    private fun createTopic(
+        binding: FragmentTopicListBinding,
+        listViewModel: TopicListViewModel
+    ) {
+        val dialog = TextDialogFragment.instanceOf(
+            R.string.topicCreateText, R.string.topicCreateHint
+        )
+        binding.topicCreateBtn.setOnClickListener {
+            dialog.show(parentFragmentManager, "topicCreation")
+        }
+        dialog.text.observe(viewLifecycleOwner) { topicName ->
+            listViewModel.create(topicName)
+        }
     }
 
     private fun initList(
