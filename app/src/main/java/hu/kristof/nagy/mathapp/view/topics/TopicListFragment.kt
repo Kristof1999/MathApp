@@ -1,5 +1,6 @@
 package hu.kristof.nagy.mathapp.view.topics
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,6 +33,20 @@ class TopicListFragment : Fragment() {
         val listViewModel: TopicListViewModel by viewModels()
         val listItemViewModel: TopicListItemViewModel by viewModels()
 
+        initList(listItemViewModel, listViewModel, binding)
+
+        binding.topicCreateBtn.setOnClickListener {
+            // TODO: show dialog and ask for name
+        }
+
+        return binding.root
+    }
+
+    private fun initList(
+        listItemViewModel: TopicListItemViewModel,
+        listViewModel: TopicListViewModel,
+        binding: FragmentTopicListBinding
+    ) {
         val adapter = TopicListRecyclerViewAdapter(TopicClickListener(
             editListener = { topic -> listItemViewModel.edit(topic) },
             deleteListener = { topic -> listItemViewModel.delete(topic) }
@@ -44,7 +59,5 @@ class TopicListFragment : Fragment() {
             adapter.submitList(list)
         }
         binding.topicList.adapter = adapter
-
-        return binding.root
     }
 }
