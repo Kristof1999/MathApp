@@ -1,9 +1,6 @@
 package hu.kristof.nagy.mathapp.data.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import hu.kristof.nagy.mathapp.data.entity.Topic
 import kotlinx.coroutines.flow.Flow
 
@@ -14,6 +11,9 @@ interface TopicDao {
 
     @Insert
     suspend fun create(topic: Topic)
+
+    @Update
+    suspend fun edit(topic: Topic)
 
     @Delete
     suspend fun delete(topic: Topic)
