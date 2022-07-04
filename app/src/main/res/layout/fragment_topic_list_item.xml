@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:contentDescription="Edit topic"
                 android:minHeight="48dp"
-                android:onClick="@{() -> clickListener.onEdit(topic.topicName)}"
+                android:onClick="@{() -> clickListener.onEdit(topic)}"
                 app:srcCompat="@drawable/ic_baseline_edit_24" />
 
             <ImageButton
@@ -47,7 +47,7 @@
                 android:layout_weight="1"
                 android:contentDescription="Delete topic"
                 android:minHeight="48dp"
-                android:onClick="@{() -> clickListener.onDelete(topic.topicName)}"
+                android:onClick="@{() -> clickListener.onDelete(topic)}"
                 app:srcCompat="@drawable/ic_baseline_delete_24" />
 
         </LinearLayout>
