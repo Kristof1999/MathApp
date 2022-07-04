@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MathApp</string>
+    <string name="topicCreateText">Add meg a téma nevét!</string>
+    <string name="topicCreateHint">Név</string>
 </resources>
