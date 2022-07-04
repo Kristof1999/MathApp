@@ -15,9 +15,9 @@ class TopicListViewModel @Inject constructor(
 ) : ViewModel() {
     val topics: Flow<Topic> = db.topicDao().loadTopics()
 
-    fun create(topic: Topic) {
+    fun create(topicName: String) {
         viewModelScope.launch {
-            db.topicDao().create(topic)
+            db.topicDao().create(Topic(topicName))
         }
     }
 }
