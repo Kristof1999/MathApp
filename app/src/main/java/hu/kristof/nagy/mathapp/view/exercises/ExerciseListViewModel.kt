@@ -1,0 +1,23 @@
+package hu.kristof.nagy.mathapp.view.exercises
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import hu.kristof.nagy.mathapp.data.Database
+import hu.kristof.nagy.mathapp.data.entity.Exercise
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class ExerciseListViewModel @Inject private constructor(
+    private val db: Database
+) : ViewModel() {
+    val exercises = db.exerciseDao().loadAll()
+
+    fun create(name: String, question: String, answer: String) {
+        val exercise = Exercise(name, question, answer)
+        viewModelScope.launch {
+            db.exerciseDao().create(exercise)
+        }
+    }
+}
