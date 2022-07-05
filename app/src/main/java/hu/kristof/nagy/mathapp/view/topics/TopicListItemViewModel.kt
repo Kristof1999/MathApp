@@ -12,12 +12,6 @@ import javax.inject.Inject
 class TopicListItemViewModel @Inject constructor(
     private val db: Database
 ) : ViewModel() {
-    fun edit(topic: Topic) {
-        viewModelScope.launch {
-            db.topicDao().edit(topic)
-        }
-    }
-
     fun delete(topic: Topic) {
         viewModelScope.launch {
             db.topicDao().delete(topic)

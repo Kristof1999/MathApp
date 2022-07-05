@@ -55,7 +55,6 @@ class TopicListFragment : Fragment() {
         binding: FragmentTopicListBinding
     ) {
         val adapter = TopicListRecyclerViewAdapter(TopicClickListener(
-            editListener = { topic -> listItemViewModel.edit(topic) },
             deleteListener = { topic -> listItemViewModel.delete(topic) }
         ))
 

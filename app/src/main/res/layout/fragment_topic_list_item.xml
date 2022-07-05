@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp" >
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -26,30 +26,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="@{topic.topicName}"
-                android:textAppearance="?attr/textAppearanceListItem" />
-
-            <ImageButton
-                android:id="@+id/topic_edit_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="Edit topic"
-                android:minHeight="48dp"
-                android:onClick="@{() -> clickListener.onEdit(topic)}"
-                app:srcCompat="@drawable/ic_baseline_edit_24" />
+                android:textAppearance="?attr/textAppearanceListItem"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/topic_delete_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:contentDescription="Delete topic"
                 android:minHeight="48dp"
                 android:onClick="@{() -> clickListener.onDelete(topic)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_delete_24" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

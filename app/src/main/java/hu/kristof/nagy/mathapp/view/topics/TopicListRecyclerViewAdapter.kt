@@ -1,16 +1,12 @@
 package hu.kristof.nagy.mathapp.view.topics
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import hu.kristof.nagy.mathapp.R
+import androidx.recyclerview.widget.RecyclerView
 import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.databinding.FragmentTopicListItemBinding
-import java.nio.file.Files.size
 
 class TopicListRecyclerViewAdapter(
     private val clickListener: TopicClickListener
@@ -55,9 +51,7 @@ class TopicListDiffCallback : DiffUtil.ItemCallback<Topic>() {
 }
 
 class TopicClickListener(
-    private val editListener: (topic: Topic) -> Unit,
     private val deleteListener: (topic: Topic) -> Unit
 ) {
-    fun onEdit(topic: Topic) = editListener(topic)
     fun onDelete(topic: Topic) = deleteListener(topic)
 }
