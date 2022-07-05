@@ -6,15 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
-import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.databinding.FragmentTopicListBinding
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TopicListFragment : Fragment() {
@@ -64,14 +59,8 @@ class TopicListFragment : Fragment() {
             deleteListener = { topic -> listItemViewModel.delete(topic) }
         ))
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                val list = mutableListOf<Topic>()
-                listViewModel.topics.collect { topic ->
-                    list.add(topic)
-                    adapter.submitList(list)
-                }
-            }
+        listViewModel.topics.observe(viewLifecycleOwner) { topics ->
+            adapter.submitList(topics)
         }
 
         binding.topicList.adapter = adapter
