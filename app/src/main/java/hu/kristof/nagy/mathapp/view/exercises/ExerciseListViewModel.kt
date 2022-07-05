@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ExerciseListViewModel @Inject private constructor(
+class ExerciseListViewModel @Inject constructor(
     private val db: Database
 ) : ViewModel() {
     val exercises = db.exerciseDao().loadAll()

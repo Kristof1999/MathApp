@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ExerciseListItemViewModel @Inject private constructor(
+class ExerciseListItemViewModel @Inject constructor(
     private val db: Database
 ) : ViewModel() {
     fun edit(exercise: Exercise) {
