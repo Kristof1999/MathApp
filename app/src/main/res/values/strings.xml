@@ -2,4 +2,11 @@
     <string name="app_name">MathApp</string>
     <string name="topicCreateText">Add meg a téma nevét!</string>
     <string name="topicCreateHint">Név</string>
+
+    <string name="exerciseCreateNameText">Add meg a feladat nevét!</string>
+    <string name="exerciseCreateNameHint">Név</string>
+    <string name="exerciseCreateQuestionText">Add meg a feladat kérdését!</string>
+    <string name="exerciseCreateQuestionHint">Kérdés</string>
+    <string name="exerciseCreateAnswerText">Add meg a feladat válaszát!</string>
+    <string name="exerciseCreateAnswerHint">Válasz</string>
 </resources>
