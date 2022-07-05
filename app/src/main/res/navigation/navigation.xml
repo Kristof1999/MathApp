@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/topicListFragment"
         android:name="hu.kristof.nagy.mathapp.view.topics.TopicListFragment"
-        android:label="TopicListFragment" />
+        android:label="TopicListFragment" >
+        <action
+            android:id="@+id/action_topicListFragment_to_exerciseListFragment"
+            app:destination="@id/exerciseListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseListFragment"
+        android:name="hu.kristof.nagy.mathapp.view.exercises.ExerciseListFragment"
+        android:label="ExerciseListFragment" />
 </navigation>
