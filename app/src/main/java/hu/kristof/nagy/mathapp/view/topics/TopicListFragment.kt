@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.databinding.FragmentTopicListBinding
@@ -55,7 +56,10 @@ class TopicListFragment : Fragment() {
         binding: FragmentTopicListBinding
     ) {
         val adapter = TopicListRecyclerViewAdapter(TopicClickListener(
-            deleteListener = { topic -> listItemViewModel.delete(topic) }
+            deleteListener = { topic -> listItemViewModel.delete(topic) },
+            detailNavListener = { topic ->
+                findNavController().navigate(R.id.action_topicListFragment_to_exerciseListFragment)
+            }
         ))
 
         listViewModel.topics.observe(viewLifecycleOwner) { topics ->

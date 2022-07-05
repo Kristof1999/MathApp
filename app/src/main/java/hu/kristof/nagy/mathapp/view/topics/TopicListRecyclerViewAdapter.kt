@@ -51,7 +51,9 @@ class TopicListDiffCallback : DiffUtil.ItemCallback<Topic>() {
 }
 
 class TopicClickListener(
-    private val deleteListener: (topic: Topic) -> Unit
+    private val deleteListener: (topic: Topic) -> Unit,
+    private val detailNavListener: (topic: Topic) -> Unit
 ) {
     fun onDelete(topic: Topic) = deleteListener(topic)
+    fun onDetailNav(topic: Topic) = detailNavListener(topic)
 }
