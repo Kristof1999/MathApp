@@ -11,11 +11,11 @@ interface ExerciseDao {
     fun loadAll(): LiveData<List<Exercise>>
 
     @Insert
-    fun create(exercise: Exercise)
+    suspend fun create(exercise: Exercise)
 
     @Delete
-    fun delete(exercise: Exercise)
+    suspend fun delete(exercise: Exercise)
 
     @Update
-    fun edit(exercise: Exercise)
+    suspend fun edit(exercise: Exercise)
 }
