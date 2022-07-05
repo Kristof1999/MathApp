@@ -7,4 +7,5 @@ import androidx.room.PrimaryKey
 data class Exercise(
     @PrimaryKey val name: String,
     val question: String, val answer: String
+    // TODO: add topic
 )
