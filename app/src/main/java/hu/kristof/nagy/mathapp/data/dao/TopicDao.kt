@@ -9,7 +9,7 @@ interface TopicDao {
     @Query("SELECT * FROM topic")
     fun loadTopics(): Flow<Topic>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun create(topic: Topic)
 
     @Update
