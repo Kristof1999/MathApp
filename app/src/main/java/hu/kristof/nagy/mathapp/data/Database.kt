@@ -7,7 +7,7 @@ import hu.kristof.nagy.mathapp.data.dao.TopicDao
 import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.data.entity.Topic
 
-@Database(entities = [Topic::class, Exercise::class], version = 1)
+@Database(entities = [Topic::class, Exercise::class], version = 2)
 abstract class Database : RoomDatabase() {
     abstract fun topicDao(): TopicDao
     abstract fun exerciseDao(): ExerciseDao
