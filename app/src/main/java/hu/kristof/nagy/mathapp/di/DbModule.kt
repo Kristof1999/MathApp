@@ -20,13 +20,18 @@ object DbModule {
     @Provides
     fun provideDb(@ApplicationContext context: Context): MathAppDatabase {
         return Room.databaseBuilder(context, MathAppDatabase::class.java, "MathApp")
-            .addMigrations(MIGRATION_2_3)
+            .addMigrations(MIGRATION_2_3, MIGRATION_3_4)
             .build()
     }
 
     private val MIGRATION_2_3 = object : Migration(2, 3) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL("ALTER TABLE topic ADD COLUMN parentTopicName TEXT")
+        }
+    }
+    private val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE exercise ADD COLUMN parentTopicName TEXT NOT NULL DEFAULT 'misc'")
         }
     }
 }
