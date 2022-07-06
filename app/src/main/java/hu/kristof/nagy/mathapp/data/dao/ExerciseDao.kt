@@ -6,9 +6,8 @@ import hu.kristof.nagy.mathapp.data.entity.Exercise
 
 @Dao
 interface ExerciseDao {
-    // TODO: load only the names, and have a method which loads a one with the given name with a given topic
-    @Query("SELECT * FROM exercise")
-    fun loadAll(): LiveData<List<Exercise>>
+    @Query("SELECT * FROM exercise WHERE exercise.parentTopicName IS :topicName")
+    fun loadAllForTopic(topicName: String): LiveData<List<Exercise>>
 
     @Insert
     suspend fun create(exercise: Exercise)
