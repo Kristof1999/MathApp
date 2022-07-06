@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.exercises
+package hu.kristof.nagy.mathapp.view.topics.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

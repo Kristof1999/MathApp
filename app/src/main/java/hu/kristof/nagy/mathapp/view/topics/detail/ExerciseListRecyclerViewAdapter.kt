@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.exercises
+package hu.kristof.nagy.mathapp.view.topics.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
