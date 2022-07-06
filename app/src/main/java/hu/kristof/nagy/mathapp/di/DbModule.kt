@@ -9,7 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import hu.kristof.nagy.mathapp.data.Database
+import hu.kristof.nagy.mathapp.data.MathAppDatabase
 import javax.inject.Singleton
 
 @Module
@@ -18,8 +18,8 @@ object DbModule {
 
     @Singleton
     @Provides
-    fun provideDb(@ApplicationContext context: Context): Database {
-        return Room.databaseBuilder(context, Database::class.java, "MathApp")
+    fun provideDb(@ApplicationContext context: Context): MathAppDatabase {
+        return Room.databaseBuilder(context, MathAppDatabase::class.java, "MathApp")
             .addMigrations(MIGRATION_2_3)
             .build()
     }

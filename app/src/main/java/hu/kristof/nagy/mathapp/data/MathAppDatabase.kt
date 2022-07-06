@@ -13,7 +13,7 @@ import hu.kristof.nagy.mathapp.data.entity.Topic
     version = 3,
     autoMigrations = [AutoMigration(from = 1, to = 2)]
 )
-abstract class Database : RoomDatabase() {
+abstract class MathAppDatabase : RoomDatabase() {
     abstract fun topicDao(): TopicDao
     abstract fun exerciseDao(): ExerciseDao
 }
