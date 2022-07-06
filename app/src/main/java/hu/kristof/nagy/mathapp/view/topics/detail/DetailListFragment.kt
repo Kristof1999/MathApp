@@ -36,7 +36,11 @@ class DetailListFragment : Fragment() {
             .get(DetailTopicListViewModel::class.java)
         val detailTopicListItemViewModel: TopicListItemViewModel by viewModels()
 
-        initList(listItemViewModel, listViewModel, detailTopicListItemViewModel, binding)
+        initList(
+            listItemViewModel, listViewModel,
+            detailTopicListViewModel, detailTopicListItemViewModel,
+            binding
+        )
 
         exerciseCreate(binding, listViewModel)
         topicCreate(binding, detailTopicListViewModel, args.parentTopicName)
@@ -100,6 +104,7 @@ class DetailListFragment : Fragment() {
     private fun initList(
         listItemViewModel: ExerciseListItemViewModel,
         listViewModel: ExerciseListViewModel,
+        detailTopicListViewModel: DetailTopicListViewModel,
         detailTopicListItemViewModel: TopicListItemViewModel,
         binding: FragmentDetailListBinding
     ) {
@@ -114,6 +119,9 @@ class DetailListFragment : Fragment() {
                 findNavController().navigate(directions)
             }
         ))
+        detailTopicListViewModel.topics.observe(viewLifecycleOwner) { topics ->
+            adapter.submitList(topics)
+        }
         listViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
             adapter.submitList(exercises)
         }
