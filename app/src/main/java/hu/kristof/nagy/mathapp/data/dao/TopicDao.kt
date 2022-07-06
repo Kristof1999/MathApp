@@ -6,8 +6,11 @@ import hu.kristof.nagy.mathapp.data.entity.Topic
 
 @Dao
 interface TopicDao {
-    @Query("SELECT * FROM topic")
-    fun loadTopics(): LiveData<List<Topic>>
+    @Query("SELECT * FROM topic WHERE topic.parentTopicName == NULL")
+    fun loadHighLevelTopics(): LiveData<List<Topic>>
+
+    @Query("SELECT * FROM topic WHERE topic.parentTopicName = :topicName")
+    fun loadTopicsFor(topicName: String): LiveData<List<Topic>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun create(topic: Topic)
