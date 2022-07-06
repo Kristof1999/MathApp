@@ -13,11 +13,11 @@ import javax.inject.Inject
 class TopicListViewModel @Inject constructor(
     private val db: Database
 ) : ViewModel() {
-    val topics: LiveData<List<Topic>> = db.topicDao().loadTopics()
+    val topics: LiveData<List<Topic>> = db.topicDao().loadHighLevelTopics()
 
     fun create(topicName: String) {
         viewModelScope.launch {
-            db.topicDao().create(Topic(topicName))
+            db.topicDao().create(Topic(topicName, null))
         }
     }
 }
