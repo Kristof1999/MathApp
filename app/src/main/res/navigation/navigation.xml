@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailListFragment"
-        android:name="hu.kristof.nagy.mathapp.view.topics.detail.ExerciseListFragment"
+        android:name="hu.kristof.nagy.mathapp.view.topics.detail.DetailListFragment"
         android:label="ExerciseListFragment" >
         <action
             android:id="@+id/action_exerciseListFragment_self"
