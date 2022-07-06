@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.MathAppDatabase
+import hu.kristof.nagy.mathapp.data.entity.Exercise
+import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.databinding.FragmentDetailListBinding
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import hu.kristof.nagy.mathapp.view.topics.TopicClickListener
@@ -124,12 +128,27 @@ class DetailListFragment : Fragment() {
                 findNavController().navigate(directions)
             }
         ))
+
+        // Invariant: the below list contains the topics first, and then the exercises.
+        val list = MutableLiveData(mutableListOf<Any>())
         detailTopicListViewModel.topics.observe(viewLifecycleOwner) { topics ->
-            adapter.submitList(topics)
+            val exercises = list.value!!.takeLastWhile { item -> item is Exercise }
+            list.value = mutableListOf<Any>().apply {
+                addAll(topics)
+                addAll(exercises)
+            }
         }
         listViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            adapter.submitList(exercises)
+            val topics = list.value!!.takeWhile { item -> item is Topic }
+            list.value = mutableListOf<Any>().apply {
+                addAll(topics)
+                addAll(exercises)
+            }
         }
+        list.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+
         binding.detailList.adapter = adapter
     }
 }
