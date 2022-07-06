@@ -14,13 +14,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Feladat létrehozás"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/exercise_list"
+            android:id="@+id/detail_list"
             android:name="hu.kristof.nagy.mathapp.view.exercises.ExerciseListFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -30,10 +30,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/exercise_create_btn"
-            tools:context=".view.exercises.ExerciseListFragment"
+            tools:context=".view.topics.detail.ExerciseListFragment"
             tools:listitem="@layout/fragment_exercise_list_item">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/detail_topic_create_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Téma Létrehozás"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
