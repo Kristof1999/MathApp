@@ -14,7 +14,7 @@ class DetailTopicListViewModel(
 
     fun createTopic(topicName: String, parentTopicName: String) {
         viewModelScope.launch {
-            db.topicDao().create(Topic(topicName, parentTopicName))
+            db.topicDao().create(Topic(null, topicName, parentTopicName))
         }
     }
 }

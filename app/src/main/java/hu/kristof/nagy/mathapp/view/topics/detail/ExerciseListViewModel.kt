@@ -13,7 +13,7 @@ class ExerciseListViewModel(
     val exercises = db.exerciseDao().loadAllForTopic(parentTopicName)
 
     fun create(name: String, question: String, answer: String, parentTopicName: String) {
-        val exercise = Exercise(name, question, answer, parentTopicName)
+        val exercise = Exercise(null, name, question, answer, parentTopicName)
         viewModelScope.launch {
             db.exerciseDao().create(exercise)
         }

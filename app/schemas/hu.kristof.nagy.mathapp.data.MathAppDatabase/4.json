@@ -2,12 +2,18 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "86cdc54a1e3cf65ad37a3da80abae879",
+    "identityHash": "c41f6f4c8e2e78e912ee6ab36a33ab6a",
     "entities": [
       {
         "tableName": "Topic",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`topicName` TEXT NOT NULL, `parentTopicName` TEXT, PRIMARY KEY(`topicName`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `topicName` TEXT NOT NULL, `parentTopicName` TEXT)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
           {
             "fieldPath": "topicName",
             "columnName": "topicName",
@@ -23,17 +29,23 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "topicName"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "Exercise",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `question` TEXT NOT NULL, `answer` TEXT NOT NULL, `parentTopicName` TEXT NOT NULL, PRIMARY KEY(`name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `question` TEXT NOT NULL, `answer` TEXT NOT NULL, `parentTopicName` TEXT NOT NULL)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
           {
             "fieldPath": "name",
             "columnName": "name",
@@ -61,9 +73,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "name"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -72,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '86cdc54a1e3cf65ad37a3da80abae879')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c41f6f4c8e2e78e912ee6ab36a33ab6a')"
     ]
   }
 }
