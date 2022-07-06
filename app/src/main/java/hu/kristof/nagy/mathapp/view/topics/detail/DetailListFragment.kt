@@ -11,13 +11,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
+import hu.kristof.nagy.mathapp.data.MathAppDatabase
 import hu.kristof.nagy.mathapp.databinding.FragmentDetailListBinding
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import hu.kristof.nagy.mathapp.view.topics.TopicClickListener
 import hu.kristof.nagy.mathapp.view.topics.TopicListItemViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailListFragment : Fragment() {
+    @Inject
+    lateinit var db: MathAppDatabase
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,7 +36,7 @@ class DetailListFragment : Fragment() {
         val args: DetailListFragmentArgs by navArgs()
         val listViewModel: ExerciseListViewModel by viewModels()
         val listItemViewModel: ExerciseListItemViewModel by viewModels()
-        val viewModelFactory = DetailTopicListViewModelFactory(args.parentTopicName)
+        val viewModelFactory = DetailTopicListViewModelFactory(db, args.parentTopicName)
         val detailTopicListViewModel = ViewModelProvider(this, viewModelFactory)
             .get(DetailTopicListViewModel::class.java)
         val detailTopicListItemViewModel: TopicListItemViewModel by viewModels()
