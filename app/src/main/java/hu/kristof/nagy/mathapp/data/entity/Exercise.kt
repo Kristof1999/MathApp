@@ -5,7 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Exercise(
-    @PrimaryKey val name: String,
-    val question: String, val answer: String,
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    val name: String,
+    val question: String,
+    val answer: String,
     val parentTopicName: String
 )

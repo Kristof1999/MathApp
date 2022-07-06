@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
  */
 @Entity
 data class Topic(
-    @PrimaryKey val topicName: String,
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    val topicName: String,
     val parentTopicName: String?
 )
-// TODO: consider switching string ids to long ids
