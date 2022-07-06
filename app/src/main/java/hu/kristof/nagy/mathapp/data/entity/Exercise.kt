@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class Exercise(
     @PrimaryKey val name: String,
-    val question: String, val answer: String
-    // TODO: add topic
+    val question: String, val answer: String,
+    val parentTopicName: String
 )
