@@ -91,6 +91,10 @@ class DetailListRecyclerViewAdapter(
 
 class DetailListDiffCallback : DiffUtil.ItemCallback<Any>() {
     override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+        if (isDifferentByType(oldItem, newItem)) {
+            return false
+        }
+
         return when (oldItem) {
             is Exercise -> oldItem.name == (newItem as Exercise).name
             is Topic -> oldItem.topicName == (newItem as Topic).topicName
@@ -99,11 +103,25 @@ class DetailListDiffCallback : DiffUtil.ItemCallback<Any>() {
     }
 
     override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+        if (isDifferentByType(oldItem, newItem)) {
+            return false
+        }
+
         return when (oldItem) {
             is Exercise -> (oldItem as Exercise) == (newItem as Exercise)
             is Topic -> (oldItem as Topic) == (newItem as Topic)
             else -> throw IllegalArgumentException("illegal list item in diff callback")
         }
+    }
+
+    private fun isDifferentByType(oldItem: Any, newItem: Any): Boolean {
+        if (oldItem is Exercise && newItem !is Exercise) {
+            return true
+        }
+        if (oldItem is Topic && newItem !is Topic) {
+            return true
+        }
+        return false
     }
 }
 
