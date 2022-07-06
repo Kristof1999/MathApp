@@ -10,10 +10,17 @@
         android:label="TopicListFragment" >
         <action
             android:id="@+id/action_topicListFragment_to_exerciseListFragment"
-            app:destination="@id/exerciseListFragment" />
+            app:destination="@id/detailListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/exerciseListFragment"
-        android:name="hu.kristof.nagy.mathapp.view.exercises.ExerciseListFragment"
-        android:label="ExerciseListFragment" />
+        android:id="@+id/detailListFragment"
+        android:name="hu.kristof.nagy.mathapp.view.topics.detail.ExerciseListFragment"
+        android:label="ExerciseListFragment" >
+        <action
+            android:id="@+id/action_exerciseListFragment_self"
+            app:destination="@id/detailListFragment" />
+        <argument
+            android:name="parentTopicName"
+            app:argType="string" />
+    </fragment>
 </navigation>
