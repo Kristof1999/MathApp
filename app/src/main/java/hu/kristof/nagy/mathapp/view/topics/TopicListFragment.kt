@@ -58,7 +58,9 @@ class TopicListFragment : Fragment() {
         val adapter = TopicListRecyclerViewAdapter(TopicClickListener(
             deleteListener = { topic -> listItemViewModel.delete(topic) },
             detailNavListener = { topic ->
-                findNavController().navigate(R.id.action_topicListFragment_to_exerciseListFragment)
+                val directions = TopicListFragmentDirections
+                    .actionTopicListFragmentToExerciseListFragment(topic.topicName)
+                findNavController().navigate(directions)
             }
         ))
 
