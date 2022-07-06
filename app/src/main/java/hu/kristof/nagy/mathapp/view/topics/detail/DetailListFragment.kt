@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.databinding.FragmentDetailListBinding
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
+import hu.kristof.nagy.mathapp.view.topics.TopicClickListener
+import hu.kristof.nagy.mathapp.view.topics.TopicListItemViewModel
 
 @AndroidEntryPoint
 class DetailListFragment : Fragment() {
@@ -25,15 +28,15 @@ class DetailListFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        // TODO: rename type
-        val args: ExerciseListFragmentArgs by navArgs()
+        val args: DetailListFragmentArgs by navArgs()
         val listViewModel: ExerciseListViewModel by viewModels()
         val listItemViewModel: ExerciseListItemViewModel by viewModels()
         val viewModelFactory = DetailTopicListViewModelFactory(args.parentTopicName)
         val detailTopicListViewModel = ViewModelProvider(this, viewModelFactory)
             .get(DetailTopicListViewModel::class.java)
+        val detailTopicListItemViewModel: TopicListItemViewModel by viewModels()
 
-        initList(listItemViewModel, listViewModel, binding)
+        initList(listItemViewModel, listViewModel, detailTopicListItemViewModel, binding)
 
         exerciseCreate(binding, listViewModel)
         topicCreate(binding, detailTopicListViewModel, args.parentTopicName)
@@ -97,11 +100,19 @@ class DetailListFragment : Fragment() {
     private fun initList(
         listItemViewModel: ExerciseListItemViewModel,
         listViewModel: ExerciseListViewModel,
+        detailTopicListItemViewModel: TopicListItemViewModel,
         binding: FragmentDetailListBinding
     ) {
-        val adapter = ExerciseListRecyclerViewAdapter(ExerciseClickListener(
+        val adapter = DetailListRecyclerViewAdapter(ExerciseClickListener(
             editListener = { exercise -> listItemViewModel.edit(exercise) },
             deleteListener = { exercise -> listItemViewModel.delete(exercise) }
+        ), TopicClickListener(
+            deleteListener = { topic -> detailTopicListItemViewModel.delete(topic) },
+            detailNavListener = { topic ->
+                val directions = DetailListFragmentDirections
+                    .actionExerciseListFragmentSelf(topic.topicName)
+                findNavController().navigate(directions)
+            }
         ))
         listViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
             adapter.submitList(exercises)
