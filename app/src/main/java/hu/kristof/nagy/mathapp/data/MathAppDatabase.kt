@@ -10,7 +10,7 @@ import hu.kristof.nagy.mathapp.data.entity.Topic
 
 @Database(
     entities = [Topic::class, Exercise::class],
-    version = 4,
+    version = 5,
     autoMigrations = [AutoMigration(from = 1, to = 2)]
 )
 abstract class MathAppDatabase : RoomDatabase() {
