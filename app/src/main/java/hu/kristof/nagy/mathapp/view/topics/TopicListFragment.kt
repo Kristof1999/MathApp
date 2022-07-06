@@ -46,7 +46,7 @@ class TopicListFragment : Fragment() {
             dialog.show(parentFragmentManager, "topicCreation")
         }
         dialog.text.observe(viewLifecycleOwner) { topicName ->
-            listViewModel.create(topicName)
+            listViewModel.createHighLevelTopic(topicName)
         }
     }
 
@@ -62,7 +62,7 @@ class TopicListFragment : Fragment() {
             }
         ))
 
-        listViewModel.topics.observe(viewLifecycleOwner) { topics ->
+        listViewModel.highLevelTopics.observe(viewLifecycleOwner) { topics ->
             adapter.submitList(topics)
         }
 

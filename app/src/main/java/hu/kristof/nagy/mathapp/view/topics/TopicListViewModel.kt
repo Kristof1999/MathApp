@@ -13,9 +13,9 @@ import javax.inject.Inject
 class TopicListViewModel @Inject constructor(
     private val db: Database
 ) : ViewModel() {
-    val topics: LiveData<List<Topic>> = db.topicDao().loadHighLevelTopics()
+    val highLevelTopics: LiveData<List<Topic>> = db.topicDao().loadHighLevelTopics()
 
-    fun create(topicName: String) {
+    fun createHighLevelTopic(topicName: String) {
         viewModelScope.launch {
             db.topicDao().create(Topic(topicName, null))
         }
