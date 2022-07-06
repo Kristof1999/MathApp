@@ -38,7 +38,9 @@ class DetailListFragment : Fragment() {
         }
 
         val args: DetailListFragmentArgs by navArgs()
-        val listViewModel: ExerciseListViewModel by viewModels()
+        val exerciseListViewModelFactory = ExerciseListViewModelFactory(db, args.parentTopicName)
+        val listViewModel = ViewModelProvider(this, exerciseListViewModelFactory)
+            .get(ExerciseListViewModel::class.java)
         val listItemViewModel: ExerciseListItemViewModel by viewModels()
         val viewModelFactory = DetailTopicListViewModelFactory(db, args.parentTopicName)
         val detailTopicListViewModel = ViewModelProvider(this, viewModelFactory)
@@ -51,7 +53,7 @@ class DetailListFragment : Fragment() {
             binding
         )
 
-        exerciseCreate(binding, listViewModel)
+        exerciseCreate(binding, listViewModel, args.parentTopicName)
         topicCreate(binding, detailTopicListViewModel, args.parentTopicName)
 
         return binding.root
@@ -75,7 +77,8 @@ class DetailListFragment : Fragment() {
 
     private fun exerciseCreate(
         binding: FragmentDetailListBinding,
-        listViewModel: ExerciseListViewModel
+        listViewModel: ExerciseListViewModel,
+        parentTopicName: String
     ) {
         binding.exerciseCreateBtn.setOnClickListener {
             var name = ""
@@ -103,7 +106,7 @@ class DetailListFragment : Fragment() {
                     answerDialog.text.observe(viewLifecycleOwner) {
                         answer = it
 
-                        listViewModel.create(name, question, answer)
+                        listViewModel.create(name, question, answer, parentTopicName)
                     }
                 }
             }
@@ -129,6 +132,7 @@ class DetailListFragment : Fragment() {
             }
         ))
 
+        // TODO: encapsulate in a class
         // Invariant: the below list contains the topics first, and then the exercises.
         val list = MutableLiveData(mutableListOf<Any>())
         detailTopicListViewModel.topics.observe(viewLifecycleOwner) { topics ->
