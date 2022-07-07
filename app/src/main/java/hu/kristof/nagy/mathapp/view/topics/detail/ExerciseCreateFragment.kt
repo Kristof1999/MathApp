@@ -1,5 +1,6 @@
 package hu.kristof.nagy.mathapp.view.topics.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,12 +13,12 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import dagger.hilt.android.AndroidEntryPoint
-import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.databinding.FragmentExerciseCreateBinding
 
 @AndroidEntryPoint
@@ -47,26 +48,41 @@ class ExerciseCreateFragment : Fragment() {
             allowContentAccess = false
             javaScriptEnabled = true
         }
+
+        val exerciseCreateViewModel: ExerciseCreateViewModel by viewModels()
+        val args: ExerciseCreateFragmentArgs by navArgs()
+        val navController = findNavController()
         binding.exerciseCreateWebView.apply {
-            addJavascriptInterface(this, "ExerciseCreateFragment")
+            addJavascriptInterface(WebAppInterface(
+                requireContext(),
+                navController,
+                exerciseCreateViewModel,
+                args.parentTopicName
+            ), "ExerciseCreateFragment")
             loadUrl("https://appassets.androidplatform.net/assets/exerciseCreate.html")
         }
 
         return binding.root
     }
 
-    @JavascriptInterface
-    fun createExercise(name: String, question: String, answer: String) {
-        val exerciseCreateViewModel: ExerciseCreateViewModel by viewModels()
-        val args: ExerciseCreateFragmentArgs by navArgs()
+    class WebAppInterface(
+        private val context: Context,
+        private val navController: NavController,
+        private val exerciseCreateViewModel: ExerciseCreateViewModel,
+        private val parentTopicName: String
+    ) {
+        @JavascriptInterface
+        fun createExercise(name: String, question: String, answer: String) {
+            exerciseCreateViewModel.create(name, question, answer, parentTopicName)
 
-        exerciseCreateViewModel.create(name, question, answer, args.parentTopicName)
+            val directions = ExerciseCreateFragmentDirections
+                .actionExerciseCreateFragmentToDetailListFragment(parentTopicName)
+            navController.navigate(directions)
+        }
 
-        findNavController().navigate(R.id.action_exerciseCreateFragment_to_detailListFragment)
-    }
-
-    @JavascriptInterface
-    fun showToast(str: String) {
-        Toast.makeText(requireContext(), str, Toast.LENGTH_LONG)
+        @JavascriptInterface
+        fun showToast(str: String) {
+            Toast.makeText(context, str, Toast.LENGTH_LONG).show()
+        }
     }
 }
