@@ -53,7 +53,7 @@ class DetailListFragment : Fragment() {
             binding
         )
 
-        exerciseCreate(args.parentTopicName)
+        exerciseCreate(binding, args.parentTopicName)
         topicCreate(binding, detailTopicListViewModel, args.parentTopicName)
 
         return binding.root
@@ -75,11 +75,15 @@ class DetailListFragment : Fragment() {
         }
     }
 
-    private fun exerciseCreate(parentTopicName: String) {
-        val directions = DetailListFragmentDirections
-            .actionDetailListFragmentToExerciseCreateFragment(parentTopicName)
-        findNavController().navigate(directions)
-
+    private fun exerciseCreate(
+        binding: FragmentDetailListBinding,
+        parentTopicName: String
+    ) {
+        binding.exerciseCreateBtn.setOnClickListener {
+            val directions = DetailListFragmentDirections
+                .actionDetailListFragmentToExerciseCreateFragment(parentTopicName)
+            findNavController().navigate(directions)
+        }
     }
 
     private fun initList(
