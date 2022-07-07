@@ -53,7 +53,7 @@ class DetailListFragment : Fragment() {
             binding
         )
 
-        exerciseCreate(binding, listViewModel, args.parentTopicName)
+        exerciseCreate(args.parentTopicName)
         topicCreate(binding, detailTopicListViewModel, args.parentTopicName)
 
         return binding.root
@@ -75,42 +75,11 @@ class DetailListFragment : Fragment() {
         }
     }
 
-    private fun exerciseCreate(
-        binding: FragmentDetailListBinding,
-        listViewModel: ExerciseListViewModel,
-        parentTopicName: String
-    ) {
-        binding.exerciseCreateBtn.setOnClickListener {
-            var name = ""
-            var question = ""
-            var answer = ""
+    private fun exerciseCreate(parentTopicName: String) {
+        val directions = DetailListFragmentDirections
+            .actionDetailListFragmentToExerciseCreateFragment(parentTopicName)
+        findNavController().navigate(directions)
 
-            val nameDialog = TextDialogFragment.instanceOf(
-                R.string.exerciseCreateNameText, R.string.exerciseCreateNameHint
-            )
-            nameDialog.show(parentFragmentManager, "exerciseCreateName")
-            nameDialog.text.observe(viewLifecycleOwner) {
-                name = it
-
-                val questionDialog = TextDialogFragment.instanceOf(
-                    R.string.exerciseCreateQuestionText, R.string.exerciseCreateQuestionHint
-                )
-                questionDialog.show(parentFragmentManager, "exerciseCreateQuestion")
-                questionDialog.text.observe(viewLifecycleOwner) {
-                    question = it
-
-                    val answerDialog = TextDialogFragment.instanceOf(
-                        R.string.exerciseCreateAnswerText, R.string.exerciseCreateAnswerHint
-                    )
-                    answerDialog.show(parentFragmentManager, "exerciseCreateAnswer")
-                    answerDialog.text.observe(viewLifecycleOwner) {
-                        answer = it
-
-                        listViewModel.create(name, question, answer, parentTopicName)
-                    }
-                }
-            }
-        }
     }
 
     private fun initList(
