@@ -30,8 +30,7 @@ function convert(inputId, buttonId, outputId) {
     //    (in case an extension needs to be loaded dynamically).
     //
     MathJax.texReset();
-    var options = MathJax.getMetricsFor(output);
-    MathJax.tex2chtmlPromise(input, options).then(function (node) {
+    MathJax.tex2chtmlPromise(input).then(function (node) {
         //
         //  The promise returns the typeset node, which we add to the output
         //  Then update the document to include the adjusted CSS for the
