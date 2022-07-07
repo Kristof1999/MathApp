@@ -58,7 +58,7 @@ class ExerciseCreateFragment : Fragment() {
                 navController,
                 exerciseCreateViewModel,
                 args.parentTopicName
-            ), "ExerciseCreateFragment")
+            ), "ExerciseCreateInterface")
             loadUrl("https://appassets.androidplatform.net/assets/exerciseCreate.html")
         }
 
