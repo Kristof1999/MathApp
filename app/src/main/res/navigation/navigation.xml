@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_detailListFragment_to_exerciseFragment"
             app:destination="@id/exerciseFragment" />
+        <action
+            android:id="@+id/action_detailListFragment_to_exerciseCreateFragment"
+            app:destination="@id/exerciseCreateFragment" />
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
@@ -33,5 +36,16 @@
         <argument
             android:name="exercise"
             app:argType="hu.kristof.nagy.mathapp.data.entity.Exercise" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseCreateFragment"
+        android:name="hu.kristof.nagy.mathapp.view.topics.detail.ExerciseCreateFragment"
+        android:label="ExerciseCreateFragment" >
+        <action
+            android:id="@+id/action_exerciseCreateFragment_to_detailListFragment"
+            app:destination="@id/detailListFragment" />
+        <argument
+            android:name="parentTopicName"
+            app:argType="string" />
     </fragment>
 </navigation>
