@@ -127,8 +127,10 @@ class DetailListDiffCallback : DiffUtil.ItemCallback<Any>() {
 
 class ExerciseClickListener(
     private val editListener: (exercise: Exercise) -> Unit,
-    private val deleteListener: (exercise: Exercise) -> Unit
+    private val deleteListener: (exercise: Exercise) -> Unit,
+    private val detailNavListener: (exercise: Exercise) -> Unit
 ) {
     fun onEdit(exercise: Exercise) = editListener(exercise)
     fun onDelete(exercise: Exercise) = deleteListener(exercise)
+    fun onDetailNav(exercise: Exercise) = detailNavListener(exercise)
 }

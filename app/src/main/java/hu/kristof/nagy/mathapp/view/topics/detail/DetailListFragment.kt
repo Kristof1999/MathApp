@@ -122,7 +122,12 @@ class DetailListFragment : Fragment() {
     ) {
         val adapter = DetailListRecyclerViewAdapter(ExerciseClickListener(
             editListener = { exercise -> listItemViewModel.edit(exercise) },
-            deleteListener = { exercise -> listItemViewModel.delete(exercise) }
+            deleteListener = { exercise -> listItemViewModel.delete(exercise) },
+            detailNavListener = { exercise ->
+                val directions = DetailListFragmentDirections
+                    .actionDetailListFragmentToExerciseFragment(exercise)
+                findNavController().navigate(directions)
+            }
         ), TopicClickListener(
             deleteListener = { topic -> detailTopicListItemViewModel.delete(topic) },
             detailNavListener = { topic ->
