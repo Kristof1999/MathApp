@@ -1,15 +1,15 @@
 function createExercise() {
     let name = document.getElementById("name").value.trim();
     if (name.length == 0) {
-        ExerciseCreateFragment.showToast("A feladat neve nem lehet üres!);
+        ExerciseCreateFragment.showToast("A feladat neve nem lehet üres!");
     }
     let question = document.getElementById("questionInput").value.trim();
     if (question.length == 0) {
-        ExerciseCreateFragment.showToast("A kérdés nem lehet üres!);
+        ExerciseCreateFragment.showToast("A kérdés nem lehet üres!");
     }
     let answer = document.getElementById("answerInput").value.trim();
     if (answer.length == 0) {
-        ExerciseCreateFragment.showToast("A válasz nem lehet üres!);
+        ExerciseCreateFragment.showToast("A válasz nem lehet üres!");
     }
     ExerciseCreateFragment.createExercise(name, question, answer);
 }
