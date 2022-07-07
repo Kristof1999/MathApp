@@ -1,8 +1,5 @@
-function convert(inputId, buttonId, outputId) {
-    var input = document.getElementById(inputId).value.trim();
-
-    var button = document.getElementById(buttonId);
-    button.disabled = true;
+function convertOnLoad(outputId) {
+    let input = ExerciseInterface.exercise.question;
 
     output = document.getElementById(outputId);
     output.innerHTML = '';
@@ -24,8 +21,6 @@ function convert(inputId, buttonId, outputId) {
         MathJax.startup.document.clear();
         MathJax.startup.document.updateDocument();
     }).catch(function (err) {
-        ExerciseCreateInterface.showToast(err.message);
-    }).then(function () {
-        button.disabled = false;
+        ExerciseInterface.showToast(err.message);
     });
 }
