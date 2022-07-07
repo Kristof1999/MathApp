@@ -1,9 +1,13 @@
 <html>
     <head>
         <script id="MathJax-script" async src="tex-chtml.js"></script>
-        <script src="convert.js"></script>
+        <script src="convertOnLoad.js"></script>
+        <link rel="stylesheet" href="exercise.css">
     </head>
-    <body>
+    <body onload="convertOnLoad('question')" >
+        <p>Kérdés:</p>
+        <div id="question" class="output"></div>
 
+        </div>
     </body>
 </html>

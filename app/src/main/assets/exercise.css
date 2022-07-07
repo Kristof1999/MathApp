@@ -1,0 +1,11 @@
+body {
+    max-width: 40em;
+    margin: auto;
+}
+div.output {
+    font-size: 120%;
+    margin-top: .75em;
+    border: 1px solid grey;
+    padding: .25em;
+    min-height: 2em;
+}
