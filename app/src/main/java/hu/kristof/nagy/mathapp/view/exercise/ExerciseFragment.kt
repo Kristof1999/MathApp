@@ -29,12 +29,11 @@ class ExerciseFragment : Fragment() {
         )
 
         val args: ExerciseFragmentArgs by navArgs()
-        binding.exerciseName.text = args.exercise.name
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
             .build()
-        binding.exerciseQuestionWebView.webViewClient = object : WebViewClientCompat() {
+        binding.exerciseWebView.webViewClient = object : WebViewClientCompat() {
             @RequiresApi(21)
             override fun shouldInterceptRequest(
                 view: WebView?,
@@ -43,12 +42,12 @@ class ExerciseFragment : Fragment() {
                 return assetLoader.shouldInterceptRequest(request.url)
             }
         }
-        binding.exerciseQuestionWebView.settings.apply {
+        binding.exerciseWebView.settings.apply {
             allowFileAccess = false
             allowContentAccess = false
             javaScriptEnabled = true
         }
-        binding.exerciseQuestionWebView.apply {
+        binding.exerciseWebView.apply {
             addJavascriptInterface(
                 WebAppInterface(requireContext(), args.exercise),
                 "ExerciseInterface"
@@ -67,5 +66,14 @@ class ExerciseFragment : Fragment() {
         fun showToast(str: String) {
             Toast.makeText(context, str, Toast.LENGTH_LONG).show()
         }
+
+        @JavascriptInterface
+        fun getExerciseQuestion(): String = exercise.question
+
+        @JavascriptInterface
+        fun getExerciseName(): String = exercise.name
+
+        @JavascriptInterface
+        fun getExerciseAnswer(): String = exercise.answer
     }
 }
