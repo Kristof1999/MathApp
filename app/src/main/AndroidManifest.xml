@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="hu.kristof.nagy.mathapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +16,7 @@
         android:theme="@style/Theme.MathApp"
         android:name="hu.kristof.nagy.mathapp.MathApp"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
