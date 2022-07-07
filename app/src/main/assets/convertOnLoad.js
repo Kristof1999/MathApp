@@ -1,7 +1,10 @@
-function convertOnLoad(outputId) {
-    let input = ExerciseInterface.exercise.question;
+function onLoad() {
+    let nameElement = document.getElementById("name");
+    nameElement.innerHtml = ExerciseInterface.getExerciseName();
 
-    output = document.getElementById(outputId);
+    let input = ExerciseInterface.getExerciseQuestion();
+
+    output = document.getElementById("question");
     output.innerHTML = '';
 
     //

@@ -4,10 +4,14 @@
         <script src="convertOnLoad.js"></script>
         <link rel="stylesheet" href="exercise.css">
     </head>
-    <body onload="convertOnLoad('question')" >
+    <body onload="onLoad()" >
+        <p>Feladat neve:</p>
+        <p id="name"></p>
+
         <p>Kérdés:</p>
         <div id="question" class="output"></div>
 
-        </div>
+        <p>Válasz:</p>
+        <input type="button" value="Ellenőrzés">
     </body>
 </html>
