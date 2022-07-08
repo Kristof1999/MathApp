@@ -1,19 +1,12 @@
 function onLoad() {
     let nameElement = document.getElementById("name");
-    nameElement.innerHtml = ExerciseInterface.getExerciseName();
+    nameElement.innerHTML = ExerciseInterface.getExerciseName();
 
     let input = ExerciseInterface.getExerciseQuestion();
 
     output = document.getElementById("question");
     output.innerHTML = '';
 
-    //
-    //  Reset the tex labels (and automatic equation numbers, though there aren't any here).
-    //  Get the conversion options (metrics and display settings)
-    //  Convert the input to CommonHTML output and use a promise to wait for it to be ready
-    //    (in case an extension needs to be loaded dynamically).
-    //
-    MathJax.texReset();
     MathJax.tex2chtmlPromise(input).then(function (node) {
         //
         //  The promise returns the typeset node, which we add to the output
@@ -21,6 +14,7 @@ function onLoad() {
         //    content of the new equation.
         //
         output.appendChild(node);
+        // try to split output by \n and so call addChild multiple times?
         MathJax.startup.document.clear();
         MathJax.startup.document.updateDocument();
     }).catch(function (err) {
@@ -29,7 +23,7 @@ function onLoad() {
 }
 
 function addStep() {
-
+    // it should be a textarea with class="output"
 }
 
 function selectStep(value) {
