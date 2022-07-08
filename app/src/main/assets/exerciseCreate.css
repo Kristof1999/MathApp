@@ -1,24 +1,15 @@
-body {
-    max-width: 40em;
-    margin: auto;
-}
-div.textarea {
-    width: 80%;
-    margin: auto;
-}
+body {max-width: 40em; margin: auto;}
+div.textarea {width: 80%; margin: auto;}
+#name, button {margin: 4px;}
 textarea {
     border: 1px solid grey;
     width: 100%;
+    max-width: 100%;
 }
 div.output {
     border: 1px solid grey;
     width: 80%;
+    max-width: 80%;
     min-height: 2em;
     margin: auto;
-}
-#name {
-    margin: 4px;
-}
-button {
-    margin: 4px;
 }
