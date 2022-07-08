@@ -9,3 +9,11 @@ div.output {
     padding: .25em;
     min-height: 2em;
 }
+#steps {
+    list-style-type: none;
+}
+li {
+    border: 1px solid grey;
+    min-height: 2em;
+    width: 80%;
+}

@@ -27,3 +27,7 @@ function onLoad() {
         ExerciseInterface.showToast(err.message);
     });
 }
+
+function addStep() {
+
+}
