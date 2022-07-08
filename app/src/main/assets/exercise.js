@@ -23,7 +23,7 @@ function onLoad() {
 }
 
 function addStep() {
-    // it should be a textarea with class="output"
+    // it should be a div with class="output"
 }
 
 function selectStep(value) {
