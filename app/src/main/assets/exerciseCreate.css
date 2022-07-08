@@ -10,6 +10,7 @@ div.output {
     border: 1px solid grey;
     width: 80%;
     max-width: 80%;
-    min-height: 2em;
+    height: 50px;
+    overflow: auto;
     margin: auto;
 }

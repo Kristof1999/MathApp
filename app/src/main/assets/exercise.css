@@ -4,7 +4,8 @@ div.output {
     width: 80%;
     margin-top: .75em;
     border: 1px solid grey;
-    min-height: 2em;
+    height: 50px;
+    overflow: auto;
     margin: auto;
 }
 #stepSelect {
