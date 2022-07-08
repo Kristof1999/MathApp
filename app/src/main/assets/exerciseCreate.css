@@ -1,10 +1,16 @@
-body {max-width: 40em; margin: auto;}
 div.textarea {width: 80%; margin: auto;}
 #name, button {margin: 4px;}
+body {
+    max-width: 40em;
+    margin: auto;
+    padding-left: 5px;
+}
 textarea {
     border: 1px solid grey;
+    border-radius: 4px;
     width: 100%;
     max-width: 100%;
+    padding: 5px;
 }
 div.output {
     border: 1px solid grey;
@@ -12,5 +18,6 @@ div.output {
     max-width: 80%;
     height: 50px;
     overflow: auto;
+    padding: 5px;
     margin: auto;
 }
