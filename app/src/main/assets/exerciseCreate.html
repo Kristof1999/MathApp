@@ -3,27 +3,32 @@
         <script id="MathJax-script" async src="tex-chtml.js"></script>
         <script src="exerciseCreate.js"></script>
         <link rel="stylesheet" href="exerciseCreate.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <p>Feladat neve:</p>
         <input type="text" id="name"><br>
 
         <p>Feladat kérdése:</p>
-        <textarea id="questionInput" rows="15" cols="10"></textarea>
-        <input id="renderQuestion"
-               type="button"
-               value="Kérdés renderelése"
+        <div class="textarea">
+            <textarea id="questionInput" rows="5" cols="5"></textarea>
+        </div>
+        <button id="renderQuestion"
                onclick="convert('questionInput', 'renderQuestion', 'questionOutput')">
+            Renderelés
+        </button>
         <br>
         <div id="questionOutput" class="output"></div>
         <br>
 
         <p>Feladat válasza:</p>
-        <textarea id="answerInput" rows="15" cols="10"></textarea>
-        <input id="renderAnswer"
-               type="button"
-               value="Válasz renderelése"
+        <div class="textarea">
+            <textarea id="answerInput" rows="5" cols="5"></textarea>
+        </div>
+        <button id="renderAnswer"
                onclick="convert('answerInput', 'renderAnswer', 'answerOutput')">
+            Renderelés
+        </button>
         <br>
         <div id="answerOutput" class="output"></div>
         <br>

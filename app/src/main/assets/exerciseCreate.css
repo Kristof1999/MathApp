@@ -2,13 +2,23 @@ body {
     max-width: 40em;
     margin: auto;
 }
+div.textarea {
+    width: 80%;
+    margin: auto;
+}
 textarea {
     border: 1px solid grey;
-    width: 80%;
+    width: 100%;
 }
 div.output {
     border: 1px solid grey;
     width: 80%;
-    min-height: 20px;
-    margin-top: 4px;
+    min-height: 2em;
+    margin: auto;
+}
+#name {
+    margin: 4px;
+}
+button {
+    margin: 4px;
 }
