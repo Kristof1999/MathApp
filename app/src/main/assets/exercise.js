@@ -31,3 +31,9 @@ function onLoad() {
 function addStep() {
 
 }
+
+function selectStep(value) {
+    // show dialog if needed
+    // transform input/prev step, and add step
+    ExerciseInterface.showToast(value);
+}

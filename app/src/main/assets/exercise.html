@@ -11,7 +11,19 @@
         <p>Kérdés:</p>
         <div id="question" class="output"></div>
 
-        <button onclick="">Lépés felvétel</button>
+        <form>
+            <label for="stepSelect">Lépés felvétel</label>
+            <select name="stepSelect" id="stepSelect" onchange="selectStep(this.value)">
+                <optgroup label="Integrálás">
+                    <option value="partFractDecomp">Parciális törtekre bontás</option>
+                    <option value="partInt">Parciális integrálás</option>
+                </optgroup>
+                <optgroup label="Egyenletek">
+                    <option value="leftOrder">Bal oldalra rendezés</option>
+                    <option value="addBothSide">Mindkét oldalhoz x hozzáadása</option>
+                </optgroup>
+            </select>
+        </form>
         <p>Lépések:</p>
         <ul id="steps">
 
