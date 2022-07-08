@@ -5,12 +5,10 @@ body {
 textarea {
     border: 1px solid grey;
     width: 80%;
-    margin: auto;
 }
 div.output {
     border: 1px solid grey;
     width: 80%;
     min-height: 20px;
-    margin: auto;
     margin-top: 4px;
 }
