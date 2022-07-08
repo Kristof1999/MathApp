@@ -52,7 +52,7 @@ class ExerciseFragment : Fragment() {
                 WebAppInterface(requireContext(), args.exercise),
                 "ExerciseInterface"
             )
-            loadUrl("https://appassets.androidplatform.net/assets/index.html")
+            loadUrl("https://appassets.androidplatform.net/assets/exercise.html")
         }
 
         return binding.root
