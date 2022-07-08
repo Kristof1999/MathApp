@@ -4,15 +4,13 @@ body {
 }
 textarea {
     border: 1px solid grey;
-    margin: 0 0 .25em;
-    width: 100%;
-    font-size: 120%;
-    box-sizing: border-box;
+    width: 80%;
+    margin: auto;
 }
 div.output {
-    font-size: 120%;
-    margin-top: .75em;
     border: 1px solid grey;
-    padding: .25em;
-    min-height: 2em;
+    width: 80%;
+    min-height: 20px;
+    margin: auto;
+    margin-top: 4px;
 }
