@@ -7,3 +7,7 @@ div.output {
     min-height: 2em;
     margin: auto;
 }
+#stepSelect {
+    position: sticky;
+    top: 0;
+}
