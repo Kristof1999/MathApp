@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/topicListFragment"
         android:name="hu.kristof.nagy.mathapp.view.topics.TopicListFragment"
-        android:label="TopicListFragment" >
+        android:label="Témák" >
         <action
             android:id="@+id/action_topicListFragment_to_exerciseListFragment"
             app:destination="@id/detailListFragment" />
@@ -15,7 +15,7 @@
     <fragment
         android:id="@+id/detailListFragment"
         android:name="hu.kristof.nagy.mathapp.view.topics.detail.DetailListFragment"
-        android:label="ExerciseListFragment" >
+        android:label="{parentTopicName}" >
         <action
             android:id="@+id/action_exerciseListFragment_self"
             app:destination="@id/detailListFragment" />
@@ -32,18 +32,21 @@
     <fragment
         android:id="@+id/exerciseFragment"
         android:name="hu.kristof.nagy.mathapp.view.exercise.ExerciseFragment"
-        android:label="ExerciseFragment" >
+        android:label="{title}" >
         <argument
             android:name="exercise"
             app:argType="hu.kristof.nagy.mathapp.data.entity.Exercise" />
         <action
             android:id="@+id/action_exerciseFragment_to_detailListFragment"
             app:destination="@id/detailListFragment" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/exerciseCreateFragment"
         android:name="hu.kristof.nagy.mathapp.view.topics.detail.ExerciseCreateFragment"
-        android:label="ExerciseCreateFragment" >
+        android:label="Feladat létrehozása" >
         <action
             android:id="@+id/action_exerciseCreateFragment_to_detailListFragment"
             app:destination="@id/detailListFragment" />

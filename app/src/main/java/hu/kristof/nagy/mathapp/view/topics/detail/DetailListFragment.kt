@@ -98,7 +98,7 @@ class DetailListFragment : Fragment() {
             deleteListener = { exercise -> listItemViewModel.delete(exercise) },
             detailNavListener = { exercise ->
                 val directions = DetailListFragmentDirections
-                    .actionDetailListFragmentToExerciseFragment(exercise)
+                    .actionDetailListFragmentToExerciseFragment(exercise, exercise.name)
                 findNavController().navigate(directions)
             }
         ), TopicClickListener(
