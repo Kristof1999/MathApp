@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
@@ -49,8 +49,8 @@ class ExerciseFragment : Fragment() {
             allowContentAccess = false
             javaScriptEnabled = true
         }
+        val navController = findNavController()
         binding.exerciseWebView.apply {
-            val navController = findNavController()
             addJavascriptInterface(
                 WebAppInterface(requireContext(), args.exercise, navController),
                 "ExerciseInterface"
