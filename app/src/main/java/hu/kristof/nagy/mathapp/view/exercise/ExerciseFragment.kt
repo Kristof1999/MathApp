@@ -78,9 +78,6 @@ class ExerciseFragment : Fragment() {
         fun getExerciseName(): String = exercise.name
 
         @JavascriptInterface
-        fun getExerciseAnswer(): String = exercise.answer
-
-        @JavascriptInterface
         fun checkAnswer(answer: String) {
             if (answer == exercise.answer) {
                 showToast("Jó válasz!")
