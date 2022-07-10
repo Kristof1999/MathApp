@@ -36,6 +36,9 @@
         <argument
             android:name="exercise"
             app:argType="hu.kristof.nagy.mathapp.data.entity.Exercise" />
+        <action
+            android:id="@+id/action_exerciseFragment_to_detailListFragment"
+            app:destination="@id/detailListFragment" />
     </fragment>
     <fragment
         android:id="@+id/exerciseCreateFragment"

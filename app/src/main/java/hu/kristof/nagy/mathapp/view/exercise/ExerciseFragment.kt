@@ -12,6 +12,8 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
@@ -48,8 +50,9 @@ class ExerciseFragment : Fragment() {
             javaScriptEnabled = true
         }
         binding.exerciseWebView.apply {
+            val navController = findNavController()
             addJavascriptInterface(
-                WebAppInterface(requireContext(), args.exercise),
+                WebAppInterface(requireContext(), args.exercise, navController),
                 "ExerciseInterface"
             )
             loadUrl("https://appassets.androidplatform.net/assets/exercise.html")
@@ -60,7 +63,8 @@ class ExerciseFragment : Fragment() {
 
     class WebAppInterface(
         private val context: Context,
-        val exercise: Exercise
+        private val exercise: Exercise,
+        private val navController: NavController
     ) {
         @JavascriptInterface
         fun showToast(str: String) {
@@ -75,5 +79,17 @@ class ExerciseFragment : Fragment() {
 
         @JavascriptInterface
         fun getExerciseAnswer(): String = exercise.answer
+
+        @JavascriptInterface
+        fun checkAnswer(answer: String) {
+            if (answer == exercise.answer) {
+                showToast("Jó válasz!")
+                val directions = ExerciseFragmentDirections
+                    .actionExerciseFragmentToDetailListFragment(exercise.parentTopicName)
+                navController.navigate(directions)
+            } else {
+                showToast("Rossz válasz!")
+            }
+        }
     }
 }
