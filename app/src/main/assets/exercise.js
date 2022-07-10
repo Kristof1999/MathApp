@@ -31,3 +31,8 @@ function selectStep(value) {
     // transform input/prev step, and add step
     ExerciseInterface.showToast(value);
 }
+
+function checkAnswer() {
+    let answer = document.findElementById("answer");
+    ExerciseInterface.checkAnswer(answer);
+}
