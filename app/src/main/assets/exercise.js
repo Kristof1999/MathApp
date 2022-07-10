@@ -1,7 +1,4 @@
 function onLoad() {
-    let nameElement = document.getElementById("name");
-    nameElement.innerHTML = ExerciseInterface.getExerciseName();
-
     let input = ExerciseInterface.getExerciseQuestion();
 
     output = document.getElementById("question");
