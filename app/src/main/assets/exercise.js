@@ -33,6 +33,6 @@ function selectStep(value) {
 }
 
 function checkAnswer() {
-    let answer = document.findElementById("answer");
+    let answer = document.getElementById("answer").value.trim();
     ExerciseInterface.checkAnswer(answer);
 }
