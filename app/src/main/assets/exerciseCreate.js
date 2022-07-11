@@ -28,31 +28,28 @@ function convert(inputId, buttonId, outputId) {
 
     let prevMathBlockStartIdx = 0;
     let prevMathBlockEndIdx = 0;
-    let mathBlockStartIdx = input.search("$");
-    let mathBlockEndIdx = mathBlockStartIdx + input.substr(mathBlockStartIdx).search("$");
-    while (mathBlockEndIdx < input.length) {
-        ExerciseCreateInterface.showToast(mathBlockEndIdx);
-
-        let prevNonMathBlock = input.substr(prevMathBlockEndIdx, mathBlockStartIdx);
-        let mathBlock = input.substr(mathBlockStartIdx, mathBlockEndIdx);
+    let mathBlockStartIdx = input.indexOf("$");
+    let mathBlockEndIdx = mathBlockStartIdx + input.substring(mathBlockStartIdx + 1).indexOf("$");
+    while (mathBlockEndIdx != prevMathBlockEndIdx) {
+        let prevNonMathBlock = input.substring(prevMathBlockEndIdx, mathBlockStartIdx + 1);
+        let mathBlock = input.substring(mathBlockStartIdx, mathBlockEndIdx + 1);
 
         MathJax.tex2chtmlPromise(mathBlock).then(function (node) {
             output.innerHTML += prevNonMathBlock;
-            output.appendChild(node);
+            output.innerHTML += node.innerHTML;
             MathJax.startup.document.clear();
             MathJax.startup.document.updateDocument();
         }).catch(function (err) {
             ExerciseCreateInterface.showToast(err.message);
-        }).then(function () {
-            button.disabled = false;
         });
 
-        let tempStart = mathBlockStartIdx;
-        let tempEnd = mathBlockEndIdx;
-        mathBlockStartIdx = mathBlockEndIdx + input.substr(mathBlockEndIdx).search("$");
-        mathBlockEdnIdx = mathBlockStartIdx + input.substr(mathBlockStartIdx).search("$");
-        prevMathBlockStartIdx = tempStart;
-        prevMathBlockEndIdx = tempEnd;
+        prevMathBlockStartIdx = mathBlockStartIdx;
+        prevMathBlockEndIdx = mathBlockEndIdx;
+        mathBlockStartIdx = prevMathBlockEndIdx + input.substring(prevMathBlockEndIdx + 1).search("$");
+        mathBlockEndIdx = mathBlockStartIdx + input.substring(mathBlockStartIdx + 1).search("$");
     }
-    let prevNonMathBlock = input.substr(prevMathBlockEndIdx, mathBlockStartIdx);
+    let lastNonMathBlock = input.substring(prevMathBlockEndIdx + 1);
+    output.innerHTML += lastNonMathBlock;
+
+    button.disabled = false;
 }
