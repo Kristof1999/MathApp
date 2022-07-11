@@ -39,30 +39,30 @@ function addStep(input) {
 
 function selectStep(stepType) {
     // show dialog if needed -> prompt("please enter...","defaultText"); -> can be null or empty string
-    // transform input/prev step, and add step
     let steps = document.getElementById("steps");
-    var prev = steps.lastChild;
-    if (prev == null) {
-        prev = ExerciseInterface.getExerciseQuestion();
+    var prev;
+    if (steps.childNodes.length > 1) {
+        prev = steps.lastChild.value;
     } else {
-        prev = prev.value;
+        prev = ExerciseInterface.getExerciseQuestion();
     }
+
     var stepInput = "";
     switch(stepType) {
         case "leftOrder":
             let sides = prev.split("=");
-            stepInput = sides[0] + "-(" + sides[1] + ")";
+            stepInput = sides[0] + "-(" + sides[1] + ")=0";
     }
+    stepInput = simplifyIdentities(stepInput);
     addStep(stepInput);
     // also call ExerciseInterface?
 }
 
-function getAsNegative(value) {
-    if (value == "0") {
-        return value;
-    } else {
-        return "-(" + value + ")";
-    }
+function simplifyIdentities(value) {
+    value = value.replace(/[+-]\(?0\)?/g, "");
+    value = value.replace(/\*\(?1\)?/g, "");
+    // replace \frac{...}{1} with ...
+    return value
 }
 
 function checkAnswer() {
