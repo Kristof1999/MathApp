@@ -26,18 +26,33 @@ function convert(inputId, buttonId, outputId) {
     output = document.getElementById(outputId);
     output.innerHTML = '';
 
-    MathJax.tex2chtmlPromise(input).then(function (node) {
-        //
-        //  The promise returns the typeset node, which we add to the output
-        //  Then update the document to include the adjusted CSS for the
-        //    content of the new equation.
-        //
-        output.appendChild(node);
-        MathJax.startup.document.clear();
-        MathJax.startup.document.updateDocument();
-    }).catch(function (err) {
-        ExerciseCreateInterface.showToast(err.message);
-    }).then(function () {
-        button.disabled = false;
-    });
+    let prevMathBlockStartIdx = 0;
+    let prevMathBlockEndIdx = 0;
+    let mathBlockStartIdx = input.search("$");
+    let mathBlockEndIdx = mathBlockStartIdx + input.substr(mathBlockStartIdx).search("$");
+    while (mathBlockEndIdx < input.length) {
+        ExerciseCreateInterface.showToast(mathBlockEndIdx);
+
+        let prevNonMathBlock = input.substr(prevMathBlockEndIdx, mathBlockStartIdx);
+        let mathBlock = input.substr(mathBlockStartIdx, mathBlockEndIdx);
+
+        MathJax.tex2chtmlPromise(mathBlock).then(function (node) {
+            output.innerHTML += prevNonMathBlock;
+            output.appendChild(node);
+            MathJax.startup.document.clear();
+            MathJax.startup.document.updateDocument();
+        }).catch(function (err) {
+            ExerciseCreateInterface.showToast(err.message);
+        }).then(function () {
+            button.disabled = false;
+        });
+
+        let tempStart = mathBlockStartIdx;
+        let tempEnd = mathBlockEndIdx;
+        mathBlockStartIdx = mathBlockEndIdx + input.substr(mathBlockEndIdx).search("$");
+        mathBlockEdnIdx = mathBlockStartIdx + input.substr(mathBlockStartIdx).search("$");
+        prevMathBlockStartIdx = tempStart;
+        prevMathBlockEndIdx = tempEnd;
+    }
+    let prevNonMathBlock = input.substr(prevMathBlockEndIdx, mathBlockStartIdx);
 }
