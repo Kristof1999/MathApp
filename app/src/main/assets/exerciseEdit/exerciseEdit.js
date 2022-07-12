@@ -54,3 +54,18 @@ async function convert(inputId, buttonId, outputId) {
 
     button.disabled = false;
 }
+
+function loadName() {
+    let nameElement = document.getElementById("name");
+    nameElement.value = ExerciseEditInterface.getExerciseName();
+}
+
+function loadQuestion() {
+    let questionElement = document.getElementById("questionInput");
+    questionElement.innerHTML = ExerciseEditInterface.getExerciseQuestion();
+}
+
+function loadAnswer() {
+    let answerElement = document.getElementById("answerInput");
+    answerElement.innerHTML = ExerciseEditInterface.getExerciseAnswer();
+}
