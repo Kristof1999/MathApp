@@ -5,15 +5,13 @@
         <link rel="stylesheet" href="exerciseEdit.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
+    <body onload="loadName(); loadQuestion(); loadAnswer();">
         <p>Feladat neve:</p>
-        <input type="text" id="name" onload="() => {innerHTML = ExerciseEditInterface.getExerciseName();}"><br>
+        <input type="text" id="name"><br>
 
         <p>Feladat kérdése:</p>
         <div class="textarea">
-            <textarea id="questionInput" rows="5" cols="5"
-                      onload="() => {this.innerHTML = ExerciseEditInterface.getExerciseQuestion();}">
-            </textarea>
+            <textarea id="questionInput" rows="5" cols="5"></textarea>
         </div>
         <button id="renderQuestion"
                 onclick="convert('questionInput', this.id, 'questionOutput')">
@@ -25,9 +23,7 @@
 
         <p>Feladat válasza:</p>
         <div class="textarea">
-            <textarea id="answerInput" rows="5" cols="5"
-                      onload="innerHTML = ExerciseEditInterface.getExerciseAnswer();">
-            </textarea>
+            <textarea id="answerInput" rows="5" cols="5"></textarea>
         </div>
         <button id="renderAnswer"
                 onclick="convert('answerInput', this.id, 'answerOutput')">
