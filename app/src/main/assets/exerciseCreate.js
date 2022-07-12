@@ -38,7 +38,7 @@ async function convert(inputId, buttonId, outputId) {
         let prevNonMathBlock = input.substring(prevMathBlockEndIdx + 1, mathBlockStartIdx);
         let mathBlock = input.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
 
-        let node = await convertHelper(input, prevNonMathBlock, mathBlock, output);
+        let node = await convertHelper(mathBlock);
         output.innerHTML += prevNonMathBlock;
         output.innerHTML += node.innerHTML;
         MathJax.startup.document.clear();
