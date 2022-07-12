@@ -12,12 +12,6 @@ import javax.inject.Inject
 class ExerciseListItemViewModel @Inject constructor(
     private val db: MathAppDatabase
 ) : ViewModel() {
-    fun edit(exercise: Exercise) {
-        viewModelScope.launch {
-            db.exerciseDao().edit(exercise)
-        }
-    }
-
     fun delete(exercise: Exercise) {
         viewModelScope.launch {
             db.exerciseDao().delete(exercise)
