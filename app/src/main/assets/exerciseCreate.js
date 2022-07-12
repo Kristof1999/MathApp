@@ -17,7 +17,11 @@ function createExercise() {
     ExerciseCreateInterface.createExercise(name, question, answer);
 }
 
-function convert(inputId, buttonId, outputId) {
+async function convertHelper(input, prevNonMathBlock, mathBlock, output) {
+    return MathJax.tex2chtmlPromise(mathBlock);
+}
+
+async function convert(inputId, buttonId, outputId) {
     var input = document.getElementById(inputId).value.trim();
 
     var button = document.getElementById(buttonId);
@@ -35,16 +39,11 @@ function convert(inputId, buttonId, outputId) {
         let mathBlock = input.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
         ExerciseCreateInterface.showToast(mathBlock);
 
-        // TODO: switch to recursive functions
-        // because typesetting takes time, and some can be faster than others
-        MathJax.tex2chtmlPromise(mathBlock).then(function (node) {
-            output.innerHTML += prevNonMathBlock;
-            output.innerHTML += node.innerHTML;
-            MathJax.startup.document.clear();
-            MathJax.startup.document.updateDocument();
-        }).catch(function (err) {
-            ExerciseCreateInterface.showToast(err.message);
-        });
+        let node = await convertHelper(input, prevNonMathBlock, mathBlock, output);
+        output.innerHTML += prevNonMathBlock;
+        output.innerHTML += node.innerHTML;
+        MathJax.startup.document.clear();
+        MathJax.startup.document.updateDocument();
 
         prevMathBlockStartIdx = mathBlockStartIdx;
         prevMathBlockEndIdx = mathBlockEndIdx;
