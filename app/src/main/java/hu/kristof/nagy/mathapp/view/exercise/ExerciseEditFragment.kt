@@ -48,13 +48,14 @@ class ExerciseEditFragment : Fragment() {
             javaScriptEnabled = true
         }
 
+        val args: ExerciseEditFragmentArgs by navArgs()
         val navController = findNavController()
         binding.exerciseEditWebView.apply {
             addJavascriptInterface(
                 ExerciseCreateFragment.WebAppInterface(
                     requireContext(),
                     navController,
-                ), "ExerciseCreateInterface")
+                ), "ExerciseEditInterface")
             loadUrl("https://appassets.androidplatform.net/assets/exerciseEdit/exerciseEdit.html")
         }
 
