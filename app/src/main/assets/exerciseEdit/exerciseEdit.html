@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <script id="MathJax-script" async src="../tex-chtml.js"></script>
+        <script src="exerciseCreate.js"></script>
+        <link rel="stylesheet" href="exerciseCreate.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p>Feladat neve:</p>
+        <input type="text" id="name"><br>
+
+        <p>Feladat kérdése:</p>
+        <div class="textarea">
+            <textarea id="questionInput" rows="5" cols="5"></textarea>
+        </div>
+        <button id="renderQuestion"
+                onclick="convert('questionInput', this.id, 'questionOutput')">
+            Renderelés
+        </button>
+        <br>
+        <div id="questionOutput" class="output"></div>
+        <br>
+
+        <p>Feladat válasza:</p>
+        <div class="textarea">
+            <textarea id="answerInput" rows="5" cols="5"></textarea>
+        </div>
+        <button id="renderAnswer"
+                onclick="convert('answerInput', this.id, 'answerOutput')">
+            Renderelés
+        </button>
+        <br>
+        <div id="answerOutput" class="output"></div>
+        <br>
+
+        <button onclick="saveEdit()">Szerkesztés mentése</button>
+    </body>
+</html>
