@@ -55,7 +55,7 @@ class ExerciseFragment : Fragment() {
                 WebAppInterface(requireContext(), args.exercise, navController),
                 "ExerciseInterface"
             )
-            loadUrl("https://appassets.androidplatform.net/assets/exercise.html")
+            loadUrl("https://appassets.androidplatform.net/assets/exercise/exercise.html")
         }
 
         return binding.root

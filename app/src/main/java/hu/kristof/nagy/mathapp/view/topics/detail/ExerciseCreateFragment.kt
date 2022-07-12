@@ -59,7 +59,7 @@ class ExerciseCreateFragment : Fragment() {
                 exerciseCreateViewModel,
                 args.parentTopicName
             ), "ExerciseCreateInterface")
-            loadUrl("https://appassets.androidplatform.net/assets/exerciseCreate.html")
+            loadUrl("https://appassets.androidplatform.net/assets/exerciseCreate/exerciseCreate.html")
         }
 
         return binding.root
