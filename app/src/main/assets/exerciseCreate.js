@@ -17,7 +17,7 @@ function createExercise() {
     ExerciseCreateInterface.createExercise(name, question, answer);
 }
 
-async function convertHelper(input, prevNonMathBlock, mathBlock, output) {
+async function convertHelper(mathBlock) {
     return MathJax.tex2chtmlPromise(mathBlock);
 }
 
@@ -37,7 +37,6 @@ async function convert(inputId, buttonId, outputId) {
     while (mathBlockEndIdx != -1) {
         let prevNonMathBlock = input.substring(prevMathBlockEndIdx + 1, mathBlockStartIdx);
         let mathBlock = input.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
-        ExerciseCreateInterface.showToast(mathBlock);
 
         let node = await convertHelper(input, prevNonMathBlock, mathBlock, output);
         output.innerHTML += prevNonMathBlock;
