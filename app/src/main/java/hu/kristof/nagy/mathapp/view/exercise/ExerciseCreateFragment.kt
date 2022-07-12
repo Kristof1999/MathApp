@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.topics.detail
+package hu.kristof.nagy.mathapp.view.exercise
 
 import android.content.Context
 import android.os.Bundle
@@ -53,7 +53,8 @@ class ExerciseCreateFragment : Fragment() {
         val args: ExerciseCreateFragmentArgs by navArgs()
         val navController = findNavController()
         binding.exerciseCreateWebView.apply {
-            addJavascriptInterface(WebAppInterface(
+            addJavascriptInterface(
+                WebAppInterface(
                 requireContext(),
                 navController,
                 exerciseCreateViewModel,

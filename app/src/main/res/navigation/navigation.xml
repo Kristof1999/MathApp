@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/exerciseCreateFragment"
-        android:name="hu.kristof.nagy.mathapp.view.topics.detail.ExerciseCreateFragment"
+        android:name="hu.kristof.nagy.mathapp.view.exercise.ExerciseCreateFragment"
         android:label="Feladat létrehozása" >
         <action
             android:id="@+id/action_exerciseCreateFragment_to_detailListFragment"
