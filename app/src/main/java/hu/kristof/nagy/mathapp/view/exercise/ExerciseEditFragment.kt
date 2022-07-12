@@ -18,9 +18,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
+import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.databinding.FragmentExerciseEditBinding
 
+@AndroidEntryPoint
 class ExerciseEditFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,13 +50,16 @@ class ExerciseEditFragment : Fragment() {
             javaScriptEnabled = true
         }
 
+        val viewModel: ExerciseEditViewModel by viewModels()
         val args: ExerciseEditFragmentArgs by navArgs()
         val navController = findNavController()
         binding.exerciseEditWebView.apply {
             addJavascriptInterface(
-                ExerciseCreateFragment.WebAppInterface(
+                WebAppInterface(
                     requireContext(),
                     navController,
+                    viewModel,
+                    args.exercise
                 ), "ExerciseEditInterface")
             loadUrl("https://appassets.androidplatform.net/assets/exerciseEdit/exerciseEdit.html")
         }
@@ -65,11 +70,15 @@ class ExerciseEditFragment : Fragment() {
     class WebAppInterface(
         private val context: Context,
         private val navController: NavController,
+        private val viewModel: ExerciseEditViewModel,
         private val exercise: Exercise
     ) {
         @JavascriptInterface
         fun saveEdit(name: String, question: String, answer: String) {
-
+            viewModel.edit(exercise, name, question, answer)
+            val directions = ExerciseEditFragmentDirections
+                .actionExerciseEditFragmentToDetailListFragment(exercise.parentTopicName)
+            navController.navigate(directions)
         }
 
         @JavascriptInterface
