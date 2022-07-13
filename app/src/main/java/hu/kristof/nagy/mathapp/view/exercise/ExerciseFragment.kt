@@ -98,11 +98,15 @@ class ExerciseFragment : Fragment() {
             when (stepType) {
                 "leftOrder" -> {
                     val sides = prevStep.split("=")
-                    transformedStep = sides[0] + "-(" + sides[1] + ")"
+                    transformedStep = sides[0] + "-(" + sides[1] + ")=0"
                 }
             }
 
-            exerciseWebView.evaluateJavascript("addStep(transformedStep)", null)
+            exerciseWebView.post {
+                exerciseWebView.evaluateJavascript(
+                    "addStep('$transformedStep')", null
+                )
+            }
         }
     }
 }
