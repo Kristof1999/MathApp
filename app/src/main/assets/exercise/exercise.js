@@ -51,28 +51,19 @@ function addStep(input) {
 
 function selectStep(stepType) {
     let steps = document.getElementById("steps");
-    var prev;
+    var prevStep;
     if (steps.childNodes.length > 1) {
-        prev = steps.lastChild.value;
+        prevStep = steps.lastChild.value;
     } else {
-        prev = ExerciseInterface.getExerciseQuestion();
-        if (prev.search(/$/g).length / 2 != 1) {
+        prevStep = ExerciseInterface.getExerciseQuestion();
+        if (prevStep.search(/$/g).length / 2 != 1) {
             //ask user which math block should we use?
         }
-        let mathBlockStartIdx = prev.indexOf("$");
-        let mathBlockEndIdx = prev.indexOf("$", mathBlockStartIdx + 1);
-        prev = prev.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
+        let mathBlockStartIdx = prevStep.indexOf("$");
+        let mathBlockEndIdx = prevStep.indexOf("$", mathBlockStartIdx + 1);
+        prevStep = prevStep.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
     }
-
-    var stepInput = "";
-    switch(stepType) {
-        case "leftOrder":
-            let sides = prev.split("=");
-            stepInput = sides[0] + "-(" + sides[1] + ")=0";
-    }
-    stepInput = simplifyIdentities(stepInput);
-    addStep(stepInput);
-    // also call ExerciseInterface?
+    ExerciseInterface.selectStep(stepType, prevStep);
 }
 
 function simplifyIdentities(value) {

@@ -52,7 +52,12 @@ class ExerciseFragment : Fragment() {
         val navController = findNavController()
         binding.exerciseWebView.apply {
             addJavascriptInterface(
-                WebAppInterface(requireContext(), args.exercise, navController),
+                WebAppInterface(
+                    requireContext(),
+                    args.exercise,
+                    navController,
+                    binding.exerciseWebView
+                ),
                 "ExerciseInterface"
             )
             loadUrl("https://appassets.androidplatform.net/assets/exercise/exercise.html")
@@ -64,7 +69,8 @@ class ExerciseFragment : Fragment() {
     class WebAppInterface(
         private val context: Context,
         private val exercise: Exercise,
-        private val navController: NavController
+        private val navController: NavController,
+        private val exerciseWebView: WebView
     ) {
         @JavascriptInterface
         fun showToast(str: String) {
@@ -84,6 +90,19 @@ class ExerciseFragment : Fragment() {
             } else {
                 showToast("Rossz válasz!")
             }
+        }
+
+        @JavascriptInterface
+        fun selectStep(stepType: String, prevStep: String) {
+            var transformedStep = ""
+            when (stepType) {
+                "leftOrder" -> {
+                    val sides = prevStep.split("=")
+                    transformedStep = sides[0] + "-(" + sides[1] + ")"
+                }
+            }
+
+            exerciseWebView.evaluateJavascript("addStep(transformedStep)", null)
         }
     }
 }
