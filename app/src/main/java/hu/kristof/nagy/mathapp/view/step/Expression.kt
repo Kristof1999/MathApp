@@ -5,8 +5,8 @@ interface Expression {
 }
 
 data class Equation(
-    private val leftSide: Expression,
-    private val rightSide: Expression
+    val leftSide: Expression,
+    val rightSide: Expression
 ) : Expression {
     override fun toLatex(): String {
         return "${leftSide.toLatex()}=${rightSide.toLatex()}"

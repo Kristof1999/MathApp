@@ -3,8 +3,8 @@ package hu.kristof.nagy.mathapp.view.step
 interface Operator : Expression
 
 data class Addition(
-    private val left: Operand,
-    private val right: Operand
+    private val left: Expression,
+    private val right: Expression
 ) : Operator {
     override fun toLatex(): String {
         return "${left.toLatex()}+${right.toLatex()}"
@@ -12,8 +12,8 @@ data class Addition(
 }
 
 data class Subtraction(
-    private val left: Operand,
-    private val right: Operand
+    private val left: Expression,
+    private val right: Expression
 ) : Operator {
     override fun toLatex(): String {
         return "${left.toLatex()}-${right.toLatex()}"
@@ -21,8 +21,8 @@ data class Subtraction(
 }
 
 data class Multiplication(
-    private val left: Operand,
-    private val right: Operand
+    private val left: Expression,
+    private val right: Expression
 ) : Operator {
     override fun toLatex(): String {
         return "${left.toLatex()}${right.toLatex()}" // should we write * between left and right?
@@ -30,8 +30,8 @@ data class Multiplication(
 }
 
 data class Division(
-    private val numerator: Operand,
-    private val denominator: Operand
+    private val numerator: Expression,
+    private val denominator: Expression
 ) : Operator {
     override fun toLatex(): String {
         return "\\frac{${numerator.toLatex()}}{${denominator.toLatex()}}"
@@ -39,8 +39,8 @@ data class Division(
 }
 
 open class Exponentiation(
-    private val base: Operand,
-    private val exponent: Operand
+    private val base: Expression,
+    private val exponent: Expression
 ) : Operator {
     override fun toLatex(): String {
         return "${base.toLatex()}^{${exponent.toLatex()}}"
@@ -48,16 +48,16 @@ open class Exponentiation(
 }
 
 data class SquareRoot(
-    private val base: Operand
-) : Exponentiation(base, Value(0.5)) {
+    private val base: Expression
+) : Operator {
     override fun toLatex(): String {
         return "\\sqrt{${base.toLatex()}}"
     }
 }
 
 data class NthRoot(
-    private val base: Operand,
-    private val root: Operand
+    private val base: Expression,
+    private val root: Expression
 ) : Operator {
     override fun toLatex(): String {
         return "\\sqrt[${root.toLatex()}]{${base.toLatex()}}"
@@ -65,8 +65,8 @@ data class NthRoot(
 }
 
 data class Logarithm(
-    private val base: Operand,
-    private val argument: Operand
+    private val base: Expression,
+    private val argument: Expression
 ) : Operator {
     override fun toLatex(): String {
         return "\\log_{${base.toLatex()}} ${argument.toLatex()}"

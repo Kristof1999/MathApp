@@ -1,8 +1,6 @@
 package hu.kristof.nagy.mathapp.view.step
 
-interface Operand {
-    fun toLatex(): String
-}
+interface Operand : Expression
 
 open class Value(private val x: Number) : Operand {
     override fun toLatex(): String {
