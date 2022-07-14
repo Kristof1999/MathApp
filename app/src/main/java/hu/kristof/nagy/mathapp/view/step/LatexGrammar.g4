@@ -50,13 +50,13 @@ fragment VARIABLE: STRING
 
 OPERAND: VALUE+ | VARIABLE+ ;
 
-LEFT_PARENTHESIS: '\\left(' ;
-RIGHT_PARENTHESIS: '\\right)' ;
-LEFT_SQUARE_PARENTHESIS: '\\left[' ;
-RIGHT_SQUARE_PARENTHESIS: '\\right]' ;
-LEFT_BLOCK_PARENTHESIS: '\\left{' ;
-RIGHT_BLOCK_PARENTHESIS: '\\right}' ;
-LEFT_STRAIGHT_PARENTHESIS: '\\left|' ;
-RIGHT_STRAIGHT_PARENTHESIS: '\\right|' ;
+LEFT_PARENTHESIS: '\\left(' | '(' ;
+RIGHT_PARENTHESIS: '\\right)' | ')' ;
+LEFT_SQUARE_PARENTHESIS: '\\left[' | '[' ;
+RIGHT_SQUARE_PARENTHESIS: '\\right]' | ']' ;
+LEFT_BLOCK_PARENTHESIS: '\\left{' | '{' ;
+RIGHT_BLOCK_PARENTHESIS: '\\right}' | '}' ;
+LEFT_STRAIGHT_PARENTHESIS: '\\left|' | '|' ;
+RIGHT_STRAIGHT_PARENTHESIS: '\\right|';
 
 WHITESPACE : ' ' -> skip ;
