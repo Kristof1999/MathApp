@@ -8,23 +8,20 @@ expression
     | LEFT_STRAIGHT_PARENTHESIS expression RIGHT_STRAIGHT_PARENTHESIS # StraightParentheses
     | '\\Vert{' expression '}' # DoubleStraightParentheses
     | '\\operatorname{' STRING '}' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # CustomFunction
-    | '\\sin' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # Sin
-    | '\\cos' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # Cos
+    | ('\\sin' | '\\cos') LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # SinCos
     | '\\lim_{' VARIABLE '\\to' VALUE '}' WHITESPACE expression # Limit
-    | '\\sum_{' expression '}^{' expression '}' WHITESPACE expression # Sum
-    | '\\prod_{' expression '}^{' expression '}' WHITESPACE expression # Product
-    | '\\int' expression # IndefiniteIntegral
-    | '\\int_{' expression '}^{' expression '}' # DefiniteIntegral
-    | '\\iint' expression # DoubleIndefiniteIntegral
-    | '\\iint_{' expression '}^{' expression '}' # DoubleDefiniteIntegral
-    | expression '^' expression # Exponentiation
+    | ('\\sum_{' | '\\prod_{') expression '}^{' expression '}' WHITESPACE expression # SumProduct
+    | '\\int' WHITESPACE expression # IndefiniteIntegral
+    | '\\int_{' expression '}^{' expression '}' WHITESPACE expression # DefiniteIntegral
+    | '\\iint' expression WHITESPACE expression # DoubleIndefiniteIntegral
+    | '\\iint_{' expression '}^{' expression '}' WHITESPACE expression # DoubleDefiniteIntegral
+    | <assoc=right> expression '^' expression # Exponentiation
     | '\\log_{' expression '}' WHITESPACE expression # Logarithm
     | '\\sqrt{' expression '}' # SquareRoot
     | '\\sqrt[' expression ']{' expression '}' # NthRoot
     | expression '*' expression # Multiplication
     | '\\frac{' expression '}{' expression '}' # Division
-    | expression '+' expression # Addition
-    | expression '-' expression # Subtraction
+    | expression ('+' | '-') expression # AdditionSubtraction
     | OPERAND+                  # Operand
     ;
 
