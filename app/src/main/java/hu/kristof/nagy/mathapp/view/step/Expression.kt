@@ -47,7 +47,7 @@ data class Limit(
 data class Sum(
     private val lowerLimit: Expression,
     private val upperLimit: Expression,
-    private val variable: Variable
+    private val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
         return "\\sum_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"
@@ -57,7 +57,7 @@ data class Sum(
 data class Product(
     private val lowerLimit: Expression,
     private val upperLimit: Expression,
-    private val variable: Variable
+    private val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
         return "\\prod_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"
@@ -65,7 +65,7 @@ data class Product(
 }
 
 data class IndefiniteIntegral(
-    private val variable: Variable
+    private val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
         return "\\int ${variable.toLatex()}"
@@ -75,7 +75,7 @@ data class IndefiniteIntegral(
 data class DefiniteIntegral(
     private val lowerLimit: Expression,
     private val upperLimit: Expression,
-    private val variable: Variable
+    private val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
         return "\\int_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"
