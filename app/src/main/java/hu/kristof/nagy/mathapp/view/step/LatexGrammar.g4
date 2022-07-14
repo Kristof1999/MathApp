@@ -15,7 +15,7 @@ expression
     | '\\int_{' expression '}^{' expression '}' WHITESPACE expression # DefiniteIntegral
     | '\\iint' expression WHITESPACE expression # DoubleIndefiniteIntegral
     | '\\iint_{' expression '}^{' expression '}' WHITESPACE expression # DoubleDefiniteIntegral
-    | <assoc=right> expression '^' expression # Exponentiation
+    | <assoc=right> expression '^{' expression '}' # Exponentiation
     | '\\log_{' expression '}' WHITESPACE expression # Logarithm
     | '\\sqrt{' expression '}' # SquareRoot
     | '\\sqrt[' expression ']{' expression '}' # NthRoot
