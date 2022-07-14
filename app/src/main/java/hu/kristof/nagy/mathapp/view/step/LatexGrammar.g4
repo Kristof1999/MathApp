@@ -1,16 +1,12 @@
 // based on: https://tomassetti.me/antlr-mega-tutorial
 grammar LatexGrammar;
 expression
-    : OPERAND+                  # Operand
-    | expression '+' expression # Addition
-    | expression '*' expression # Multiplication
-    | expression '-' expression # Subtraction
-    | '\\frac{' expression '}{' expression '}' # Division
-    | expression '^' expression # Exponentiation
-    | '\\sqrt{' expression '}' # SquareRoot
-    | '\\sqrt[' expression ']{' expression '}' # NthRoot
-    | '\\log_{' expression '}' WHITESPACE expression # Logarithm
-    | expression '=' expression # Equation
+    : expression '=' expression # Equation
+    | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # Parentheses
+    | LEFT_SQUARE_PARENTHESIS expression RIGHT_SQUARE_PARENTHESIS # SquareParentheses
+    | LEFT_BLOCK_PARENTHESIS expression RIGHT_BLOCK_PARENTHESIS # BlockParentheses
+    | LEFT_STRAIGHT_PARENTHESIS expression RIGHT_STRAIGHT_PARENTHESIS # StraightParentheses
+    | '\\Vert{' expression '}' # DoubleStraightParentheses
     | '\\operatorname{' STRING '}' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # CustomFunction
     | '\\sin' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # Sin
     | '\\cos' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # Cos
@@ -21,11 +17,15 @@ expression
     | '\\int_{' expression '}^{' expression '}' # DefiniteIntegral
     | '\\iint' expression # DoubleIndefiniteIntegral
     | '\\iint_{' expression '}^{' expression '}' # DoubleDefiniteIntegral
-    | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS # Parentheses
-    | LEFT_SQUARE_PARENTHESIS expression RIGHT_SQUARE_PARENTHESIS # SquareParentheses
-    | LEFT_BLOCK_PARENTHESIS expression RIGHT_BLOCK_PARENTHESIS # BlockParentheses
-    | LEFT_STRAIGHT_PARENTHESIS expression RIGHT_STRAIGHT_PARENTHESIS # StraightParentheses
-    | '\\Vert{' expression '}' # DoubleStraightParentheses
+    | expression '^' expression # Exponentiation
+    | '\\log_{' expression '}' WHITESPACE expression # Logarithm
+    | '\\sqrt{' expression '}' # SquareRoot
+    | '\\sqrt[' expression ']{' expression '}' # NthRoot
+    | expression '*' expression # Multiplication
+    | '\\frac{' expression '}{' expression '}' # Division
+    | expression '+' expression # Addition
+    | expression '-' expression # Subtraction
+    | OPERAND+                  # Operand
     ;
 
 fragment DIGIT: [0-9] ;
