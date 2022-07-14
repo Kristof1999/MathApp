@@ -25,7 +25,7 @@ data class Multiplication(
     private val right: Expression
 ) : Operator {
     override fun toLatex(): String {
-        return "${left.toLatex()}${right.toLatex()}" // should we write * between left and right?
+        return "${left.toLatex()}*${right.toLatex()}"
     }
 }
 
