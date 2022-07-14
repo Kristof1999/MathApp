@@ -13,6 +13,8 @@ class StepParser {
         val lexer = LatexGrammarLexer(inputStream)
         val commonTokenStream = CommonTokenStream(lexer)
         val parser = LatexGrammarParser(commonTokenStream)
-
+        val expressionContext = parser.expression()
+        val visitor = StepVisitor()
+        return visitor.visit(expressionContext)
     }
 }
