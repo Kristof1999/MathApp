@@ -38,7 +38,7 @@ data class Division(
     }
 }
 
-open class Exponentiation(
+data class Exponentiation(
     private val base: Expression,
     private val exponent: Expression
 ) : Operator {
