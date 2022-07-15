@@ -1,11 +1,19 @@
 package hu.kristof.nagy.mathapp.view.step
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
-    override fun visitAddition(ctx: LatexGrammarParser.AdditionContext?): Expression {
+    override fun visitAdditionSubtraction(ctx: LatexGrammarParser.AdditionSubtractionContext?): Expression {
         return ctx?.let { additionContext ->
             val left = visit(additionContext.expression(0))
             val right = visit(additionContext.expression(1))
-            return Addition(left, right)
+
+            if (additionContext.PLUS() != null) {
+                return Addition(left, right)
+            }
+            if (additionContext.MINUS() != null) {
+                return Subtraction(left, right)
+            }
+
+            throw IllegalArgumentException("Unknown addition/subtraction")
         } ?: throw IllegalStateException("Addition is null")
     }
 
