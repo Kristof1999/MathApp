@@ -6,9 +6,13 @@ import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 
 object StepParser {
+    /**
+     * Parses a latex string, and gives back an expression.
+     * Example:
+     *   Input: x + 2
+     *   Output: Addition(Variable(x), Value(2))
+     */
     fun parse(step: String): Expression {
-        // x+2 -> Addition(Variable("x"), Value(2))
-        // (x+2) * (y+1) -> Mutliplication(Addition(Variable("x"), Value(2)), Addition(Variable("y"), Value(1)))
         val inputStream = CharStreams.fromString(step)
         val lexer = LatexGrammarLexer(inputStream)
         val commonTokenStream = CommonTokenStream(lexer)
