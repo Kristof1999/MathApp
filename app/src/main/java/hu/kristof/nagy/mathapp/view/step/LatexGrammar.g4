@@ -22,7 +22,7 @@ expression
     | expression '*' expression                                                      # Multiplication
     | '\\frac{' expression '}{' expression '}'                                       # Division
     | expression ('+' | '-') expression                                              # AdditionSubtraction
-    | OPERAND+                                                                       # Operand
+    | OPERAND                                                                        # Operand
     ;
 
 fragment DIGIT        : [0-9] ;
