@@ -2,7 +2,7 @@ package hu.kristof.nagy.mathapp.view.step
 
 interface Operand : Expression
 
-open class Value(private val x: Number) : Operand {
+open class Value(val x: Number) : Operand {
     override fun toLatex(): String {
         return x.toString()
     }
@@ -26,7 +26,7 @@ class Pi : Value(3.14159) {
     }
 }
 
-open class Variable(private val name: String) : Operand {
+open class Variable(val name: String) : Operand {
     override fun toLatex(): String {
         return name
     }
