@@ -29,7 +29,7 @@ fragment DIGIT        : [0-9] ;
 fragment INFINITY     : '\\infty' ;
 fragment EULERS_NUMBER: 'e' ;
 fragment PI           : '\\pi' ;
-fragment VALUE: DIGIT+ ([.,] DIGIT+)?
+fragment VALUE: DIGIT+ ([.] DIGIT+)?
     | INFINITY | EULERS_NUMBER | PI
     ;
 

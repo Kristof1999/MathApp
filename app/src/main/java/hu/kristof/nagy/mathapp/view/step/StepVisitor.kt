@@ -10,7 +10,7 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
             if (leafText.matches(Regex("[0-9]+"))) {
                 return Value(leafText.toInt())
             }
-            if (leafText.matches(Regex("[0-9]+([.,][0-9]+)+"))) {
+            if (leafText.matches(Regex("[0-9]+([.][0-9]+)+"))) {
                 return Value(leafText.toDouble())
             }
             if (leafText.matches(Regex("[a-zA-Z]+]"))) {
