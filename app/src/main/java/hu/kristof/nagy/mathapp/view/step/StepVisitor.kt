@@ -6,20 +6,18 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
         return ctx?.let { operandContext ->
             val leafText = operandContext.OPERAND().text
 
-            // Double?
             if (leafText.matches(Regex("[0-9]+"))) {
                 return Value(leafText.toInt())
             }
             if (leafText.matches(Regex("[0-9]+([.][0-9]+)+"))) {
                 return Value(leafText.toDouble())
             }
-            if (leafText.matches(Regex("[a-zA-Z]+]"))) {
+            if (leafText.matches(Regex("[a-zA-Z]+"))) {
                 return Variable(leafText)
             }
 
             return when(leafText) {
                 "\\infty" -> Infinity()
-                "e" -> EulersNumber()
                 "\\pi" -> Pi()
 
                 "\\alpha" -> Alpha()
@@ -31,7 +29,7 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
                 "\\phi" -> Phi()
                 "\\varphi" -> VarPhi()
 
-                else -> throw IllegalArgumentException("Unkown operand: " + leafText)
+                else -> throw IllegalArgumentException("Unknown operand: $leafText")
             }
         } ?: throw IllegalStateException("Operand is null")
     }

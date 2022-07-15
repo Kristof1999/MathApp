@@ -14,12 +14,6 @@ class Infinity : Value(Int.MAX_VALUE) {
     }
 }
 
-class EulersNumber : Value(2.7183) {
-    override fun toLatex(): String {
-        return "e"
-    }
-}
-
 class Pi : Value(3.14159) {
     override fun toLatex(): String {
         return "\\pi"
