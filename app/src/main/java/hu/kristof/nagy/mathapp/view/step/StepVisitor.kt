@@ -1,18 +1,16 @@
 package hu.kristof.nagy.mathapp.view.step
 
-import android.util.Log
-
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
     // TODO: override visit methods to return the proper Step model classes
     override fun visitOperand(ctx: LatexGrammarParser.OperandContext?): Expression {
         return ctx?.let { operandContext ->
             val leafText = operandContext.OPERAND().text
-            Log.println(Log.INFO, "StepVisitor", leafText)
 
             // Double?
-            if (leafText.matches(Regex("[0-9]+([.,][0-9]+)?"))) {
-                return Value(leafText.toDouble())
+            if (leafText.matches(Regex("[0-9]+"))) {
+                return Value(leafText.toInt())
             }
+            if (leafText.matches(Regex("[0-9]+([.,][0-9]+)+")))
             if (leafText.matches(Regex("[a-zA-Z]+]"))) {
                 return Variable(leafText)
             }
