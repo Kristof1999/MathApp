@@ -48,7 +48,7 @@ fragment VARIABLE: STRING
     | PHI | VARPHI
     ;
 
-OPERAND: VALUE+ | VARIABLE+ ;
+OPERAND: VALUE | VARIABLE ;
 
 LEFT_PARENTHESIS          : '\\left('  | '(' ;
 RIGHT_PARENTHESIS         : '\\right)' | ')' ;
