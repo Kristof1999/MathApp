@@ -3,8 +3,8 @@ package hu.kristof.nagy.mathapp.view.step
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
     override fun visitAddition(ctx: LatexGrammarParser.AdditionContext?): Expression {
         return ctx?.let { additionContext ->
-            val left = visitChildren(additionContext.expression(0))
-            val right = visitChildren(additionContext.expression(1))
+            val left = visit(additionContext.expression(0))
+            val right = visit(additionContext.expression(1))
             return Addition(left, right)
         } ?: throw IllegalStateException("Addition is null")
     }
