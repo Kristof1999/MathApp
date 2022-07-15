@@ -21,7 +21,8 @@ expression
     | '\\sqrt[' expression ']{' expression '}'                                       # NthRoot
     | expression '*' expression                                                      # Multiplication
     | '\\frac{' expression '}{' expression '}'                                       # Division
-    | expression ('+' | '-') expression                                              # AdditionSubtraction
+    | expression '+' expression                                                      # Addition
+    | expression '-' expression                                                      # Subtraction
     | OPERAND                                                                        # Operand
     ;
 
