@@ -5,15 +5,15 @@ package hu.kristof.nagy.mathapp.view.step
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 
-object StepParser {
+object LatexParser {
     /**
      * Parses a latex string, and gives back an expression.
      * Example:
      *   Input: x + 2
      *   Output: Addition(Variable(x), Value(2))
      */
-    fun parse(step: String): Expression {
-        val inputStream = CharStreams.fromString(step)
+    fun parse(latex: String): Expression {
+        val inputStream = CharStreams.fromString(latex)
         val lexer = LatexGrammarLexer(inputStream)
         val commonTokenStream = CommonTokenStream(lexer)
         val parser = LatexGrammarParser(commonTokenStream)
