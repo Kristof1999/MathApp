@@ -21,8 +21,7 @@ expression
     | '\\sqrt[' expression ']{' expression '}'                                       # NthRoot
     | expression '*' expression                                                      # Multiplication
     | '\\frac{' expression '}{' expression '}'                                       # Division
-    | expression '+' expression                                                      # Addition
-    | expression '-' expression                                                      # Subtraction
+    | expression (PLUS | MINUS) expression                                           # AdditionSubtraction
     | OPERAND                                                                        # Operand
     ;
 
@@ -58,5 +57,8 @@ LEFT_BLOCK_PARENTHESIS    : '\\left{'  | '{' ;
 RIGHT_BLOCK_PARENTHESIS   : '\\right}' | '}' ;
 LEFT_STRAIGHT_PARENTHESIS : '\\left|'  | '|' ;
 RIGHT_STRAIGHT_PARENTHESIS: '\\right|'       ;
+
+PLUS : '+' ;
+MINUS: '-' ;
 
 WHITESPACE : ' ' -> skip ;
