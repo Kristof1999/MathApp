@@ -29,7 +29,7 @@ expression
 fragment DIGIT        : [0-9] ;
 fragment INFINITY     : '\\infty' ;
 fragment PI           : '\\pi' ;
-fragment VALUE: DIGIT+ ([.] DIGIT+)?
+fragment VALUE: DIGIT+ (.DIGIT+)?
     | INFINITY | PI
     ;
 
