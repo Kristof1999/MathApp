@@ -1,6 +1,90 @@
 package hu.kristof.nagy.mathapp.view.step
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
+    override fun visitDoubleDefiniteIntegral(ctx: LatexGrammarParser.DoubleDefiniteIntegralContext?): Expression {
+        return ctx?.let { doubleDefiniteIntegralContext ->
+            val lowerBound = visit(doubleDefiniteIntegralContext.expression(0))
+            val upperBound = visit(doubleDefiniteIntegralContext.expression(1))
+            val argument = visit(doubleDefiniteIntegralContext.expression(2))
+
+            return DefiniteIntegral(lowerBound, upperBound, argument)
+        } ?: throw IllegalStateException("DoubleDefiniteIntegral is null")
+    }
+
+    override fun visitDoubleIndefiniteIntegral(ctx: LatexGrammarParser.DoubleIndefiniteIntegralContext?): Expression {
+        return ctx?.let { doubleIndefiniteIntegralContext ->
+            val argument = visit(doubleIndefiniteIntegralContext.expression())
+            return DoubleIndefiniteIntegral(argument)
+        } ?: throw IllegalStateException("DoubleIndefiniteIntegral is null")
+    }
+
+    override fun visitDefiniteIntegral(ctx: LatexGrammarParser.DefiniteIntegralContext?): Expression {
+        return ctx?.let { definiteIntegralContext ->
+            val lowerBound = visit(definiteIntegralContext.expression(0))
+            val upperBound = visit(definiteIntegralContext.expression(1))
+            val argument = visit(definiteIntegralContext.expression(2))
+
+            return DefiniteIntegral(lowerBound, upperBound, argument)
+        } ?: throw IllegalStateException("DefiniteIntegral is null")
+    }
+
+    override fun visitIndefiniteIntegral(ctx: LatexGrammarParser.IndefiniteIntegralContext?): Expression {
+        return ctx?.let { indefiniteIntegralContext ->
+            val argument = visit(indefiniteIntegralContext.expression())
+            return IndefiniteIntegral(argument)
+        } ?: throw IllegalStateException("IndefiniteIntegral is null")
+    }
+
+    override fun visitSumProduct(ctx: LatexGrammarParser.SumProductContext?): Expression {
+        return ctx?.let { sumProductContext ->
+            val lowerBound = visit(sumProductContext.expression(0))
+            val upperBound = visit(sumProductContext.expression(1))
+            val argument = visit(sumProductContext.expression(2))
+
+            if (sumProductContext.SUM() != null) {
+                return Sum(lowerBound, upperBound, argument)
+            }
+            if (sumProductContext.PROD() != null) {
+                return Product(lowerBound, upperBound, argument)
+            }
+
+            throw IllegalArgumentException("Unknown sumProduct")
+        } ?: throw IllegalStateException("SumProd is null")
+    }
+
+    override fun visitLimit(ctx: LatexGrammarParser.LimitContext?): Expression {
+        return ctx?.let { limitContext ->
+            // TODO: test
+            val variable = visitOperand(limitContext.VARIABLE() as LatexGrammarParser.OperandContext)
+            val limes = visitOperand(limitContext.VALUE() as LatexGrammarParser.OperandContext)
+            val argument = visit(limitContext.expression())
+            return Limit(variable as Variable, argument, limes as Value)
+        } ?: throw IllegalStateException("Limit is null")
+    }
+
+    override fun visitSinCos(ctx: LatexGrammarParser.SinCosContext?): Expression {
+        return ctx?.let { sinCosContext ->
+            val argument = visit(sinCosContext.expression())
+
+            if (sinCosContext.SIN() != null) {
+                return Sin(argument)
+            }
+            if (sinCosContext.COS() != null) {
+                return Cos(argument)
+            }
+
+            throw IllegalArgumentException("Unknown trig func")
+        } ?: throw IllegalStateException("Trig func is null")
+    }
+
+    override fun visitCustomFunction(ctx: LatexGrammarParser.CustomFunctionContext?): Expression {
+        return ctx?.let { customFunctionContext ->
+            val name = customFunctionContext.STRING().text
+            val argument = visit(customFunctionContext.expression())
+            return CustomFunction(name, argument)
+        } ?: throw IllegalStateException("CustomFunction is null")
+    }
+
     override fun visitLogarithm(ctx: LatexGrammarParser.LogarithmContext?): Expression {
         return ctx?.let { logarithmContext ->
             val base = visit(logarithmContext.expression(0))
