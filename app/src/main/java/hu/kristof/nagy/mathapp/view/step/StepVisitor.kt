@@ -1,6 +1,55 @@
 package hu.kristof.nagy.mathapp.view.step
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
+    override fun visitEquation(ctx: LatexGrammarParser.EquationContext?): Expression {
+        return ctx?.let { equationContext ->
+            val left = visit(equationContext.expression(0))
+            val right = visit(equationContext.expression(1))
+
+            return Equation(left, right)
+        } ?: throw IllegalStateException("Equation is null")
+    }
+
+    override fun visitDoubleStraightParentheses(ctx: LatexGrammarParser.DoubleStraightParenthesesContext?): Expression {
+        return ctx?.let { doubleStraightParenthesesContext ->
+            val expr = visit(doubleStraightParenthesesContext.expression())
+
+            return DoubleStraightParentheses(expr)
+        } ?: throw IllegalStateException("DoubleStraightParentheses is null")
+    }
+
+    override fun visitStraightParentheses(ctx: LatexGrammarParser.StraightParenthesesContext?): Expression {
+        return ctx?.let { straightParenthesesContext ->
+            val expr = visit(straightParenthesesContext.expression())
+
+            return StraightParentheses(expr)
+        } ?: throw IllegalStateException("StraightParentheses is null")
+    }
+
+    override fun visitBlockParentheses(ctx: LatexGrammarParser.BlockParenthesesContext?): Expression {
+        return ctx?.let { blockParenthesesContext ->
+            val expr = visit(blockParenthesesContext.expression())
+
+            return BlockParentheses(expr)
+        } ?: throw IllegalStateException("BlockParentheses is null")
+    }
+
+    override fun visitSquareParentheses(ctx: LatexGrammarParser.SquareParenthesesContext?): Expression {
+        return ctx?.let { squareParentheses ->
+            val expr = visit(squareParentheses.expression())
+
+            return SquareParentheses(expr)
+        } ?: throw IllegalStateException("SquareParentheses is null")
+    }
+
+    override fun visitParentheses(ctx: LatexGrammarParser.ParenthesesContext?): Expression {
+        return ctx?.let { parenthesesContext ->
+            val expr = visit(parenthesesContext.expression())
+
+            return Parentheses(expr)
+        } ?: throw IllegalStateException("Parentheses is null")
+    }
+
     override fun visitDoubleDefiniteIntegral(ctx: LatexGrammarParser.DoubleDefiniteIntegralContext?): Expression {
         return ctx?.let { doubleDefiniteIntegralContext ->
             val lowerBound = visit(doubleDefiniteIntegralContext.expression(0))
