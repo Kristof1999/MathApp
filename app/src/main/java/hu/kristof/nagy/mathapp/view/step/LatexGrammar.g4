@@ -10,7 +10,7 @@ expression
     | '\\operatorname{' STRING '}' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS     # CustomFunction
     | (SIN | COS) LEFT_PARENTHESIS expression RIGHT_PARENTHESIS                      # SinCos
     | '\\lim_{' VARIABLE '\\to' VALUE '}' WHITESPACE expression                      # Limit
-    | ('\\sum_{' | '\\prod_{') expression '}^{' expression '}' WHITESPACE expression # SumProduct
+    | (SUM | PROD) '_{' expression '}^{' expression '}' WHITESPACE expression # SumProduct
     | '\\int' WHITESPACE expression                                                  # IndefiniteIntegral
     | '\\int_{' expression '}^{' expression '}' WHITESPACE expression                # DefiniteIntegral
     | '\\iint' expression WHITESPACE expression                                      # DoubleIndefiniteIntegral
@@ -62,5 +62,7 @@ PLUS : '+' ;
 MINUS: '-' ;
 SIN  : '\\sin' ;
 COS  : '\\cos' ;
+SUM  : '\\sum' ;
+PROD : '\\prod';
 
 WHITESPACE : ' ' -> skip ;
