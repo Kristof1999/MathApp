@@ -8,7 +8,7 @@ expression
     | LEFT_STRAIGHT_PARENTHESIS expression RIGHT_STRAIGHT_PARENTHESIS                # StraightParentheses
     | '\\Vert{' expression '}'                                                       # DoubleStraightParentheses
     | '\\operatorname{' STRING '}' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS     # CustomFunction
-    | ('\\sin' | '\\cos') LEFT_PARENTHESIS expression RIGHT_PARENTHESIS              # SinCos
+    | (SIN | COS) LEFT_PARENTHESIS expression RIGHT_PARENTHESIS                      # SinCos
     | '\\lim_{' VARIABLE '\\to' VALUE '}' WHITESPACE expression                      # Limit
     | ('\\sum_{' | '\\prod_{') expression '}^{' expression '}' WHITESPACE expression # SumProduct
     | '\\int' WHITESPACE expression                                                  # IndefiniteIntegral
@@ -60,5 +60,7 @@ RIGHT_STRAIGHT_PARENTHESIS: '\\right|'       ;
 
 PLUS : '+' ;
 MINUS: '-' ;
+SIN  : '\\sin' ;
+COS  : '\\cos' ;
 
 WHITESPACE : ' ' -> skip ;
