@@ -10,11 +10,11 @@ expression
     | '\\operatorname{' STRING '}' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS     # CustomFunction
     | (SIN | COS) LEFT_PARENTHESIS expression RIGHT_PARENTHESIS                      # SinCos
     | '\\lim_{' VARIABLE '\\to' VALUE '}' WHITESPACE expression                      # Limit
-    | (SUM | PROD) '_{' expression '}^{' expression '}' WHITESPACE expression # SumProduct
-    | '\\int' WHITESPACE expression                                                  # IndefiniteIntegral
-    | '\\int_{' expression '}^{' expression '}' WHITESPACE expression                # DefiniteIntegral
+    | (SUM | PROD) '_{' expression '}^{' expression '}' WHITESPACE expression        # SumProduct
     | '\\iint' expression WHITESPACE expression                                      # DoubleIndefiniteIntegral
     | '\\iint_{' expression '}^{' expression '}' WHITESPACE expression               # DoubleDefiniteIntegral
+    | '\\int' WHITESPACE expression                                                  # IndefiniteIntegral
+    | '\\int_{' expression '}^{' expression '}' WHITESPACE expression                # DefiniteIntegral
     | <assoc=right> expression '^{' expression '}'                                   # Exponentiation
     | '\\log_{' expression '}' WHITESPACE expression                                 # Logarithm
     | '\\sqrt{' expression '}'                                                       # SquareRoot
