@@ -83,7 +83,7 @@ data class DefiniteIntegral(
 }
 
 data class DoubleIndefiniteIntegral(
-    private val variable: Variable
+    private val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
         return "\\iint ${variable.toLatex()}"
@@ -93,7 +93,7 @@ data class DoubleIndefiniteIntegral(
 data class DoubleDefiniteIntegral(
     private val lowerLimit: Expression,
     private val upperLimit: Expression,
-    private val variable: Variable
+    private val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
         return "\\iint_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"
