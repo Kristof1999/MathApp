@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.step
+package hu.kristof.nagy.mathapp.view.step.model
 
 data class IndefiniteIntegral(
     private val variable: Expression

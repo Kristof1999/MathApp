@@ -1,8 +1,6 @@
 package hu.kristof.nagy.mathapp.view.step.antlr
 
-import hu.kristof.nagy.mathapp.view.step.DefiniteIntegral
-import hu.kristof.nagy.mathapp.view.step.DoubleIndefiniteIntegral
-import hu.kristof.nagy.mathapp.view.step.IndefiniteIntegral
+import hu.kristof.nagy.mathapp.view.step.model.*
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
     override fun visitEquation(ctx: LatexGrammarParser.EquationContext?): Expression {
