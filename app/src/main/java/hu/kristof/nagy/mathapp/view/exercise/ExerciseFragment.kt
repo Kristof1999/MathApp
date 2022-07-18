@@ -24,9 +24,8 @@ import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.databinding.FragmentExerciseBinding
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import hu.kristof.nagy.mathapp.view.step.LatexParser
-import hu.kristof.nagy.mathapp.view.step.transform.AddBothSide
-import hu.kristof.nagy.mathapp.view.step.transform.LeftOrder
-import hu.kristof.nagy.mathapp.view.step.transform.RightOrder
+import hu.kristof.nagy.mathapp.view.step.model.Expression
+import hu.kristof.nagy.mathapp.view.step.transform.*
 
 
 class ExerciseFragment : Fragment() {
@@ -117,17 +116,33 @@ class ExerciseFragment : Fragment() {
                     addStep(transformedStep)
                 }
                 "addBothSide" -> {
-                    val textDialog = TextDialogFragment.instanceOf(
-                        R.string.xText, R.string.xHint
-                    )
-                    textDialog.show(fragmentManager, "x")
-                    textDialog.text.observe(lifecycleOwner) { x ->
-                        val parsedX = LatexParser.parse(x)
-                        val transformedStep = AddBothSide.transform(parsedStep, parsedX).toLatex()
-                        addStep(transformedStep)
-                    }
+                    transformStepWithX(AddBothSide, parsedStep)
+                }
+                "subtractBothSide" -> {
+                    transformStepWithX(SubtractBothSide, parsedStep)
+                }
+                "multiplyBothSide" -> {
+                    transformStepWithX(MultiplyBothSide, parsedStep)
+                }
+                "divideBothSide" -> {
+                    transformStepWithX(DivideBothSide, parsedStep)
                 }
                 else -> throw IllegalArgumentException("Unknown stepType: $stepType")
+            }
+        }
+
+        private fun transformStepWithX(
+            transformer: StepTransformer,
+            parsedStep: Expression
+        ) {
+            val xDialog = TextDialogFragment.instanceOf(
+                R.string.xText, R.string.xHint
+            )
+            xDialog.show(fragmentManager, "x")
+            xDialog.text.observe(lifecycleOwner) { x ->
+                val parsedX = LatexParser.parse(x)
+                val transformedStep = transformer.transform(parsedStep, parsedX).toLatex()
+                addStep(transformedStep)
             }
         }
 
