@@ -19,6 +19,9 @@ import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.databinding.FragmentExerciseBinding
+import hu.kristof.nagy.mathapp.view.step.LatexParser
+import hu.kristof.nagy.mathapp.view.step.transform.LeftOrder
+import hu.kristof.nagy.mathapp.view.step.transform.RightOrder
 
 
 class ExerciseFragment : Fragment() {
@@ -94,12 +97,15 @@ class ExerciseFragment : Fragment() {
 
         @JavascriptInterface
         fun selectStep(stepType: String, prevStep: String) {
-            var transformedStep = ""
-            when (stepType) {
+            val parsedStep = LatexParser.parse(prevStep)
+            val transformedStep = when (stepType) {
                 "leftOrder" -> {
-                    val sides = prevStep.split("=")
-                    transformedStep = sides[0] + "-(" + sides[1] + ")=0"
+                    LeftOrder.transform(parsedStep).toLatex()
                 }
+                "rightOrder" -> {
+                    RightOrder.transform(parsedStep).toLatex()
+                }
+                else -> throw IllegalArgumentException("Unknown stepType: $stepType")
             }
 
             exerciseWebView.post {
