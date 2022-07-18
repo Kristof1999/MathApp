@@ -1,8 +1,7 @@
 // based on: https://tomassetti.me/antlr-mega-tutorial
 grammar LatexGrammar;
 expression
-    : expression '=' expression                                                      # Equation
-    | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS                                  # Parentheses
+    : LEFT_PARENTHESIS expression RIGHT_PARENTHESIS                                  # Parentheses
     | LEFT_SQUARE_PARENTHESIS expression RIGHT_SQUARE_PARENTHESIS                    # SquareParentheses
     | LEFT_BLOCK_PARENTHESIS expression RIGHT_BLOCK_PARENTHESIS                      # BlockParentheses
     | LEFT_STRAIGHT_PARENTHESIS expression RIGHT_STRAIGHT_PARENTHESIS                # StraightParentheses
@@ -22,6 +21,7 @@ expression
     | expression '*' expression                                                      # Multiplication
     | '\\frac{' expression '}{' expression '}'                                       # Division
     | expression (PLUS | MINUS) expression                                           # AdditionSubtraction
+    | expression '=' expression                                                      # Equation
     | OPERAND                                                                        # Operand
     ;
 
