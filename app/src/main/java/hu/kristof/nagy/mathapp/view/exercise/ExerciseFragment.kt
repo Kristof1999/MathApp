@@ -173,6 +173,7 @@ class ExerciseFragment : Fragment() {
 
         private fun addStep(transformedStep: Expression) {
             steps.add(transformedStep)
+            // TODO: figure out a way to escape \r in JS
             exerciseWebView.post {
                 exerciseWebView.evaluateJavascript(
                     "addStep('${transformedStep.toLatex()}')", null
