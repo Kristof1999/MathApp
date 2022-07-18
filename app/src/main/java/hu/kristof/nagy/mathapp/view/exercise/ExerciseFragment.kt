@@ -130,11 +130,11 @@ class ExerciseFragment : Fragment() {
             val prevStep = steps[steps.size - 1]
             when (stepType) {
                 "leftOrder" -> {
-                    val transformedStep = LeftOrder.transform(prevStep, null).toLatex()
+                    val transformedStep = LeftOrder.transform(prevStep, null)
                     addStep(transformedStep)
                 }
                 "rightOrder" -> {
-                    val transformedStep = RightOrder.transform(prevStep, null).toLatex()
+                    val transformedStep = RightOrder.transform(prevStep, null)
                     addStep(transformedStep)
                 }
                 "addBothSide" -> {
@@ -165,16 +165,17 @@ class ExerciseFragment : Fragment() {
                 xDialog.text.observe(lifecycleOwner) { x ->
                     val parsedX = LatexParser.parse(x)
                     // TODO: handle errors and edge cases
-                    val transformedStep = transformer.transform(parsedStep, parsedX).toLatex()
+                    val transformedStep = transformer.transform(parsedStep, parsedX)
                     addStep(transformedStep)
                 }
             }
         }
 
-        private fun addStep(transformedStep: String) {
+        private fun addStep(transformedStep: Expression) {
+            steps.add(transformedStep)
             exerciseWebView.post {
                 exerciseWebView.evaluateJavascript(
-                    "addStep('$transformedStep')", null
+                    "addStep('${transformedStep.toLatex()}')", null
                 )
             }
         }
