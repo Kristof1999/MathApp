@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.step
+package hu.kristof.nagy.mathapp.view.step.model
 
 abstract class Function(
     private val argument: Expression
