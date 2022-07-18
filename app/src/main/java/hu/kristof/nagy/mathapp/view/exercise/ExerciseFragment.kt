@@ -12,14 +12,19 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
+import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.databinding.FragmentExerciseBinding
+import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import hu.kristof.nagy.mathapp.view.step.LatexParser
+import hu.kristof.nagy.mathapp.view.step.transform.AddBothSide
 import hu.kristof.nagy.mathapp.view.step.transform.LeftOrder
 import hu.kristof.nagy.mathapp.view.step.transform.RightOrder
 
@@ -57,6 +62,8 @@ class ExerciseFragment : Fragment() {
             addJavascriptInterface(
                 WebAppInterface(
                     requireContext(),
+                    parentFragmentManager,
+                    viewLifecycleOwner,
                     args.exercise,
                     navController,
                     binding.exerciseWebView
@@ -71,6 +78,8 @@ class ExerciseFragment : Fragment() {
 
     class WebAppInterface(
         private val context: Context,
+        private val fragmentManager: FragmentManager,
+        private val lifecycleOwner: LifecycleOwner,
         private val exercise: Exercise,
         private val navController: NavController,
         private val exerciseWebView: WebView
@@ -98,16 +107,31 @@ class ExerciseFragment : Fragment() {
         @JavascriptInterface
         fun selectStep(stepType: String, prevStep: String) {
             val parsedStep = LatexParser.parse(prevStep)
-            val transformedStep = when (stepType) {
+            when (stepType) {
                 "leftOrder" -> {
-                    LeftOrder.transform(parsedStep).toLatex()
+                    val transformedStep = LeftOrder.transform(parsedStep, null).toLatex()
+                    addStep(transformedStep)
                 }
                 "rightOrder" -> {
-                    RightOrder.transform(parsedStep).toLatex()
+                    val transformedStep = RightOrder.transform(parsedStep, null).toLatex()
+                    addStep(transformedStep)
+                }
+                "addBothSide" -> {
+                    val textDialog = TextDialogFragment.instanceOf(
+                        R.string.xText, R.string.xHint
+                    )
+                    textDialog.show(fragmentManager, "x")
+                    textDialog.text.observe(lifecycleOwner) { x ->
+                        val parsedX = LatexParser.parse(x)
+                        val transformedStep = AddBothSide.transform(parsedStep, parsedX).toLatex()
+                        addStep(transformedStep)
+                    }
                 }
                 else -> throw IllegalArgumentException("Unknown stepType: $stepType")
             }
+        }
 
+        private fun addStep(transformedStep: String) {
             exerciseWebView.post {
                 exerciseWebView.evaluateJavascript(
                     "addStep('$transformedStep')", null
