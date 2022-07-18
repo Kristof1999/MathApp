@@ -50,20 +50,10 @@ function addStep(input) {
 }
 
 function selectStep(stepType) {
-    let steps = document.getElementById("steps");
-    var prevStep;
-    if (steps.childNodes.length > 1) {
-        prevStep = steps.lastChild.value;
-    } else {
-        prevStep = ExerciseInterface.getExerciseQuestion();
-        if (prevStep.search(/$/g).length / 2 != 1) {
-            //ask user which math block should we use?
-        }
-        let mathBlockStartIdx = prevStep.indexOf("$");
-        let mathBlockEndIdx = prevStep.indexOf("$", mathBlockStartIdx + 1);
-        prevStep = prevStep.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
+    if (steps.childNodes.length <= 1) {
+        ExerciseInterface.setFirstStep();
     }
-    ExerciseInterface.selectStep(stepType, prevStep);
+    ExerciseInterface.selectStep(stepType);
 }
 
 function simplifyIdentities(value) {

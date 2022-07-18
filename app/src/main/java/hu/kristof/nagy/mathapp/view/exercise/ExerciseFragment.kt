@@ -2,6 +2,7 @@ package hu.kristof.nagy.mathapp.view.exercise
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
+import com.google.android.material.snackbar.Snackbar
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.databinding.FragmentExerciseBinding
@@ -63,6 +64,7 @@ class ExerciseFragment : Fragment() {
         binding.exerciseWebView.apply {
             addJavascriptInterface(
                 WebAppInterface(
+                    this,
                     requireContext(),
                     parentFragmentManager,
                     viewLifecycleOwner,
@@ -80,6 +82,7 @@ class ExerciseFragment : Fragment() {
     }
 
     class WebAppInterface(
+        private val view: View,
         private val context: Context,
         private val fragmentManager: FragmentManager,
         private val lifecycleOwner: LifecycleOwner,
@@ -88,9 +91,11 @@ class ExerciseFragment : Fragment() {
         private val navController: NavController,
         private val exerciseWebView: WebView
     ) {
+        private val steps = mutableListOf<Expression>()
+
         @JavascriptInterface
         fun showToast(str: String) {
-            Toast.makeText(context, str, Toast.LENGTH_LONG).show()
+            Snackbar.make(view, str, Snackbar.LENGTH_LONG).show()
         }
 
         @JavascriptInterface
@@ -109,28 +114,41 @@ class ExerciseFragment : Fragment() {
         }
 
         @JavascriptInterface
-        fun selectStep(stepType: String, prevStep: String) {
-            val parsedStep = LatexParser.parse(prevStep)
+        fun setFirstStep() {
+            val question = exercise.question
+            if (question.count { c -> c == '$'} > 1) {
+                //ask user which math block should we use?
+            }
+            val mathBlockStartIdx = question.indexOf('$')
+            val mathBlockEndIdx = question.indexOf('$', mathBlockStartIdx + 1)
+            val mathBlock = question.substring(mathBlockStartIdx + 1, mathBlockEndIdx)
+            val parsedStep = LatexParser.parse(mathBlock)
+            steps.add(parsedStep)
+        }
+
+        @JavascriptInterface
+        fun selectStep(stepType: String) {
+            val prevStep = steps[steps.size - 1]
             when (stepType) {
                 "leftOrder" -> {
-                    val transformedStep = LeftOrder.transform(parsedStep, null).toLatex()
+                    val transformedStep = LeftOrder.transform(prevStep, null).toLatex()
                     addStep(transformedStep)
                 }
                 "rightOrder" -> {
-                    val transformedStep = RightOrder.transform(parsedStep, null).toLatex()
+                    val transformedStep = RightOrder.transform(prevStep, null).toLatex()
                     addStep(transformedStep)
                 }
                 "addBothSide" -> {
-                    transformStepByX(AddBothSideByX, parsedStep)
+                    transformStepByX(AddBothSideByX, prevStep)
                 }
                 "subtractBothSide" -> {
-                    transformStepByX(SubtractBothSideByX, parsedStep)
+                    transformStepByX(SubtractBothSideByX, prevStep)
                 }
                 "multiplyBothSide" -> {
-                    transformStepByX(MultiplyBothSideByX, parsedStep)
+                    transformStepByX(MultiplyBothSideByX, prevStep)
                 }
                 "divideBothSide" -> {
-                    transformStepByX(DivideBothSideByX, parsedStep)
+                    transformStepByX(DivideBothSideByX, prevStep)
                 }
                 else -> throw IllegalArgumentException("Unknown stepType: $stepType")
             }
@@ -147,6 +165,7 @@ class ExerciseFragment : Fragment() {
             scope.launch {
                 xDialog.text.observe(lifecycleOwner) { x ->
                     val parsedX = LatexParser.parse(x)
+                    Log.i("transformStepByX", "$parsedStep")
                     val transformedStep = transformer.transform(parsedStep, parsedX).toLatex()
                     addStep(transformedStep)
                 }
