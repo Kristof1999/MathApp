@@ -1,5 +1,8 @@
 package hu.kristof.nagy.mathapp.view.step
 
+import hu.kristof.nagy.mathapp.view.step.antlr.LatexGrammarBaseVisitor
+import hu.kristof.nagy.mathapp.view.step.antlr.LatexGrammarParser
+
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
     override fun visitEquation(ctx: LatexGrammarParser.EquationContext?): Expression {
         return ctx?.let { equationContext ->
