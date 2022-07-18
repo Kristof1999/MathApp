@@ -11,8 +11,15 @@ data class Addition(
     override fun toLatex(): String {
         return "${left.toLatex()}+${right.toLatex()}"
     }
-}
+    }
 
+/*
+try writing it in infix style, or like hamcrest when testing:
+instead of:
+Equation(Subtraction(equation.leftSide, x), Subtraction(equation.rightSide, x))
+should be:
+Equation(equation.leftSide '-' x, equation.rightSide '-' x)
+ */
 data class Subtraction(
     private val left: Expression,
     private val right: Expression
