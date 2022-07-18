@@ -2,7 +2,6 @@ package hu.kristof.nagy.mathapp.view.exercise
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -165,7 +164,7 @@ class ExerciseFragment : Fragment() {
             scope.launch {
                 xDialog.text.observe(lifecycleOwner) { x ->
                     val parsedX = LatexParser.parse(x)
-                    Log.i("transformStepByX", "$parsedStep")
+                    // TODO: handle errors and edge cases
                     val transformedStep = transformer.transform(parsedStep, parsedX).toLatex()
                     addStep(transformedStep)
                 }
