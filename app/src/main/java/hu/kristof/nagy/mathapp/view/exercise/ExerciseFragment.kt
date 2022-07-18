@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -26,6 +27,8 @@ import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import hu.kristof.nagy.mathapp.view.step.LatexParser
 import hu.kristof.nagy.mathapp.view.step.model.Expression
 import hu.kristof.nagy.mathapp.view.step.transform.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 class ExerciseFragment : Fragment() {
@@ -63,6 +66,7 @@ class ExerciseFragment : Fragment() {
                     requireContext(),
                     parentFragmentManager,
                     viewLifecycleOwner,
+                    lifecycle.coroutineScope,
                     args.exercise,
                     navController,
                     binding.exerciseWebView
@@ -79,6 +83,7 @@ class ExerciseFragment : Fragment() {
         private val context: Context,
         private val fragmentManager: FragmentManager,
         private val lifecycleOwner: LifecycleOwner,
+        private val scope: CoroutineScope,
         private val exercise: Exercise,
         private val navController: NavController,
         private val exerciseWebView: WebView
@@ -139,10 +144,12 @@ class ExerciseFragment : Fragment() {
                 R.string.xText, R.string.xHint
             )
             xDialog.show(fragmentManager, "x")
-            xDialog.text.observe(lifecycleOwner) { x ->
-                val parsedX = LatexParser.parse(x)
-                val transformedStep = transformer.transform(parsedStep, parsedX).toLatex()
-                addStep(transformedStep)
+            scope.launch {
+                xDialog.text.observe(lifecycleOwner) { x ->
+                    val parsedX = LatexParser.parse(x)
+                    val transformedStep = transformer.transform(parsedStep, parsedX).toLatex()
+                    addStep(transformedStep)
+                }
             }
         }
 
