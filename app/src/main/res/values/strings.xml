@@ -9,4 +9,7 @@
     <string name="exerciseCreateQuestionHint">Kérdés</string>
     <string name="exerciseCreateAnswerText">Add meg a feladat válaszát!</string>
     <string name="exerciseCreateAnswerHint">Válasz</string>
+
+    <string name="xText">Add meg x értékét!</string>
+    <string name="xHint">X=</string>
 </resources>
