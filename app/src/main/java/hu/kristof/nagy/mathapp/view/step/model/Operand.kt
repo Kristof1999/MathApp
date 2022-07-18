@@ -21,6 +21,10 @@ open class Value(val x: Number) : Operand {
     override fun hashCode(): Int {
         return x.hashCode()
     }
+
+    override fun toString(): String {
+        return "Value(x=$x)"
+    }
 }
 
 class Infinity : Value(Int.MAX_VALUE) {
@@ -53,6 +57,10 @@ open class Variable(val name: String) : Operand {
 
     override fun hashCode(): Int {
         return name.hashCode()
+    }
+
+    override fun toString(): String {
+        return "Variable(name='$name')"
     }
 }
 
