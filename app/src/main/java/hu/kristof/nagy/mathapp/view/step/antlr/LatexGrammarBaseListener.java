@@ -1,4 +1,4 @@
-// Generated from C:/Users/36203/Desktop/MathApp/mobile/app/src/main/java/hu/kristof/nagy/mathapp/view/step\LatexGrammar.g4 by ANTLR 4.10.1
+// Generated from C:/Users/36203/Desktop/MathApp/mobile/app/src/main/java/hu/kristof/nagy/mathapp/view/step/antlr\LatexGrammar.g4 by ANTLR 4.10.1
 package hu.kristof.nagy.mathapp.view.step.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
