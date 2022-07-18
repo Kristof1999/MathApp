@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.step
+package hu.kristof.nagy.mathapp.view.step.transform
 
 class LeftOrder : StepTransformer {
     override fun transform(step: Expression): Expression {
