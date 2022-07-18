@@ -121,22 +121,22 @@ class ExerciseFragment : Fragment() {
                     addStep(transformedStep)
                 }
                 "addBothSide" -> {
-                    transformStepWithX(AddBothSide, parsedStep)
+                    transformStepByX(AddBothSideByX, parsedStep)
                 }
                 "subtractBothSide" -> {
-                    transformStepWithX(SubtractBothSide, parsedStep)
+                    transformStepByX(SubtractBothSideByX, parsedStep)
                 }
                 "multiplyBothSide" -> {
-                    transformStepWithX(MultiplyBothSide, parsedStep)
+                    transformStepByX(MultiplyBothSideByX, parsedStep)
                 }
                 "divideBothSide" -> {
-                    transformStepWithX(DivideBothSide, parsedStep)
+                    transformStepByX(DivideBothSideByX, parsedStep)
                 }
                 else -> throw IllegalArgumentException("Unknown stepType: $stepType")
             }
         }
 
-        private fun transformStepWithX(
+        private fun transformStepByX(
             transformer: StepTransformer,
             parsedStep: Expression
         ) {
