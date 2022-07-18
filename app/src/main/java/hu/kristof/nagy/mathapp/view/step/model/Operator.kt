@@ -1,5 +1,7 @@
 package hu.kristof.nagy.mathapp.view.step.model
 
+import hu.kristof.nagy.mathapp.view.step.parenthesize
+
 interface Operator : Expression
 
 data class Addition(
@@ -15,18 +17,16 @@ data class Subtraction(
     private val left: Expression,
     private val right: Expression
 ) : Operator {
-    override fun toLatex(): String {
-        return "${left.toLatex()}-${right.toLatex()}"
-    }
+    override fun toLatex(): String =
+        "${parenthesize(left).toLatex()}-${parenthesize(right).toLatex()}"
 }
 
 data class Multiplication(
     private val left: Expression,
     private val right: Expression
 ) : Operator {
-    override fun toLatex(): String {
-        return "${left.toLatex()}*${right.toLatex()}"
-    }
+    override fun toLatex(): String =
+        "${parenthesize(left).toLatex()}*${parenthesize(right).toLatex()}"
 }
 
 data class Division(
@@ -42,9 +42,8 @@ data class Exponentiation(
     private val base: Expression,
     private val exponent: Expression
 ) : Operator {
-    override fun toLatex(): String {
-        return "${base.toLatex()}^{${exponent.toLatex()}}"
-    }
+    override fun toLatex(): String =
+        "${parenthesize(base).toLatex()}^{${exponent.toLatex()}}"
 }
 
 data class SquareRoot(
