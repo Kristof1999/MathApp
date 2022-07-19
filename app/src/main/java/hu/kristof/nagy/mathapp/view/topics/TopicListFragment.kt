@@ -61,6 +61,14 @@ class TopicListFragment : Fragment() {
                 val directions = TopicListFragmentDirections
                     .actionTopicListFragmentToExerciseListFragment(topic.topicName)
                 findNavController().navigate(directions)
+            },
+            editListener = { topic ->
+                val directions = TopicListFragmentDirections
+                    .actionTopicListFragmentToTopicEditFragment(topic)
+                findNavController().navigate(directions)
+            },
+            summaryNavListener = { topic ->  
+                
             }
         ))
 

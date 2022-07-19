@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/topicListFragment">
 
@@ -11,6 +12,9 @@
         <action
             android:id="@+id/action_topicListFragment_to_exerciseListFragment"
             app:destination="@id/detailListFragment" />
+        <action
+            android:id="@+id/action_topicListFragment_to_topicEditFragment"
+            app:destination="@id/topicEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailListFragment"
@@ -31,6 +35,9 @@
         <action
             android:id="@+id/action_detailListFragment_to_exerciseEditFragment"
             app:destination="@id/exerciseEditFragment" />
+        <action
+            android:id="@+id/action_detailListFragment_to_topicEditFragment"
+            app:destination="@id/topicEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
@@ -67,5 +74,14 @@
         <argument
             android:name="exercise"
             app:argType="hu.kristof.nagy.mathapp.data.entity.Exercise" />
+    </fragment>
+    <fragment
+        android:id="@+id/topicEditFragment"
+        android:name="hu.kristof.nagy.mathapp.view.topics.TopicEditFragment"
+        android:label="fragment_topic_edit"
+        tools:layout="@layout/fragment_topic_edit" >
+        <argument
+            android:name="topic"
+            app:argType="hu.kristof.nagy.mathapp.data.entity.Topic" />
     </fragment>
 </navigation>
