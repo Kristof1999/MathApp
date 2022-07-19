@@ -15,6 +15,7 @@ interface TopicDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun create(topic: Topic)
 
+    // TODO: update related exercises too
     @Update
     suspend fun edit(topic: Topic)
 
