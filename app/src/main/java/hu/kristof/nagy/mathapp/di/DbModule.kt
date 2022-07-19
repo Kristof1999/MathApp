@@ -20,7 +20,7 @@ object DbModule {
     @Provides
     fun provideDb(@ApplicationContext context: Context): MathAppDatabase {
         return Room.databaseBuilder(context, MathAppDatabase::class.java, "MathApp")
-            .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+            .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
             .build()
     }
 
