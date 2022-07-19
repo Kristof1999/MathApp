@@ -1,13 +1,24 @@
 <html>
     <head>
         <script id="MathJax-script" async src="../tex-chtml.js"></script>
+        <script src="../convert.js"></script>
+        <link rel="stylesheet" href="../convertStyle.css">
     </head>
-    <body>
-        <p>Összefoglaló:</p>
+    <body onload="onLoad()">
+        <p>Téma neve:</p>
+        <input type="text" id="topicName"><br>
 
-        <textarea rows="15" cols="5"></textarea>
-        <button>Renderelés</button>
-        <div class="output"></div>
+        <!--parentTopicName-t select-el lehessen változtatni a hibák elkerülése végett-->
+
+        <p>Összefoglaló:</p>
+        <div class="textarea">
+            <textarea rows="15" cols="5" id="input"></textarea>
+        </div>
+        <button id="btn"
+            onclick="convert('input', this.id, 'output')">
+            Renderelés
+        </button><br>
+        <div class="output" id="output"></div><br>
 
         <button>Mentés</button>
     </body>
