@@ -46,7 +46,7 @@ class BrowseFragment : Fragment() {
         initList(
             listItemViewModel, listViewModel,
             topicViewModel, topicListItemViewModel,
-            browseList
+            browseList, args.parentTopicName
         )
 
         exerciseCreate(exerciseCreateBtn, args.parentTopicName)
@@ -73,7 +73,7 @@ class BrowseFragment : Fragment() {
 
     private fun exerciseCreate(
         exerciseCreateBtn: Button,
-        parentTopicName: String
+        parentTopicName: String?
     ) {
         exerciseCreateBtn.setOnClickListener {
             val directions = BrowseFragmentDirections
@@ -87,7 +87,8 @@ class BrowseFragment : Fragment() {
         listViewModel: ExerciseListViewModel,
         topicViewModel: TopicViewModel,
         detailTopicListItemViewModel: TopicListItemViewModel,
-        browseList: RecyclerView
+        browseList: RecyclerView,
+        parentTopicName: String?
     ) {
         val adapter = BrowseRecyclerViewAdapter(ExerciseClickListener(
             editListener = { exercise ->
@@ -126,6 +127,7 @@ class BrowseFragment : Fragment() {
                 addAll(exercises)
             }
         }
+        topicViewModel.loadTopics(parentTopicName)
         listViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
             val topics = list.value!!.takeWhile { item -> item is Topic }
             list.value = mutableListOf<Any>().apply {

@@ -6,7 +6,7 @@ import hu.kristof.nagy.mathapp.data.MathAppDatabase
 
 class ExerciseListViewModelFactory(
     private val db: MathAppDatabase,
-    private val parentTopicName: String
+    private val parentTopicName: String?
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ExerciseListViewModel::class.java)) {

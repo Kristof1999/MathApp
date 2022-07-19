@@ -70,7 +70,7 @@ class ExerciseCreateFragment : Fragment() {
         private val context: Context,
         private val navController: NavController,
         private val exerciseCreateViewModel: ExerciseCreateViewModel,
-        private val parentTopicName: String
+        private val parentTopicName: String?
     ) {
         @JavascriptInterface
         fun createExercise(name: String, question: String, answer: String) {
