@@ -49,7 +49,7 @@ class BrowseFragment : Fragment() {
             browseList
         )
 
-        exerciseCreate(exerciseCreateBtn, args.parentTopicName!!)
+        exerciseCreate(exerciseCreateBtn, args.parentTopicName)
         topicCreate(topicCreateBtn, topicViewModel, args.parentTopicName)
 
         return view
