@@ -19,8 +19,6 @@ import hu.kristof.nagy.mathapp.data.MathAppDatabase
 import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
-import hu.kristof.nagy.mathapp.view.topics.detail.DetailListFragmentArgs
-import hu.kristof.nagy.mathapp.view.topics.detail.DetailListFragmentDirections
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,27 +41,25 @@ class BrowseFragment : Fragment() {
         val listViewModel = ViewModelProvider(this, exerciseListViewModelFactory)
             .get(ExerciseListViewModel::class.java)
         val listItemViewModel: ExerciseListItemViewModel by viewModels()
-        val viewModelFactory = DetailTopicListViewModelFactory(db, args.parentTopicName)
-        val detailTopicListViewModel = ViewModelProvider(this, viewModelFactory)
-            .get(DetailTopicListViewModel::class.java)
-        val detailTopicListItemViewModel: TopicListItemViewModel by viewModels()
+        val topicListItemViewModel: TopicListItemViewModel by viewModels()
+        val topicViewModel: TopicViewModel by viewModels()
 
         initList(
             listItemViewModel, listViewModel,
-            detailTopicListViewModel, detailTopicListItemViewModel,
+            topicViewModel, topicListItemViewModel,
             browseList
         )
 
-        exerciseCreate(exerciseCreateBtn, args.parentTopicName)
-        topicCreate(topicCreateBtn, detailTopicListViewModel, args.parentTopicName)
+        exerciseCreate(exerciseCreateBtn, args.parentTopicName!!)
+        topicCreate(topicCreateBtn, topicViewModel, args.parentTopicName)
 
         return view
     }
 
     private fun topicCreate(
         topicCreateBtn: Button,
-        detailTopicListViewModel: DetailTopicListViewModel,
-        parentTopicName: String
+        topicViewModel: TopicViewModel,
+        parentTopicName: String?
     ) {
         val dialog = TextDialogFragment.instanceOf(
             R.string.topicCreateText, R.string.topicCreateHint
@@ -72,7 +68,7 @@ class BrowseFragment : Fragment() {
             dialog.show(parentFragmentManager, "topicCreation")
         }
         dialog.text.observe(viewLifecycleOwner) { topicName ->
-            detailTopicListViewModel.createTopic(topicName, parentTopicName)
+            topicViewModel.createTopic(topicName, parentTopicName)
         }
     }
 
@@ -81,8 +77,8 @@ class BrowseFragment : Fragment() {
         parentTopicName: String
     ) {
         exerciseCreateBtn.setOnClickListener {
-            val directions = DetailListFragmentDirections
-                .actionDetailListFragmentToExerciseCreateFragment(parentTopicName)
+            val directions = BrowseFragmentDirections
+                .actionBrowseFragmentToExerciseCreateFragment(parentTopicName)
             findNavController().navigate(directions)
         }
     }
@@ -90,27 +86,27 @@ class BrowseFragment : Fragment() {
     private fun initList(
         listItemViewModel: ExerciseListItemViewModel,
         listViewModel: ExerciseListViewModel,
-        detailTopicListViewModel: DetailTopicListViewModel,
+        topicViewModel: TopicViewModel,
         detailTopicListItemViewModel: TopicListItemViewModel,
         browseList: RecyclerView
     ) {
         val adapter = BrowseRecyclerViewAdapter(ExerciseClickListener(
             editListener = { exercise ->
-                val directions = DetailListFragmentDirections
-                    .actionDetailListFragmentToExerciseEditFragment(exercise)
+                val directions = BrowseFragmentDirections
+                    .actionBrowseFragmentToExerciseEditFragment(exercise)
                 findNavController().navigate(directions);
             },
             deleteListener = { exercise -> listItemViewModel.delete(exercise) },
             detailNavListener = { exercise ->
-                val directions = DetailListFragmentDirections
-                    .actionDetailListFragmentToExerciseFragment(exercise, exercise.name)
+                val directions = BrowseFragmentDirections
+                    .actionBrowseFragmentToExerciseFragment(exercise, exercise.name)
                 findNavController().navigate(directions)
             }
         ), TopicClickListener(
             deleteListener = { topic -> detailTopicListItemViewModel.delete(topic) },
             detailNavListener = { topic ->
-                val directions = DetailListFragmentDirections
-                    .actionExerciseListFragmentSelf(topic.topicName)
+                val directions = BrowseFragmentDirections
+                    .actionBrowseFragmentSelf(topic.topicName)
                 findNavController().navigate(directions)
             },
             editListener = { topic ->
@@ -124,7 +120,7 @@ class BrowseFragment : Fragment() {
         // TODO: encapsulate in a class
         // Invariant: the below list contains the topics first, and then the exercises.
         val list = MutableLiveData(mutableListOf<Any>())
-        detailTopicListViewModel.topics.observe(viewLifecycleOwner) { topics ->
+        topicViewModel.topics.observe(viewLifecycleOwner) { topics ->
             val exercises = list.value!!.takeLastWhile { item -> item is Exercise }
             list.value = mutableListOf<Any>().apply {
                 addAll(topics)

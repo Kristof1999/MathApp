@@ -7,7 +7,7 @@ import hu.kristof.nagy.mathapp.data.entity.Exercise
 @Dao
 interface ExerciseDao {
     @Query("SELECT * FROM exercise WHERE exercise.parentTopicName IS :topicName")
-    fun loadAllForTopic(topicName: String): LiveData<List<Exercise>>
+    fun loadAllForTopic(topicName: String?): LiveData<List<Exercise>>
 
     @Insert
     suspend fun create(exercise: Exercise)
