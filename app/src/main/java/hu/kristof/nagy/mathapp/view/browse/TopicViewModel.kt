@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BrowseViewModel @Inject constructor(
+class TopicViewModel @Inject constructor(
     private val db: MathAppDatabase
 ) : ViewModel() {
     private val _topics = MutableLiveData<List<Topic>>()
