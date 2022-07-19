@@ -10,6 +10,7 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import hu.kristof.nagy.mathapp.R
@@ -25,6 +26,7 @@ class TopicEditFragment : Fragment() {
         // maybe try using only this in other cases too (ExerciseFragment, ...)
         // instead of data binding
         val webView = view.findViewById<WebView>(R.id.topic_edit_web_view)
+        val args: TopicEditFragmentArgs by navArgs()
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
@@ -42,6 +44,13 @@ class TopicEditFragment : Fragment() {
             allowFileAccess = false
             allowContentAccess = false
             javaScriptEnabled = true
+        }
+        webView.apply {
+            addJavascriptInterface(
+                WebAppInterface(args.topic),
+                "TopicEditInterface"
+            )
+            loadUrl("https://appassets.androidplatform.net/assets/topicEdit/topicEdit.html")
         }
 
         return view
