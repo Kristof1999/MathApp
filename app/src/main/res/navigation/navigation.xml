@@ -73,5 +73,9 @@
         <action
             android:id="@+id/action_browseFragment_self"
             app:destination="@id/browseFragment" />
+        <argument
+            android:name="parentTopicName"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

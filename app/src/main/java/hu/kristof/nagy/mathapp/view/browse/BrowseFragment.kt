@@ -38,7 +38,7 @@ class BrowseFragment : Fragment() {
         val browseList = view.findViewById<RecyclerView>(R.id.browse_list)
         val topicCreateBtn = view.findViewById<Button>(R.id.browse_topic_create_btn)
         val exerciseCreateBtn = view.findViewById<Button>(R.id.browse_exercise_create_btn)
-        val args: DetailListFragmentArgs by navArgs()
+        val args: BrowseFragmentArgs by navArgs()
         val exerciseListViewModelFactory = ExerciseListViewModelFactory(db, args.parentTopicName)
         val listViewModel = ViewModelProvider(this, exerciseListViewModelFactory)
             .get(ExerciseListViewModel::class.java)
