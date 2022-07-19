@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.topics.detail
+package hu.kristof.nagy.mathapp.view.browse
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +10,18 @@ import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.databinding.FragmentExerciseListItemBinding
 import hu.kristof.nagy.mathapp.databinding.FragmentTopicListItemBinding
-import hu.kristof.nagy.mathapp.view.topics.TopicClickListener
 
 private val EXERCISE_VIEW_TYPE = 0
 private val TOPIC_VIEW_TYPE = 1
 
-class DetailListRecyclerViewAdapter(
-    private val exerciseClickListener: ExerciseClickListener,
-    private val topicClickListener: TopicClickListener
-) : ListAdapter<Any, DetailListRecyclerViewAdapter.ViewHolder>(DetailListDiffCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+class BrowseRecyclerViewAdapter(
+  private val exerciseClickListener: ExerciseClickListener,
+  private val topicClickListener: TopicClickListener
+) : ListAdapter<Any, BrowseRecyclerViewAdapter.ViewHolder>(BrowseDiffCallback()){
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder =
         ViewHolder.from(parent, exerciseClickListener, topicClickListener, viewType)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -89,7 +91,7 @@ class DetailListRecyclerViewAdapter(
     }
 }
 
-class DetailListDiffCallback : DiffUtil.ItemCallback<Any>() {
+class BrowseDiffCallback : DiffUtil.ItemCallback<Any>() {
     override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
         if (isDifferentByType(oldItem, newItem)) {
             return false
@@ -133,4 +135,16 @@ class ExerciseClickListener(
     fun onEdit(exercise: Exercise) = editListener(exercise)
     fun onDelete(exercise: Exercise) = deleteListener(exercise)
     fun onDetailNav(exercise: Exercise) = detailNavListener(exercise)
+}
+
+class TopicClickListener(
+    private val deleteListener: (topic: Topic) -> Unit,
+    private val detailNavListener: (topic: Topic) -> Unit,
+    private val editListener: (topic: Topic) -> Unit,
+    private val summaryNavListener: (topic: Topic) -> Unit
+) {
+    fun onDelete(topic: Topic) = deleteListener(topic)
+    fun onDetailNav(topic: Topic) = detailNavListener(topic)
+    fun onEdit(topic: Topic) = editListener(topic)
+    fun onSummaryNav(topic: Topic) = summaryNavListener(topic)
 }

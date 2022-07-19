@@ -10,7 +10,7 @@
             type="hu.kristof.nagy.mathapp.data.entity.Exercise" />
         <variable
             name="clickListener"
-            type="hu.kristof.nagy.mathapp.view.topics.detail.ExerciseClickListener" />
+            type="hu.kristof.nagy.mathapp.view.browse.ExerciseClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView

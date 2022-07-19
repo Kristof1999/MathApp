@@ -9,7 +9,7 @@
             type="hu.kristof.nagy.mathapp.data.entity.Topic" />
         <variable
             name="clickListener"
-            type="hu.kristof.nagy.mathapp.view.topics.TopicClickListener" />
+            type="hu.kristof.nagy.mathapp.view.browse.TopicClickListener" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
