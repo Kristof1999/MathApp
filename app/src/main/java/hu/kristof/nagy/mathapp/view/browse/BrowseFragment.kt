@@ -58,7 +58,7 @@ class BrowseFragment : Fragment() {
     private fun topicCreate(
         topicCreateBtn: Button,
         topicViewModel: TopicViewModel,
-        parentTopicName: String?
+        parentTopicName: String
     ) {
         val dialog = TextDialogFragment.instanceOf(
             R.string.topicCreateText, R.string.topicCreateHint
@@ -73,7 +73,7 @@ class BrowseFragment : Fragment() {
 
     private fun exerciseCreate(
         exerciseCreateBtn: Button,
-        parentTopicName: String?
+        parentTopicName: String
     ) {
         exerciseCreateBtn.setOnClickListener {
             val directions = BrowseFragmentDirections
@@ -88,7 +88,7 @@ class BrowseFragment : Fragment() {
         topicViewModel: TopicViewModel,
         detailTopicListItemViewModel: TopicListItemViewModel,
         browseList: RecyclerView,
-        parentTopicName: String?
+        parentTopicName: String
     ) {
         val adapter = BrowseRecyclerViewAdapter(ExerciseClickListener(
             editListener = { exercise ->

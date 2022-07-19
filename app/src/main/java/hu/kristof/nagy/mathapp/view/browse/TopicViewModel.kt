@@ -14,19 +14,19 @@ import javax.inject.Inject
 class TopicViewModel @Inject constructor(
     private val db: MathAppDatabase
 ) : ViewModel() {
-    private val _topics = MutableLiveData<List<Topic>>()
+    private val _topics = MutableLiveData<List<Topic>>(listOf())
     val topics: LiveData<List<Topic>>
         get() = _topics
 
-    fun loadTopics(parentTopicName: String?) {
-        _topics.value = if (parentTopicName == null) {
+    fun loadTopics(parentTopicName: String) {
+        _topics.value = if (parentTopicName.isEmpty()) {
             db.topicDao().loadHighLevelTopics().value
         } else {
             db.topicDao().loadTopicsFor(parentTopicName).value
         }
     }
 
-    fun createTopic(topicName: String, parentTopicName: String?) {
+    fun createTopic(topicName: String, parentTopicName: String) {
         viewModelScope.launch {
             db.topicDao().create(Topic(null, topicName, parentTopicName, ""))
         }

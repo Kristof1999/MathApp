@@ -78,7 +78,6 @@
         <argument
             android:name="parentTopicName"
             app:argType="string"
-            android:defaultValue='null'
-            app:nullable="true" />
+            android:defaultValue='' />
     </fragment>
 </navigation>
