@@ -1,5 +1,6 @@
 package hu.kristof.nagy.mathapp.view.topics
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -47,7 +49,7 @@ class TopicEditFragment : Fragment() {
         }
         webView.apply {
             addJavascriptInterface(
-                WebAppInterface(args.topic),
+                WebAppInterface(requireContext(), args.topic),
                 "TopicEditInterface"
             )
             loadUrl("https://appassets.androidplatform.net/assets/topicEdit/topicEdit.html")
@@ -57,6 +59,7 @@ class TopicEditFragment : Fragment() {
     }
 
     class WebAppInterface(
+        private val context: Context,
         private val topic: Topic
     ) {
         @JavascriptInterface
@@ -68,6 +71,11 @@ class TopicEditFragment : Fragment() {
         @JavascriptInterface
         fun save(name:String, summary: String) {
             // call viewmodel
+        }
+
+        @JavascriptInterface
+        fun showToast(str: String) {
+            Toast.makeText(context, str, Toast.LENGTH_LONG).show()
         }
     }
 }
