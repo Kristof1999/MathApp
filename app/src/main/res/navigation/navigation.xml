@@ -3,42 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/topicListFragment">
+    app:startDestination="@id/browseFragment">
 
-    <fragment
-        android:id="@+id/topicListFragment"
-        android:name="hu.kristof.nagy.mathapp.view.topics.TopicListFragment"
-        android:label="Témák" >
-        <action
-            android:id="@+id/action_topicListFragment_to_exerciseListFragment"
-            app:destination="@id/detailListFragment" />
-        <action
-            android:id="@+id/action_topicListFragment_to_topicEditFragment"
-            app:destination="@id/topicEditFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/detailListFragment"
-        android:name="hu.kristof.nagy.mathapp.view.topics.detail.DetailListFragment"
-        android:label="{parentTopicName}" >
-        <action
-            android:id="@+id/action_exerciseListFragment_self"
-            app:destination="@id/detailListFragment" />
-        <argument
-            android:name="parentTopicName"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_detailListFragment_to_exerciseFragment"
-            app:destination="@id/exerciseFragment" />
-        <action
-            android:id="@+id/action_detailListFragment_to_exerciseCreateFragment"
-            app:destination="@id/exerciseCreateFragment" />
-        <action
-            android:id="@+id/action_detailListFragment_to_exerciseEditFragment"
-            app:destination="@id/exerciseEditFragment" />
-        <action
-            android:id="@+id/action_detailListFragment_to_topicEditFragment"
-            app:destination="@id/topicEditFragment" />
-    </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
         android:name="hu.kristof.nagy.mathapp.view.exercise.ExerciseFragment"
@@ -46,34 +12,34 @@
         <argument
             android:name="exercise"
             app:argType="hu.kristof.nagy.mathapp.data.entity.Exercise" />
-        <action
-            android:id="@+id/action_exerciseFragment_to_detailListFragment"
-            app:destination="@id/detailListFragment" />
         <argument
             android:name="title"
             app:argType="string" />
+        <action
+            android:id="@+id/action_exerciseFragment_to_browseFragment"
+            app:destination="@id/browseFragment" />
     </fragment>
     <fragment
         android:id="@+id/exerciseCreateFragment"
         android:name="hu.kristof.nagy.mathapp.view.exercise.ExerciseCreateFragment"
         android:label="Feladat létrehozása" >
-        <action
-            android:id="@+id/action_exerciseCreateFragment_to_detailListFragment"
-            app:destination="@id/detailListFragment" />
         <argument
             android:name="parentTopicName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_exerciseCreateFragment_to_browseFragment"
+            app:destination="@id/browseFragment" />
     </fragment>
     <fragment
         android:id="@+id/exerciseEditFragment"
         android:name="hu.kristof.nagy.mathapp.view.exercise.ExerciseEditFragment"
         android:label="ExerciseEditFragment" >
-        <action
-            android:id="@+id/action_exerciseEditFragment_to_detailListFragment"
-            app:destination="@id/detailListFragment" />
         <argument
             android:name="exercise"
             app:argType="hu.kristof.nagy.mathapp.data.entity.Exercise" />
+        <action
+            android:id="@+id/action_exerciseEditFragment_to_browseFragment"
+            app:destination="@id/browseFragment" />
     </fragment>
     <fragment
         android:id="@+id/topicEditFragment"
@@ -83,5 +49,29 @@
         <argument
             android:name="topic"
             app:argType="hu.kristof.nagy.mathapp.data.entity.Topic" />
+        <action
+            android:id="@+id/action_topicEditFragment_to_browseFragment"
+            app:destination="@id/browseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/browseFragment"
+        android:name="hu.kristof.nagy.mathapp.view.browse.BrowseFragment"
+        android:label="fragment_browse"
+        tools:layout="@layout/fragment_browse" >
+        <action
+            android:id="@+id/action_browseFragment_to_exerciseCreateFragment"
+            app:destination="@id/exerciseCreateFragment" />
+        <action
+            android:id="@+id/action_browseFragment_to_exerciseEditFragment"
+            app:destination="@id/exerciseEditFragment" />
+        <action
+            android:id="@+id/action_browseFragment_to_exerciseFragment"
+            app:destination="@id/exerciseFragment" />
+        <action
+            android:id="@+id/action_browseFragment_to_topicEditFragment"
+            app:destination="@id/topicEditFragment" />
+        <action
+            android:id="@+id/action_browseFragment_self"
+            app:destination="@id/browseFragment" />
     </fragment>
 </navigation>
