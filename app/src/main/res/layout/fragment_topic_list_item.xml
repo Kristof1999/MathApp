@@ -55,6 +55,7 @@
                 android:layout_marginEnd="8dp"
                 android:contentDescription="Edit topic"
                 android:minHeight="48dp"
+                android:onClick="@{() -> clickListener.onEdit(topic)}"
                 app:layout_constraintEnd_toStartOf="@+id/topic_delete_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_edit_24" />
@@ -67,6 +68,7 @@
                 android:layout_marginEnd="8dp"
                 android:contentDescription="See summary of topic"
                 android:minHeight="48dp"
+                android:onClick="@{() -> clickListener.onSummaryNav(topic)}"
                 app:layout_constraintEnd_toStartOf="@+id/topic_edit_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_read_more_24" />
