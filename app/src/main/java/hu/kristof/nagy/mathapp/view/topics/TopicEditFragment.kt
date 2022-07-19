@@ -12,12 +12,17 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
+import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Topic
 
+@AndroidEntryPoint
 class TopicEditFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +34,8 @@ class TopicEditFragment : Fragment() {
         // instead of data binding
         val webView = view.findViewById<WebView>(R.id.topic_edit_web_view)
         val args: TopicEditFragmentArgs by navArgs()
+        val vieModel: TopicEditViewModel by viewModels()
+        val navController = findNavController()
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
@@ -49,7 +56,12 @@ class TopicEditFragment : Fragment() {
         }
         webView.apply {
             addJavascriptInterface(
-                WebAppInterface(requireContext(), args.topic),
+                WebAppInterface(
+                    requireContext(),
+                    navController,
+                    vieModel,
+                    args.topic
+                ),
                 "TopicEditInterface"
             )
             loadUrl("https://appassets.androidplatform.net/assets/topicEdit/topicEdit.html")
@@ -60,6 +72,8 @@ class TopicEditFragment : Fragment() {
 
     class WebAppInterface(
         private val context: Context,
+        private val navController: NavController,
+        private val viewModel: TopicEditViewModel,
         private val topic: Topic
     ) {
         @JavascriptInterface
@@ -70,7 +84,8 @@ class TopicEditFragment : Fragment() {
 
         @JavascriptInterface
         fun save(name:String, summary: String) {
-            // call viewmodel
+            viewModel.save(topic, name, summary)
+            // TODO: add navigation back to list
         }
 
         @JavascriptInterface
