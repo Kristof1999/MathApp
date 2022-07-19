@@ -20,7 +20,7 @@ class TopicViewModel @Inject constructor(
 
     fun loadTopics(parentTopicName: String) {
         _topics.value = if (parentTopicName.isEmpty()) {
-            db.topicDao().loadHighLevelTopics().value
+            db.topicDao().loadTopLevelTopics().value
         } else {
             db.topicDao().loadTopicsFor(parentTopicName).value
         }

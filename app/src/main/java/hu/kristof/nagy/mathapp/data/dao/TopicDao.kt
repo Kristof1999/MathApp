@@ -6,8 +6,8 @@ import hu.kristof.nagy.mathapp.data.entity.Topic
 
 @Dao
 interface TopicDao {
-    @Query("SELECT * FROM topic WHERE topic.parentTopicName IS NULL")
-    fun loadHighLevelTopics(): LiveData<List<Topic>>
+    @Query("SELECT * FROM topic WHERE topic.parentTopicName IS ''")
+    fun loadTopLevelTopics(): LiveData<List<Topic>>
 
     @Query("SELECT * FROM topic WHERE topic.parentTopicName IS :topicName")
     fun loadTopicsFor(topicName: String): LiveData<List<Topic>>
