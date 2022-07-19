@@ -60,10 +60,13 @@ class TopicEditFragment : Fragment() {
         private val topic: Topic
     ) {
         @JavascriptInterface
+        fun getName(): String = topic.topicName
+
+        @JavascriptInterface
         fun getSummary(): String = topic.summary
 
         @JavascriptInterface
-        fun save(summary: String) {
+        fun save(name:String, summary: String) {
             // call viewmodel
         }
     }
