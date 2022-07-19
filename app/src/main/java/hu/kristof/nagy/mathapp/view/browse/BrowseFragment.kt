@@ -19,8 +19,8 @@ import hu.kristof.nagy.mathapp.data.MathAppDatabase
 import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
-import hu.kristof.nagy.mathapp.view.topics.TopicListItemViewModel
-import hu.kristof.nagy.mathapp.view.topics.detail.*
+import hu.kristof.nagy.mathapp.view.topics.detail.DetailListFragmentArgs
+import hu.kristof.nagy.mathapp.view.topics.detail.DetailListFragmentDirections
 import javax.inject.Inject
 
 @AndroidEntryPoint

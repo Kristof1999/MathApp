@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.topics
+package hu.kristof.nagy.mathapp.view.browse
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +17,7 @@ class TopicListViewModel @Inject constructor(
 
     fun createHighLevelTopic(topicName: String) {
         viewModelScope.launch {
-            db.topicDao().create(Topic(null, topicName, null, null))
+            db.topicDao().create(Topic(null, topicName, null, ""))
         }
     }
 }

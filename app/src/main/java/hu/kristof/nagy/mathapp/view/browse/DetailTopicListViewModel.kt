@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.topics.detail
+package hu.kristof.nagy.mathapp.view.browse
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +14,7 @@ class DetailTopicListViewModel(
 
     fun createTopic(topicName: String, parentTopicName: String) {
         viewModelScope.launch {
-            db.topicDao().create(Topic(null, topicName, parentTopicName, null))
+            db.topicDao().create(Topic(null, topicName, parentTopicName, ""))
         }
     }
 }

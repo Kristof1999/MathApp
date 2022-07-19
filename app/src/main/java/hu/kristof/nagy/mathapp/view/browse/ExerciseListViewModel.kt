@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.topics.detail
+package hu.kristof.nagy.mathapp.view.browse
 
 import androidx.lifecycle.ViewModel
 import hu.kristof.nagy.mathapp.data.MathAppDatabase
