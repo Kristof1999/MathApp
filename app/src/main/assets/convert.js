@@ -19,6 +19,10 @@ async function convert(inputId, buttonId, outputId) {
         let prevNonMathBlock = input.substring(prevMathBlockEndIdx + 1, mathBlockStartIdx);
         let mathBlock = input.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
 
+        // TODO: handle errors
+        // ehhez kellhet még egy paraméter,
+        // amely a WebAppInterface lesz.
+        // Ide lehet a hibaüzenetet írni.
         let node = await convertHelper(mathBlock);
         output.innerHTML += prevNonMathBlock;
         output.innerHTML += node.innerHTML;
