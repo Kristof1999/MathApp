@@ -105,7 +105,7 @@ class ExerciseFragment : Fragment() {
             if (answer == exercise.answer) {
                 showToast("Jó válasz!")
                 val directions = ExerciseFragmentDirections
-                    .actionExerciseFragmentToDetailListFragment(exercise.parentTopicName)
+                    .actionExerciseFragmentToBrowseFragment(exercise.parentTopicName)
                 navController.navigate(directions)
             } else {
                 showToast("Rossz válasz!")

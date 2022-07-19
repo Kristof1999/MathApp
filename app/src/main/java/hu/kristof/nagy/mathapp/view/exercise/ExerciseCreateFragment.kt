@@ -77,7 +77,7 @@ class ExerciseCreateFragment : Fragment() {
             exerciseCreateViewModel.create(name, question, answer, parentTopicName)
 
             val directions = ExerciseCreateFragmentDirections
-                .actionExerciseCreateFragmentToDetailListFragment(parentTopicName)
+                .actionExerciseCreateFragmentToBrowseFragment(parentTopicName)
             navController.navigate(directions)
         }
 
