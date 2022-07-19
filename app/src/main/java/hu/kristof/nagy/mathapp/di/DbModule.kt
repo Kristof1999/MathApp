@@ -50,4 +50,9 @@ object DbModule {
             )
         }
     }
+    private val MIGRATION_5_6 = object : Migration(5, 6) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE topic ADD COLUMN summary TEXT")
+        }
+    }
 }
