@@ -9,6 +9,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -22,6 +23,7 @@ import androidx.webkit.WebViewClientCompat
 import com.google.android.material.snackbar.Snackbar
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Exercise
+import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.databinding.FragmentExerciseBinding
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import hu.kristof.nagy.mathapp.view.step.LatexParser
@@ -46,7 +48,6 @@ class ExerciseFragment : Fragment() {
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
             .build()
         binding.exerciseWebView.webViewClient = object : WebViewClientCompat() {
-            @RequiresApi(21)
             override fun shouldInterceptRequest(
                 view: WebView?,
                 request: WebResourceRequest
@@ -63,14 +64,14 @@ class ExerciseFragment : Fragment() {
         binding.exerciseWebView.apply {
             addJavascriptInterface(
                 WebAppInterface(
-                    this,
                     requireContext(),
                     parentFragmentManager,
                     viewLifecycleOwner,
                     lifecycle.coroutineScope,
                     args.exercise,
                     navController,
-                    binding.exerciseWebView
+                    binding.exerciseWebView,
+                    args.topicId
                 ),
                 "ExerciseInterface"
             )
@@ -81,20 +82,20 @@ class ExerciseFragment : Fragment() {
     }
 
     class WebAppInterface(
-        private val view: View,
         private val context: Context,
         private val fragmentManager: FragmentManager,
         private val lifecycleOwner: LifecycleOwner,
         private val scope: CoroutineScope,
         private val exercise: Exercise,
         private val navController: NavController,
-        private val exerciseWebView: WebView
+        private val exerciseWebView: WebView,
+        private val topicId: Long
     ) {
         private val steps = mutableListOf<Expression>()
 
         @JavascriptInterface
         fun showToast(str: String) {
-            Snackbar.make(view, str, Snackbar.LENGTH_LONG).show()
+            Toast.makeText(context, str, Toast.LENGTH_LONG).show()
         }
 
         @JavascriptInterface
@@ -110,6 +111,17 @@ class ExerciseFragment : Fragment() {
             } else {
                 showToast("Rossz válasz!")
             }
+        }
+
+        @JavascriptInterface
+        fun reviewTheory() {
+            // maybe disable/hide the button instead of this
+            if (topicId == 0L) {
+                return
+            }
+            val directions = ExerciseFragmentDirections
+                .actionExerciseFragmentToTopicSummaryFragment(topicId)
+            navController.navigate(directions)
         }
 
         @JavascriptInterface
