@@ -48,9 +48,9 @@ class TopicSummaryFragment : Fragment() {
         webView.apply {
             addJavascriptInterface(
                 WebAppInterface(args.topic),
-                "TopicEditInterface"
+                "TopicSummaryInterface"
             )
-            loadUrl("https://appassets.androidplatform.net/assets/topicEdit/topicEdit.html")
+            loadUrl("https://appassets.androidplatform.net/assets/topicSummary/topicSummary.html")
         }
 
         return view
