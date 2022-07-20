@@ -43,7 +43,7 @@ class BrowseFragment : Fragment() {
             .get(TopicListViewModel::class.java)
 
         initList(
-            exerciseListViewModel, topicListViewModel, browseList
+            exerciseListViewModel, topicListViewModel, browseList, args.parentTopicId
         )
 
         exerciseCreate(exerciseCreateBtn, args.parentTopicName)
@@ -82,18 +82,19 @@ class BrowseFragment : Fragment() {
     private fun initList(
         exerciseListViewModel: ExerciseListViewModel,
         topicListViewModel: TopicListViewModel,
-        browseList: RecyclerView
+        browseList: RecyclerView,
+        parentTopicId: Long
     ) {
         val adapter = BrowseRecyclerViewAdapter(ExerciseClickListener(
             editListener = { exercise ->
                 val directions = BrowseFragmentDirections
                     .actionBrowseFragmentToExerciseEditFragment(exercise)
-                findNavController().navigate(directions);
+                findNavController().navigate(directions)
             },
             deleteListener = { exercise -> exerciseListViewModel.delete(exercise) },
             detailNavListener = { exercise ->
                 val directions = BrowseFragmentDirections
-                    .actionBrowseFragmentToExerciseFragment(exercise, exercise.name)
+                    .actionBrowseFragmentToExerciseFragment(exercise, exercise.name, parentTopicId)
                 findNavController().navigate(directions)
             }
         ), TopicClickListener(
@@ -105,12 +106,12 @@ class BrowseFragment : Fragment() {
             },
             editListener = { topic ->
                 val directions = BrowseFragmentDirections
-                    .actionBrowseFragmentToTopicEditFragment(topic)
+                    .actionBrowseFragmentToTopicEditFragment(topic.id!!, parentTopicId)
                 findNavController().navigate(directions)
             },
             summaryNavListener = { topic ->
                 val directions = BrowseFragmentDirections
-                    .actionBrowseFragmentToTopicSummaryFragment(topic)
+                    .actionBrowseFragmentToTopicSummaryFragment(topic.id!!)
                 findNavController().navigate(directions)
             }
         ))
