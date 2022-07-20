@@ -10,11 +10,7 @@ class TopicViewModel(
     private val db: MathAppDatabase,
     parentTopicName: String
 ) : ViewModel() {
-    val topics = if (parentTopicName.isEmpty()) {
-        db.topicDao().loadTopLevelTopics()
-    } else {
-        db.topicDao().loadTopicsFor(parentTopicName)
-    }
+    val topics = db.topicDao().loadTopicsFor(parentTopicName)
 
     fun createTopic(topicName: String, parentTopicName: String) {
         viewModelScope.launch {
