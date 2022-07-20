@@ -80,7 +80,7 @@ class BrowseFragment : Fragment() {
     }
 
     private fun initList(
-        listViewModel: ExerciseListViewModel,
+        exerciseListViewModel: ExerciseListViewModel,
         topicListViewModel: TopicListViewModel,
         browseList: RecyclerView
     ) {
@@ -90,7 +90,7 @@ class BrowseFragment : Fragment() {
                     .actionBrowseFragmentToExerciseEditFragment(exercise)
                 findNavController().navigate(directions);
             },
-            deleteListener = { exercise -> listViewModel.delete(exercise) },
+            deleteListener = { exercise -> exerciseListViewModel.delete(exercise) },
             detailNavListener = { exercise ->
                 val directions = BrowseFragmentDirections
                     .actionBrowseFragmentToExerciseFragment(exercise, exercise.name)
@@ -121,7 +121,7 @@ class BrowseFragment : Fragment() {
                 addAll(exercises)
             }
         }
-        listViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
+        exerciseListViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
             val topics = list.value!!.takeWhile { item -> item is Topic }
             list.value = mutableListOf<Any>().apply {
                 addAll(topics)
