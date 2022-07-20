@@ -43,8 +43,7 @@ class BrowseFragment : Fragment() {
             .get(TopicListViewModel::class.java)
 
         initList(
-            exerciseListViewModel, topicListViewModel,
-            browseList, args.parentTopicName
+            exerciseListViewModel, topicListViewModel, browseList
         )
 
         exerciseCreate(exerciseCreateBtn, args.parentTopicName)
@@ -83,8 +82,7 @@ class BrowseFragment : Fragment() {
     private fun initList(
         listViewModel: ExerciseListViewModel,
         topicListViewModel: TopicListViewModel,
-        browseList: RecyclerView,
-        parentTopicName: String
+        browseList: RecyclerView
     ) {
         val adapter = BrowseRecyclerViewAdapter(ExerciseClickListener(
             editListener = { exercise ->
