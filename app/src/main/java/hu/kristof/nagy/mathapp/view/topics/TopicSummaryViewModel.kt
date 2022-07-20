@@ -11,18 +11,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TopicEditViewModel @Inject constructor(
+class TopicSummaryViewModel @Inject constructor(
     private val db: MathAppDatabase
 ) : ViewModel() {
     private val _topic = MutableLiveData<Topic>()
     val topic: LiveData<Topic>
         get() = _topic
-
-    fun save(oldTopic: Topic, name: String, summary: String) {
-        viewModelScope.launch {
-            db.topicDao().edit(Topic(oldTopic.id, name, oldTopic.parentTopicName, summary))
-        }
-    }
 
     fun loadTopic(topicId: Long) {
         viewModelScope.launch {
