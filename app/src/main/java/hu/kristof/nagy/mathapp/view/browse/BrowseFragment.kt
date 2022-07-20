@@ -41,7 +41,9 @@ class BrowseFragment : Fragment() {
             .get(ExerciseListViewModel::class.java)
         val listItemViewModel: ExerciseListItemViewModel by viewModels()
         val topicListItemViewModel: TopicListItemViewModel by viewModels()
-        val topicViewModel: TopicViewModel by viewModels()
+        val topicViewModelFactory = TopicViewModelFactory(db, args. parentTopicName)
+        val topicViewModel = ViewModelProvider(this, topicViewModelFactory)
+            .get(TopicViewModel::class.java)
 
         initList(
             listItemViewModel, listViewModel,
@@ -127,7 +129,6 @@ class BrowseFragment : Fragment() {
                 addAll(exercises)
             }
         }
-        topicViewModel.loadTopics(parentTopicName)
         listViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
             val topics = list.value!!.takeWhile { item -> item is Topic }
             list.value = mutableListOf<Any>().apply {
