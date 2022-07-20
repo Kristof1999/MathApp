@@ -1,9 +1,6 @@
 function onLoad() {
-    let nameElement = document.getElementById("topicName");
-    nameElement.value = TopicEditInterface.getName();
-
-    let summaryElement = document.getElementById("input");
-    summaryElement.value = TopicEditInterface.getSummary();
+    TopicEditInterface.setName();
+    TopicEditInterface.setSummary();
 }
 
 function save() {

@@ -10,9 +10,9 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,7 +20,6 @@ import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
-import hu.kristof.nagy.mathapp.data.entity.Topic
 
 @AndroidEntryPoint
 class TopicEditFragment : Fragment() {
@@ -34,14 +33,15 @@ class TopicEditFragment : Fragment() {
         // instead of data binding
         val webView = view.findViewById<WebView>(R.id.topic_edit_web_view)
         val args: TopicEditFragmentArgs by navArgs()
-        val vieModel: TopicEditViewModel by viewModels()
+        val viewModel: TopicEditViewModel by viewModels()
         val navController = findNavController()
+        viewModel.loadTopic(args.topicId)
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
             .build()
         webView.webViewClient = object : WebViewClientCompat() {
-            @RequiresApi(21)
+
             override fun shouldInterceptRequest(
                 view: WebView?,
                 request: WebResourceRequest
@@ -59,8 +59,10 @@ class TopicEditFragment : Fragment() {
                 WebAppInterface(
                     requireContext(),
                     navController,
-                    vieModel,
-                    args.topic
+                    viewModel,
+                    viewLifecycleOwner,
+                    webView,
+                    args.parentTopicId
                 ),
                 "TopicEditInterface"
             )
@@ -74,20 +76,42 @@ class TopicEditFragment : Fragment() {
         private val context: Context,
         private val navController: NavController,
         private val viewModel: TopicEditViewModel,
-        private val topic: Topic
+        private val lifecycleOwner: LifecycleOwner,
+        private val webView: WebView,
+        private val parentTopicId: Long
     ) {
         @JavascriptInterface
-        fun getName(): String = topic.topicName
+        fun setName() {
+            viewModel.topic.observe(lifecycleOwner) { topic ->
+                webView.post {
+                    webView.evaluateJavascript(
+                        "let nameElement = document.getElementById('topicName');" +
+                                "nameElement.value = '${topic.topicName}';", null
+                    )
+                }
+            }
+        }
 
         @JavascriptInterface
-        fun getSummary(): String = topic.summary
+        fun setSummary() {
+            viewModel.topic.observe(lifecycleOwner) { topic ->
+                webView.post {
+                    webView.evaluateJavascript(
+                        "let summaryElement = document.getElementById('input');" +
+                                "summaryElement.value = '${topic.summary}';", null
+                    )
+                }
+            }
+        }
 
         @JavascriptInterface
         fun save(name:String, summary: String) {
-            viewModel.save(topic, name, summary)
-            val directions = TopicEditFragmentDirections
-                .actionTopicEditFragmentToBrowseFragment(topic.parentTopicName)
-            navController.navigate(directions)
+            viewModel.topic.observe(lifecycleOwner) { topic ->
+                viewModel.save(topic, name, summary)
+                val directions = TopicEditFragmentDirections
+                    .actionTopicEditFragmentToBrowseFragment(topic.parentTopicName, parentTopicId)
+                navController.navigate(directions)
+            }
         }
 
         @JavascriptInterface

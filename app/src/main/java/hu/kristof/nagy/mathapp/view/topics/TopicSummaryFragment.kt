@@ -11,13 +11,19 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
+import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Topic
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class TopicSummaryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +34,8 @@ class TopicSummaryFragment : Fragment() {
         val webView = view.findViewById<WebView>(R.id.topic_summary_web_view)
 
         val args: TopicSummaryFragmentArgs by navArgs()
+        val viewModel: TopicSummaryViewModel by viewModels()
+        viewModel.loadTopic(args.topicId)
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
@@ -47,7 +55,12 @@ class TopicSummaryFragment : Fragment() {
         }
         webView.apply {
             addJavascriptInterface(
-                WebAppInterface(args.topic),
+                WebAppInterface(
+                    viewModel,
+                    webView,
+                    viewLifecycleOwner,
+                    lifecycleScope
+                ),
                 "TopicSummaryInterface"
             )
             loadUrl("https://appassets.androidplatform.net/assets/topicSummary/topicSummary.html")
@@ -57,9 +70,24 @@ class TopicSummaryFragment : Fragment() {
     }
 
     class WebAppInterface(
-        private val topic: Topic
+        private val viewModel: TopicSummaryViewModel,
+        private val webView: WebView,
+        private val lifecycleOwner: LifecycleOwner,
+        private val scope: CoroutineScope
     ) {
         @JavascriptInterface
-        fun getSummary(): String = topic.summary
+        fun setSummary() {
+            scope.launch {
+                viewModel.topic.observe(lifecycleOwner) { topic ->
+                    webView.post {
+                        webView.evaluateJavascript(
+                            "let summary = '${topic.summary}';" +
+                                    "let output = document.getElementById('output');" +
+                                    "convertOnLoad(summary, output);", null
+                        )
+                    }
+                }
+            }
+        }
     }
 }
