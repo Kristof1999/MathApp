@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -37,29 +36,26 @@ class BrowseFragment : Fragment() {
         val exerciseCreateBtn = view.findViewById<Button>(R.id.browse_exercise_create_btn)
         val args: BrowseFragmentArgs by navArgs()
         val exerciseListViewModelFactory = ExerciseListViewModelFactory(db, args.parentTopicName)
-        val listViewModel = ViewModelProvider(this, exerciseListViewModelFactory)
+        val exerciseListViewModel = ViewModelProvider(this, exerciseListViewModelFactory)
             .get(ExerciseListViewModel::class.java)
-        val listItemViewModel: ExerciseListItemViewModel by viewModels()
-        val topicListItemViewModel: TopicListItemViewModel by viewModels()
-        val topicViewModelFactory = TopicViewModelFactory(db, args. parentTopicName)
-        val topicViewModel = ViewModelProvider(this, topicViewModelFactory)
-            .get(TopicViewModel::class.java)
+        val topicListViewModelFactory = TopicListViewModelFactory(db, args. parentTopicName)
+        val topicListViewModel = ViewModelProvider(this, topicListViewModelFactory)
+            .get(TopicListViewModel::class.java)
 
         initList(
-            listItemViewModel, listViewModel,
-            topicViewModel, topicListItemViewModel,
+            exerciseListViewModel, topicListViewModel,
             browseList, args.parentTopicName
         )
 
         exerciseCreate(exerciseCreateBtn, args.parentTopicName)
-        topicCreate(topicCreateBtn, topicViewModel, args.parentTopicName)
+        topicCreate(topicCreateBtn, topicListViewModel, args.parentTopicName)
 
         return view
     }
 
     private fun topicCreate(
         topicCreateBtn: Button,
-        topicViewModel: TopicViewModel,
+        topicListViewModel: TopicListViewModel,
         parentTopicName: String
     ) {
         val dialog = TextDialogFragment.instanceOf(
@@ -69,7 +65,7 @@ class BrowseFragment : Fragment() {
             dialog.show(parentFragmentManager, "topicCreation")
         }
         dialog.text.observe(viewLifecycleOwner) { topicName ->
-            topicViewModel.createTopic(topicName, parentTopicName)
+            topicListViewModel.createTopic(topicName, parentTopicName)
         }
     }
 
@@ -85,10 +81,8 @@ class BrowseFragment : Fragment() {
     }
 
     private fun initList(
-        listItemViewModel: ExerciseListItemViewModel,
         listViewModel: ExerciseListViewModel,
-        topicViewModel: TopicViewModel,
-        detailTopicListItemViewModel: TopicListItemViewModel,
+        topicListViewModel: TopicListViewModel,
         browseList: RecyclerView,
         parentTopicName: String
     ) {
@@ -98,14 +92,14 @@ class BrowseFragment : Fragment() {
                     .actionBrowseFragmentToExerciseEditFragment(exercise)
                 findNavController().navigate(directions);
             },
-            deleteListener = { exercise -> listItemViewModel.delete(exercise) },
+            deleteListener = { exercise -> listViewModel.delete(exercise) },
             detailNavListener = { exercise ->
                 val directions = BrowseFragmentDirections
                     .actionBrowseFragmentToExerciseFragment(exercise, exercise.name)
                 findNavController().navigate(directions)
             }
         ), TopicClickListener(
-            deleteListener = { topic -> detailTopicListItemViewModel.delete(topic) },
+            deleteListener = { topic -> topicListViewModel.delete(topic) },
             detailNavListener = { topic ->
                 val directions = BrowseFragmentDirections
                     .actionBrowseFragmentSelf(topic.topicName)
@@ -122,7 +116,7 @@ class BrowseFragment : Fragment() {
         // TODO: encapsulate in a class
         // Invariant: the below list contains the topics first, and then the exercises.
         val list = MutableLiveData(mutableListOf<Any>())
-        topicViewModel.topics.observe(viewLifecycleOwner) { topics ->
+        topicListViewModel.topics.observe(viewLifecycleOwner) { topics ->
             val exercises = list.value!!.takeLastWhile { item -> item is Exercise }
             list.value = mutableListOf<Any>().apply {
                 addAll(topics)
