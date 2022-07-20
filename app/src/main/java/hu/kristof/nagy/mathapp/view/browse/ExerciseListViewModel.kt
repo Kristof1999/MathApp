@@ -7,5 +7,5 @@ class ExerciseListViewModel(
     parentTopicName: String?,
     private val db: MathAppDatabase
 ) : ViewModel() {
-    val exercises = db.exerciseDao().loadAllForTopic(parentTopicName)
+    val exercises = db.exerciseDao().loadExercisesFor(parentTopicName)
 }
