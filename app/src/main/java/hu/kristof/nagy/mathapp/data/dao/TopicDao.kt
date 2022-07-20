@@ -9,6 +9,9 @@ interface TopicDao {
     @Query("SELECT * FROM topic WHERE topic.parentTopicName IS :topicName")
     fun loadTopicsFor(topicName: String): LiveData<List<Topic>>
 
+    @Query("SELECT * FROM topic WHERE id IS :topicId")
+    suspend fun loadTopic(topicId: Long): Topic
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun create(topic: Topic)
 
