@@ -12,11 +12,10 @@ import kotlinx.parcelize.Parcelize
  * might even have exercises where one should categorise a given diff. eq..
  * A summary of the related theory can also be included.
  */
-@Parcelize
 @Entity
 data class Topic(
     @PrimaryKey(autoGenerate = true) val id: Long?,
     val topicName: String,
     val parentTopicName: String,
     val summary: String
-) : Parcelable
+)
