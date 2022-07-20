@@ -87,9 +87,6 @@
         android:name="hu.kristof.nagy.mathapp.view.topics.TopicSummaryFragment"
         android:label="fragment_topic_summary"
         tools:layout="@layout/fragment_topic_summary" >
-        <action
-            android:id="@+id/action_topicSummaryFragment_to_browseFragment"
-            app:destination="@id/browseFragment" />
         <argument
             android:name="topic"
             app:argType="hu.kristof.nagy.mathapp.data.entity.Topic" />
