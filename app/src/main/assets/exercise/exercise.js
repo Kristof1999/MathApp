@@ -1,3 +1,7 @@
+function reviewTheory() {
+    ExerciseInterface.reviewTheory();
+}
+
 async function onLoad() {
     let input = ExerciseInterface.getExerciseQuestion();
     output = document.getElementById("question");
