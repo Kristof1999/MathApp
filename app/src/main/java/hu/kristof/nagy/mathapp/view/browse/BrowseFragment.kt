@@ -104,7 +104,9 @@ class BrowseFragment : Fragment() {
                 findNavController().navigate(directions)
             },
             editListener = { topic ->
-
+                val directions = BrowseFragmentDirections
+                    .actionBrowseFragmentToTopicEditFragment(topic)
+                findNavController().navigate(directions)
             },
             summaryNavListener = { topic ->
 

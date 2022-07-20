@@ -85,7 +85,9 @@ class TopicEditFragment : Fragment() {
         @JavascriptInterface
         fun save(name:String, summary: String) {
             viewModel.save(topic, name, summary)
-            // TODO: add navigation back to list
+            val directions = TopicEditFragmentDirections
+                .actionTopicEditFragmentToBrowseFragment(topic.parentTopicName)
+            navController.navigate(directions)
         }
 
         @JavascriptInterface
