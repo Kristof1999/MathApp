@@ -20,7 +20,7 @@ object DbModule {
     @Provides
     fun provideDb(@ApplicationContext context: Context): MathAppDatabase {
         return Room.databaseBuilder(context, MathAppDatabase::class.java, "MathApp")
-            .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+            .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
             .build()
     }
 
@@ -53,6 +53,28 @@ object DbModule {
     private val MIGRATION_5_6 = object : Migration(5, 6) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL("ALTER TABLE topic ADD COLUMN summary TEXT NOT NULL DEFAULT ''")
+        }
+    }
+    private val MIGRATION_6_7 = object : Migration(6, 7) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.beginTransaction()
+            try {
+                database.execSQL("CREATE TABLE topic2(" +
+                        "id INTEGER PRIMARY KEY," +
+                        "topicName TEXT NOT NULL," +
+                        "parentTopicName TEXT NOT NULL," +
+                        "summary TEXT NOT NULL DEFAULT '')"
+                )
+                database.execSQL("UPDATE topic " +
+                        "SET parentTopicName = ''" +
+                        "WHERE parentTopicName IS NULL")
+                database.execSQL("INSERT INTO topic2 SELECT * FROM topic ")
+                database.execSQL("DROP TABLE topic")
+                database.execSQL("ALTER TABLE topic2 RENAME TO topic")
+                database.setTransactionSuccessful()
+            } finally {
+                database.endTransaction()
+            }
         }
     }
 }
