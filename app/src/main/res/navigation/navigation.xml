@@ -18,6 +18,12 @@
         <action
             android:id="@+id/action_exerciseFragment_to_browseFragment"
             app:destination="@id/browseFragment" />
+        <argument
+            android:name="topicId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_exerciseFragment_to_topicSummaryFragment"
+            app:destination="@id/topicSummaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/exerciseCreateFragment"
@@ -48,8 +54,8 @@
         android:label="fragment_topic_edit"
         tools:layout="@layout/fragment_topic_edit" >
         <argument
-            android:name="topic"
-            app:argType="hu.kristof.nagy.mathapp.data.entity.Topic" />
+            android:name="topicId"
+            app:argType="long" />
         <action
             android:id="@+id/action_topicEditFragment_to_browseFragment"
             app:destination="@id/browseFragment" />
@@ -88,7 +94,7 @@
         android:label="fragment_topic_summary"
         tools:layout="@layout/fragment_topic_summary" >
         <argument
-            android:name="topic"
-            app:argType="hu.kristof.nagy.mathapp.data.entity.Topic" />
+            android:name="topicId"
+            app:argType="long" />
     </fragment>
 </navigation>
