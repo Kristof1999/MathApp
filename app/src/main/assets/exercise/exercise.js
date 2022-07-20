@@ -1,34 +1,7 @@
-async function onLoadHelper(mathBlock) {
-    return MathJax.tex2chtmlPromise(mathBlock);
-}
-
 async function onLoad() {
     let input = ExerciseInterface.getExerciseQuestion();
-
     output = document.getElementById("question");
-    output.innerHTML = '';
-
-    let prevMathBlockStartIdx = -1;
-    let prevMathBlockEndIdx = -1;
-    let mathBlockStartIdx = input.indexOf("$");
-    let mathBlockEndIdx = input.indexOf("$", mathBlockStartIdx + 1);
-    while (mathBlockEndIdx != -1) {
-        let prevNonMathBlock = input.substring(prevMathBlockEndIdx + 1, mathBlockStartIdx);
-        let mathBlock = input.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
-
-        let node = await onLoadHelper(mathBlock);
-        output.innerHTML += prevNonMathBlock;
-        output.innerHTML += node.innerHTML;
-        MathJax.startup.document.clear();
-        MathJax.startup.document.updateDocument();
-
-        prevMathBlockStartIdx = mathBlockStartIdx;
-        prevMathBlockEndIdx = mathBlockEndIdx;
-        mathBlockStartIdx = input.indexOf("$", prevMathBlockEndIdx);
-        mathBlockEndIdx = input.indexOf("$", mathBlockStartIdx + 1);
-    }
-    let lastNonMathBlock = input.substring(prevMathBlockEndIdx + 1);
-    output.innerHTML += lastNonMathBlock;
+    convertOnLoad(input, output);
 }
 
 function addStep(input) {
