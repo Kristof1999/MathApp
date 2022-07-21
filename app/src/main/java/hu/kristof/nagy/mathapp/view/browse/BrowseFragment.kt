@@ -105,7 +105,7 @@ class BrowseFragment : Fragment() {
             deleteListener = { topic -> topicListViewModel.delete(topic) },
             detailNavListener = { topic ->
                 val directions = BrowseFragmentDirections
-                    .actionBrowseFragmentSelf(topic.parentTopicId)
+                    .actionBrowseFragmentSelf(topic.id!!)
                 findNavController().navigate(directions)
             },
             editListener = { topic ->
