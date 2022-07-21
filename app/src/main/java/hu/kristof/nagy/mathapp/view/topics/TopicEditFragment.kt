@@ -32,8 +32,6 @@ class TopicEditFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_topic_edit, container, false)
 
-        // maybe try using only this in other cases too (ExerciseFragment, ...)
-        // instead of data binding
         val webView = view.findViewById<WebView>(R.id.topic_edit_web_view)
         val args: TopicEditFragmentArgs by navArgs()
         val viewModel: TopicEditViewModel by viewModels()

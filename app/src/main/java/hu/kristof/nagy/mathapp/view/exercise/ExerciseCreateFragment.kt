@@ -19,22 +19,22 @@ import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import dagger.hilt.android.AndroidEntryPoint
-import hu.kristof.nagy.mathapp.databinding.FragmentExerciseCreateBinding
+import hu.kristof.nagy.mathapp.R
 
 @AndroidEntryPoint
 class ExerciseCreateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val binding = hu.kristof.nagy.mathapp.databinding.FragmentExerciseCreateBinding.inflate(
-            inflater, container, false
-        )
+    ): View? {
+        val view = inflater.inflate(R.id.exerciseCreateFragment, container, false)
+
+        val webView = view.findViewById<WebView>(R.id.exercise_create_web_view)
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
             .build()
-        binding.exerciseCreateWebView.webViewClient = object : WebViewClientCompat() {
+        webView.webViewClient = object : WebViewClientCompat() {
             @RequiresApi(21)
             override fun shouldInterceptRequest(
                 view: WebView?,
@@ -43,7 +43,7 @@ class ExerciseCreateFragment : Fragment() {
                 return assetLoader.shouldInterceptRequest(request.url)
             }
         }
-        binding.exerciseCreateWebView.settings.apply {
+        webView.settings.apply {
             allowFileAccess = false
             allowContentAccess = false
             javaScriptEnabled = true
@@ -52,7 +52,7 @@ class ExerciseCreateFragment : Fragment() {
         val exerciseCreateViewModel: ExerciseCreateViewModel by viewModels()
         val args: ExerciseCreateFragmentArgs by navArgs()
         val navController = findNavController()
-        binding.exerciseCreateWebView.apply {
+        webView.apply {
             addJavascriptInterface(
                 WebAppInterface(
                 requireContext(),
@@ -63,7 +63,7 @@ class ExerciseCreateFragment : Fragment() {
             loadUrl("https://appassets.androidplatform.net/assets/exerciseCreate/exerciseCreate.html")
         }
 
-        return binding.root
+        return view
     }
 
     class WebAppInterface(

@@ -19,8 +19,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import dagger.hilt.android.AndroidEntryPoint
+import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Exercise
-import hu.kristof.nagy.mathapp.databinding.FragmentExerciseEditBinding
 
 @AndroidEntryPoint
 class ExerciseEditFragment : Fragment() {
@@ -28,14 +28,14 @@ class ExerciseEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentExerciseEditBinding.inflate(
-            inflater, container, false
-        )
+        val view = inflater.inflate(R.id.exerciseEditFragment, container, false)
+
+        val webView = view.findViewById<WebView>(R.id.exercise_web_view)
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
             .build()
-        binding.exerciseEditWebView.webViewClient = object : WebViewClientCompat() {
+        webView.webViewClient = object : WebViewClientCompat() {
             @RequiresApi(21)
             override fun shouldInterceptRequest(
                 view: WebView?,
@@ -44,7 +44,7 @@ class ExerciseEditFragment : Fragment() {
                 return assetLoader.shouldInterceptRequest(request.url)
             }
         }
-        binding.exerciseEditWebView.settings.apply {
+        webView.settings.apply {
             allowFileAccess = false
             allowContentAccess = false
             javaScriptEnabled = true
@@ -53,7 +53,7 @@ class ExerciseEditFragment : Fragment() {
         val viewModel: ExerciseEditViewModel by viewModels()
         val args: ExerciseEditFragmentArgs by navArgs()
         val navController = findNavController()
-        binding.exerciseEditWebView.apply {
+        webView.apply {
             addJavascriptInterface(
                 WebAppInterface(
                     requireContext(),
@@ -64,7 +64,7 @@ class ExerciseEditFragment : Fragment() {
             loadUrl("https://appassets.androidplatform.net/assets/exerciseEdit/exerciseEdit.html")
         }
 
-        return binding.root
+        return view
     }
 
     class WebAppInterface(

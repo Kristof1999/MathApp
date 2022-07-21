@@ -37,17 +37,16 @@ class ExerciseFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val binding = FragmentExerciseBinding.inflate(
-            inflater, container, false
-        )
+    ): View? {
+        val view = inflater.inflate(R.id.exerciseFragment, container, false)
 
         val args: ExerciseFragmentArgs by navArgs()
+        val webView = view.findViewById<WebView>(R.id.exercise_web_view)
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
             .build()
-        binding.exerciseWebView.webViewClient = object : WebViewClientCompat() {
+        webView.webViewClient = object : WebViewClientCompat() {
             override fun shouldInterceptRequest(
                 view: WebView?,
                 request: WebResourceRequest
@@ -55,13 +54,13 @@ class ExerciseFragment : Fragment() {
                 return assetLoader.shouldInterceptRequest(request.url)
             }
         }
-        binding.exerciseWebView.settings.apply {
+        webView.settings.apply {
             allowFileAccess = false
             allowContentAccess = false
             javaScriptEnabled = true
         }
         val navController = findNavController()
-        binding.exerciseWebView.apply {
+        webView.apply {
             addJavascriptInterface(
                 WebAppInterface(
                     requireContext(),
@@ -70,7 +69,7 @@ class ExerciseFragment : Fragment() {
                     lifecycle.coroutineScope,
                     args.exercise,
                     navController,
-                    binding.exerciseWebView,
+                    webView,
                     args.topicId
                 ),
                 "ExerciseInterface"
@@ -78,7 +77,7 @@ class ExerciseFragment : Fragment() {
             loadUrl("https://appassets.androidplatform.net/assets/exercise/exercise.html")
         }
 
-        return binding.root
+        return view
     }
 
     class WebAppInterface(
