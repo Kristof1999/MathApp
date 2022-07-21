@@ -29,13 +29,11 @@
         android:id="@+id/exerciseCreateFragment"
         android:name="hu.kristof.nagy.mathapp.view.exercise.ExerciseCreateFragment"
         android:label="Feladat létrehozása" >
-        <argument
-            android:name="parentTopicName"
-            app:argType="string"
-            android:defaultValue='' />
         <action
             android:id="@+id/action_exerciseCreateFragment_to_browseFragment"
             app:destination="@id/browseFragment" />
+        <argument android:name="parentTopicId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/exerciseEditFragment"
@@ -82,10 +80,6 @@
         <action
             android:id="@+id/action_browseFragment_self"
             app:destination="@id/browseFragment" />
-        <argument
-            android:name="parentTopicName"
-            app:argType="string"
-            android:defaultValue='' />
         <action
             android:id="@+id/action_browseFragment_to_topicSummaryFragment"
             app:destination="@id/topicSummaryFragment" />
