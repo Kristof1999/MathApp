@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.browse
+package hu.kristof.nagy.mathapp.viewmodel.browse
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

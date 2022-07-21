@@ -9,17 +9,15 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
-import hu.kristof.nagy.mathapp.data.entity.Topic
+import hu.kristof.nagy.mathapp.viewmodel.topic.TopicSummaryViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

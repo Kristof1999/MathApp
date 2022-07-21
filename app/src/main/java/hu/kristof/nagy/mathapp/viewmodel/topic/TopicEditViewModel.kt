@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.topics
+package hu.kristof.nagy.mathapp.viewmodel.topic
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,12 +11,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TopicSummaryViewModel @Inject constructor(
+class TopicEditViewModel @Inject constructor(
     private val db: MathAppDatabase
 ) : ViewModel() {
     private val _topic = MutableLiveData<Topic>()
     val topic: LiveData<Topic>
         get() = _topic
+
+    fun save(oldTopic: Topic, name: String, summary: String) {
+        viewModelScope.launch {
+            db.topicDao().edit(Topic(oldTopic.id, name, oldTopic.parentTopicName, summary))
+        }
+    }
 
     fun loadTopic(topicId: Long) {
         viewModelScope.launch {

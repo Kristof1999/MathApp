@@ -17,6 +17,10 @@ import hu.kristof.nagy.mathapp.data.MathAppDatabase
 import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.data.entity.Topic
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
+import hu.kristof.nagy.mathapp.viewmodel.browse.ExerciseListViewModel
+import hu.kristof.nagy.mathapp.viewmodel.browse.ExerciseListViewModelFactory
+import hu.kristof.nagy.mathapp.viewmodel.browse.TopicListViewModel
+import hu.kristof.nagy.mathapp.viewmodel.browse.TopicListViewModelFactory
 import javax.inject.Inject
 
 @AndroidEntryPoint

@@ -21,6 +21,7 @@ import androidx.webkit.WebViewClientCompat
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Exercise
+import hu.kristof.nagy.mathapp.viewmodel.exercise.ExerciseEditViewModel
 
 @AndroidEntryPoint
 class ExerciseEditFragment : Fragment() {
