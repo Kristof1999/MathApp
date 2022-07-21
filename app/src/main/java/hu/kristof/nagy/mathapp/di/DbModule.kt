@@ -20,7 +20,7 @@ object DbModule {
     @Provides
     fun provideDb(@ApplicationContext context: Context): MathAppDatabase {
         return Room.databaseBuilder(context, MathAppDatabase::class.java, "MathApp")
-            .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
+            .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
             .build()
     }
 
@@ -71,6 +71,32 @@ object DbModule {
                 database.execSQL("INSERT INTO topic2 SELECT * FROM topic ")
                 database.execSQL("DROP TABLE topic")
                 database.execSQL("ALTER TABLE topic2 RENAME TO topic")
+                database.setTransactionSuccessful()
+            } finally {
+                database.endTransaction()
+            }
+        }
+    }
+    private val MIGRATION_7_8 = object : Migration(7, 8) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.beginTransaction()
+            try {
+                database.execSQL("DROP TABLE topic")
+                database.execSQL("CREATE TABLE topic(" +
+                        "id INTEGER PRIMARY KEY," +
+                        "topicName TEXT NOT NULL," +
+                        "summary TEXT NOT NULL DEFAULT ''," +
+                        "parentTopicId INTEGER NOT NULL)"
+                )
+
+                database.execSQL("DROP TABLE exercise")
+                database.execSQL("CREATE TABLE exercise(" +
+                        "id INTEGER PRIMARY KEY," +
+                        "name TEXT NOT NULL," +
+                        "question TEXT NOT NULL," +
+                        "answer TEXT NOT NULL," +
+                        "parentTopicId INTEGER NOT NULL)"
+                )
                 database.setTransactionSuccessful()
             } finally {
                 database.endTransaction()
