@@ -91,8 +91,8 @@ class TopicEditFragment : Fragment() {
                 viewModel.topic.observe(lifecycleOwner) { topic ->
                     webView.post {
                         webView.evaluateJavascript(
-                            "let nameElement = document.getElementById('topicName');" +
-                                    "nameElement.value = '${topic.topicName}';", null
+                            "let nameElement = document.getElementById(\"topicName\");" +
+                                    "nameElement.value = \"${topic.topicName}\";", null
                         )
                     }
                 }
@@ -104,9 +104,15 @@ class TopicEditFragment : Fragment() {
             scope.launch {
                 viewModel.topic.observe(lifecycleOwner) { topic ->
                     webView.post {
+                        // Note: if the summary is $x = 3$, then
+                        // with "let x = '${summary}'", JS will throw
+                        // an error, because it probably interprets '${summary}'
+                        // as a statement instead of a string.
+                        // "let x = \'${summary}\'" will also not work, but
+                        // "let x = \"${summary}\"" is okay.
                         webView.evaluateJavascript(
-                            "let summaryElement = document.getElementById('input');" +
-                                    "summaryElement.value = '${topic.summary}';", null
+                            "let summaryElement = document.getElementById(\"input\");" +
+                                    "summaryElement.value = \"${topic.summary}\";", null
                         )
                     }
                 }
