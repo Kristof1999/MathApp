@@ -28,7 +28,7 @@ class ExerciseCreateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.id.exerciseCreateFragment, container, false)
+        val view = inflater.inflate(R.layout.fragment_exercise_create, container, false)
 
         val webView = view.findViewById<WebView>(R.id.exercise_create_web_view)
 
