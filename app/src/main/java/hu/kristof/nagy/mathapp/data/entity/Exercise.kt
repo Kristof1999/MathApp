@@ -12,5 +12,5 @@ data class Exercise(
     val name: String,
     val question: String,
     val answer: String,
-    val parentTopicName: String
+    val parentTopicId: Long
 ) : Parcelable
