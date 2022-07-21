@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,6 +21,8 @@ import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 import dagger.hilt.android.AndroidEntryPoint
 import hu.kristof.nagy.mathapp.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TopicEditFragment : Fragment() {
@@ -62,6 +65,7 @@ class TopicEditFragment : Fragment() {
                     viewModel,
                     viewLifecycleOwner,
                     webView,
+                    lifecycleScope,
                     args.parentTopicId
                 ),
                 "TopicEditInterface"
@@ -78,39 +82,46 @@ class TopicEditFragment : Fragment() {
         private val viewModel: TopicEditViewModel,
         private val lifecycleOwner: LifecycleOwner,
         private val webView: WebView,
+        private val scope: CoroutineScope,
         private val parentTopicId: Long
     ) {
         @JavascriptInterface
         fun setName() {
-            viewModel.topic.observe(lifecycleOwner) { topic ->
-                webView.post {
-                    webView.evaluateJavascript(
-                        "let nameElement = document.getElementById('topicName');" +
-                                "nameElement.value = '${topic.topicName}';", null
-                    )
+            scope.launch {
+                viewModel.topic.observe(lifecycleOwner) { topic ->
+                    webView.post {
+                        webView.evaluateJavascript(
+                            "let nameElement = document.getElementById('topicName');" +
+                                    "nameElement.value = '${topic.topicName}';", null
+                        )
+                    }
                 }
             }
         }
 
         @JavascriptInterface
         fun setSummary() {
-            viewModel.topic.observe(lifecycleOwner) { topic ->
-                webView.post {
-                    webView.evaluateJavascript(
-                        "let summaryElement = document.getElementById('input');" +
-                                "summaryElement.value = '${topic.summary}';", null
-                    )
+            scope.launch {
+                viewModel.topic.observe(lifecycleOwner) { topic ->
+                    webView.post {
+                        webView.evaluateJavascript(
+                            "let summaryElement = document.getElementById('input');" +
+                                    "summaryElement.value = '${topic.summary}';", null
+                        )
+                    }
                 }
             }
         }
 
         @JavascriptInterface
         fun save(name:String, summary: String) {
-            viewModel.topic.observe(lifecycleOwner) { topic ->
-                viewModel.save(topic, name, summary)
-                val directions = TopicEditFragmentDirections
-                    .actionTopicEditFragmentToBrowseFragment(topic.parentTopicName, parentTopicId)
-                navController.navigate(directions)
+            scope.launch {
+                viewModel.topic.observe(lifecycleOwner) { topic ->
+                    viewModel.save(topic, name, summary)
+                    val directions = TopicEditFragmentDirections
+                        .actionTopicEditFragmentToBrowseFragment(topic.parentTopicName, parentTopicId)
+                    navController.navigate(directions)
+                }
             }
         }
 
