@@ -9,17 +9,17 @@ open class CustomFunction(
     private val argument: Expression
 ) : Function(argument) {
     override fun toLatex(): String {
-        return "\\operatorname{${name}}${Parentheses(argument)}"
+        return """\operatorname{${name}}${Parentheses(argument)}"""
     }
 }
 
 data class Sin(
     private val argument: Expression
-) : CustomFunction("\\sin", argument)
+) : CustomFunction("""\\sin""", argument)
 
 data class Cos(
     private val argument: Expression
-) : CustomFunction("\\cos", argument)
+) : CustomFunction("""\\cos""", argument)
 
 data class Limit(
     private val variable: Variable,
@@ -27,7 +27,7 @@ data class Limit(
     private val limes: Value
 ) : Function(argument) {
     override fun toLatex(): String {
-        return "\\lim_{${variable.toLatex()} \\to ${limes.toLatex()}} ${argument.toLatex()}"
+        return """\lim_{${variable.toLatex()} \\to ${limes.toLatex()}} ${argument.toLatex()}"""
     }
 }
 
@@ -37,7 +37,7 @@ data class Sum(
     private val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
-        return "\\sum_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"
+        return """\\sum_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"""
     }
 }
 
@@ -47,6 +47,6 @@ data class Product(
     private val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
-        return "\\prod_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"
+        return """\\prod_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"""
     }
 }

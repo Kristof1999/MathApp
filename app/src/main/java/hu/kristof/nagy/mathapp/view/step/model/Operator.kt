@@ -41,7 +41,7 @@ data class Division(
     private val denominator: Expression
 ) : Operator {
     override fun toLatex(): String {
-        return "\\frac{${numerator.toLatex()}}{${denominator.toLatex()}}"
+        return """\\frac{${numerator.toLatex()}}{${denominator.toLatex()}}"""
     }
 }
 
@@ -57,7 +57,7 @@ data class SquareRoot(
     private val base: Expression
 ) : Operator {
     override fun toLatex(): String {
-        return "\\sqrt{${base.toLatex()}}"
+        return """\\sqrt{${base.toLatex()}}"""
     }
 }
 
@@ -66,7 +66,7 @@ data class NthRoot(
     private val root: Expression
 ) : Operator {
     override fun toLatex(): String {
-        return "\\sqrt[${root.toLatex()}]{${base.toLatex()}}"
+        return """\\sqrt[${root.toLatex()}]{${base.toLatex()}}"""
     }
 }
 
@@ -75,6 +75,6 @@ data class Logarithm(
     private val argument: Expression
 ) : Operator {
     override fun toLatex(): String {
-        return "\\log_{${base.toLatex()}} ${argument.toLatex()}"
+        return """\\log_{${base.toLatex()}} ${argument.toLatex()}"""
     }
 }
