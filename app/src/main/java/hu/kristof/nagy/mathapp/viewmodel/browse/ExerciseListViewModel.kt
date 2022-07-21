@@ -7,10 +7,10 @@ import hu.kristof.nagy.mathapp.data.entity.Exercise
 import kotlinx.coroutines.launch
 
 class ExerciseListViewModel(
-    parentTopicName: String,
+    parentTopicId: Long,
     private val db: MathAppDatabase
 ) : ViewModel() {
-    val exercises = db.exerciseDao().loadExercisesFor(parentTopicName)
+    val exercises = db.exerciseDao().loadExercisesOf(parentTopicId)
 
     fun delete(exercise: Exercise) {
         viewModelScope.launch {

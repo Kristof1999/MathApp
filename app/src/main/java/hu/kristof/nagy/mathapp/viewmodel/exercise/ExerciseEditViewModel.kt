@@ -13,7 +13,7 @@ class ExerciseEditViewModel @Inject constructor(
     private val db: MathAppDatabase
 ) : ViewModel() {
     fun edit(exercise: Exercise, name: String, question: String, answer: String) {
-        val newExercise = Exercise(exercise.id, name, question, answer, exercise.parentTopicName);
+        val newExercise = Exercise(exercise.id, name, question, answer, exercise.parentTopicId)
         viewModelScope.launch {
             db.exerciseDao().edit(newExercise)
         }

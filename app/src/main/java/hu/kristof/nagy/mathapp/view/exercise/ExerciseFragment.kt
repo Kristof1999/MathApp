@@ -10,7 +10,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
@@ -20,11 +19,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
-import com.google.android.material.snackbar.Snackbar
 import hu.kristof.nagy.mathapp.R
 import hu.kristof.nagy.mathapp.data.entity.Exercise
-import hu.kristof.nagy.mathapp.data.entity.Topic
-import hu.kristof.nagy.mathapp.databinding.FragmentExerciseBinding
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import hu.kristof.nagy.mathapp.view.step.LatexParser
 import hu.kristof.nagy.mathapp.view.step.model.Expression
@@ -105,7 +101,7 @@ class ExerciseFragment : Fragment() {
             if (answer == exercise.answer) {
                 showToast("Jó válasz!")
                 val directions = ExerciseFragmentDirections
-                    .actionExerciseFragmentToBrowseFragment(exercise.parentTopicName)
+                    .actionExerciseFragmentToBrowseFragment(exercise.parentTopicId)
                 navController.navigate(directions)
             } else {
                 showToast("Rossz válasz!")

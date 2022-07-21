@@ -8,13 +8,13 @@ import kotlinx.coroutines.launch
 
 class TopicListViewModel(
     private val db: MathAppDatabase,
-    parentTopicName: String
+    parentTopicId: Long
 ) : ViewModel() {
-    val topics = db.topicDao().loadTopicsFor(parentTopicName)
+    val topics = db.topicDao().loadTopicsOf(parentTopicId)
 
-    fun createTopic(topicName: String, parentTopicName: String) {
+    fun createTopic(topicName: String, parentTopicId: Long) {
         viewModelScope.launch {
-            db.topicDao().create(Topic(null, topicName, parentTopicName, ""))
+            db.topicDao().create(Topic(null, topicName, "", parentTopicId))
         }
     }
 

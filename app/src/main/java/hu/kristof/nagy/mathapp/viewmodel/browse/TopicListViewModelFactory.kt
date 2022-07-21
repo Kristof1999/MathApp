@@ -6,11 +6,11 @@ import hu.kristof.nagy.mathapp.data.MathAppDatabase
 
 class TopicListViewModelFactory (
     private val db: MathAppDatabase,
-    private val parentTopicName: String
+    private val parentTopicId: Long
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TopicListViewModel::class.java)) {
-            return TopicListViewModel(db, parentTopicName) as T
+            return TopicListViewModel(db, parentTopicId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

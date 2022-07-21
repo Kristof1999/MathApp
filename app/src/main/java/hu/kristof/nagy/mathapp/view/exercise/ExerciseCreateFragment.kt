@@ -59,7 +59,7 @@ class ExerciseCreateFragment : Fragment() {
                 requireContext(),
                 navController,
                 exerciseCreateViewModel,
-                args.parentTopicName
+                args.parentTopicId
             ), "ExerciseCreateInterface")
             loadUrl("https://appassets.androidplatform.net/assets/exerciseCreate/exerciseCreate.html")
         }
@@ -71,14 +71,14 @@ class ExerciseCreateFragment : Fragment() {
         private val context: Context,
         private val navController: NavController,
         private val exerciseCreateViewModel: ExerciseCreateViewModel,
-        private val parentTopicName: String
+        private val parentTopicId: Long
     ) {
         @JavascriptInterface
         fun createExercise(name: String, question: String, answer: String) {
-            exerciseCreateViewModel.create(name, question, answer, parentTopicName)
+            exerciseCreateViewModel.create(name, question, answer, parentTopicId)
 
             val directions = ExerciseCreateFragmentDirections
-                .actionExerciseCreateFragmentToBrowseFragment(parentTopicName)
+                .actionExerciseCreateFragmentToBrowseFragment(parentTopicId)
             navController.navigate(directions)
         }
 

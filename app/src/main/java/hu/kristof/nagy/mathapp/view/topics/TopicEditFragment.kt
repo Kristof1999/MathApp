@@ -122,9 +122,9 @@ class TopicEditFragment : Fragment() {
         fun save(name:String, summary: String) {
             scope.launch {
                 viewModel.topic.observe(lifecycleOwner) { topic ->
-                    viewModel.save(topic, name, summary)
+                    viewModel.save(topic, name, summary, parentTopicId)
                     val directions = TopicEditFragmentDirections
-                        .actionTopicEditFragmentToBrowseFragment(topic.parentTopicName, parentTopicId)
+                        .actionTopicEditFragmentToBrowseFragment(parentTopicId)
                     navController.navigate(directions)
                 }
             }

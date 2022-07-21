@@ -18,9 +18,9 @@ class TopicEditViewModel @Inject constructor(
     val topic: LiveData<Topic>
         get() = _topic
 
-    fun save(oldTopic: Topic, name: String, summary: String) {
+    fun save(oldTopic: Topic, name: String, summary: String, parentTopicId: Long) {
         viewModelScope.launch {
-            db.topicDao().edit(Topic(oldTopic.id, name, oldTopic.parentTopicName, summary))
+            db.topicDao().edit(Topic(oldTopic.id, name, summary, parentTopicId))
         }
     }
 

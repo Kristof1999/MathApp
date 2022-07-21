@@ -78,7 +78,7 @@ class ExerciseEditFragment : Fragment() {
         fun saveEdit(name: String, question: String, answer: String) {
             viewModel.edit(exercise, name, question, answer)
             val directions = ExerciseEditFragmentDirections
-                .actionExerciseEditFragmentToBrowseFragment(exercise.parentTopicName)
+                .actionExerciseEditFragmentToBrowseFragment(exercise.parentTopicId)
             navController.navigate(directions)
         }
 

@@ -12,8 +12,8 @@ import javax.inject.Inject
 class ExerciseCreateViewModel @Inject constructor(
     private val db: MathAppDatabase
 ) : ViewModel() {
-    fun create(name: String, question: String, answer: String, parentTopicName: String) {
-        val exercise = Exercise(null, name, question, answer, parentTopicName)
+    fun create(name: String, question: String, answer: String, parentTopicId: Long) {
+        val exercise = Exercise(null, name, question, answer, parentTopicId)
         viewModelScope.launch {
             db.exerciseDao().create(exercise)
         }

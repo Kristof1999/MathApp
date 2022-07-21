@@ -39,10 +39,10 @@ class BrowseFragment : Fragment() {
         val topicCreateBtn = view.findViewById<Button>(R.id.browse_topic_create_btn)
         val exerciseCreateBtn = view.findViewById<Button>(R.id.browse_exercise_create_btn)
         val args: BrowseFragmentArgs by navArgs()
-        val exerciseListViewModelFactory = ExerciseListViewModelFactory(db, args.parentTopicName)
+        val exerciseListViewModelFactory = ExerciseListViewModelFactory(db, args.parentTopicId)
         val exerciseListViewModel = ViewModelProvider(this, exerciseListViewModelFactory)
             .get(ExerciseListViewModel::class.java)
-        val topicListViewModelFactory = TopicListViewModelFactory(db, args. parentTopicName)
+        val topicListViewModelFactory = TopicListViewModelFactory(db, args.parentTopicId)
         val topicListViewModel = ViewModelProvider(this, topicListViewModelFactory)
             .get(TopicListViewModel::class.java)
 
@@ -50,8 +50,8 @@ class BrowseFragment : Fragment() {
             exerciseListViewModel, topicListViewModel, browseList, args.parentTopicId
         )
 
-        exerciseCreate(exerciseCreateBtn, args.parentTopicName)
-        topicCreate(topicCreateBtn, topicListViewModel, args.parentTopicName)
+        exerciseCreate(exerciseCreateBtn, args.parentTopicId)
+        topicCreate(topicCreateBtn, topicListViewModel, args.parentTopicId)
 
         return view
     }
@@ -59,7 +59,7 @@ class BrowseFragment : Fragment() {
     private fun topicCreate(
         topicCreateBtn: Button,
         topicListViewModel: TopicListViewModel,
-        parentTopicName: String
+        parentTopicId: Long
     ) {
         val dialog = TextDialogFragment.instanceOf(
             R.string.topicCreateText, R.string.topicCreateHint
@@ -68,17 +68,17 @@ class BrowseFragment : Fragment() {
             dialog.show(parentFragmentManager, "topicCreation")
         }
         dialog.text.observe(viewLifecycleOwner) { topicName ->
-            topicListViewModel.createTopic(topicName, parentTopicName)
+            topicListViewModel.createTopic(topicName, parentTopicId)
         }
     }
 
     private fun exerciseCreate(
         exerciseCreateBtn: Button,
-        parentTopicName: String
+        parentTopicId: Long
     ) {
         exerciseCreateBtn.setOnClickListener {
             val directions = BrowseFragmentDirections
-                .actionBrowseFragmentToExerciseCreateFragment(parentTopicName)
+                .actionBrowseFragmentToExerciseCreateFragment(parentTopicId)
             findNavController().navigate(directions)
         }
     }
@@ -105,7 +105,7 @@ class BrowseFragment : Fragment() {
             deleteListener = { topic -> topicListViewModel.delete(topic) },
             detailNavListener = { topic ->
                 val directions = BrowseFragmentDirections
-                    .actionBrowseFragmentSelf(topic.topicName)
+                    .actionBrowseFragmentSelf(topic.parentTopicId)
                 findNavController().navigate(directions)
             },
             editListener = { topic ->
