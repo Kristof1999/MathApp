@@ -1,7 +1,6 @@
 package hu.kristof.nagy.mathapp.view.topics
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -87,7 +87,7 @@ class TopicSummaryFragment : Fragment() {
                         webView.evaluateJavascript(
                             "let summary = \"${topic.summary}\";" +
                                     "let output = document.getElementById(\"output\");" +
-                                    "convertOnLoad(summary, output);", null
+                                    "convertOnLoad(summary, output, 'TopicSummaryInterface');", null
                         )
                     }
                 }

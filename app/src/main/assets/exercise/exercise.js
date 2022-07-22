@@ -5,7 +5,7 @@ function reviewTheory() {
 async function onLoad() {
     let input = ExerciseInterface.getExerciseQuestion();
     output = document.getElementById("question");
-    convertOnLoad(input, output);
+    convertOnLoad(input, output, ExerciseInterface);
 }
 
 function addStep(input) {
