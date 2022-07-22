@@ -6,7 +6,7 @@ function reviewTheory() {
 
 function onLoad() {
     let input = ExerciseInterface.getExerciseQuestion();
-    output = document.getElementById("question");
+    let output = document.getElementById("question");
     convertOnLoad(input, output, ExerciseInterface);
 }
 
