@@ -2,7 +2,7 @@ async function convertOnLoadHelper(mathBlock) {
     return MathJax.tex2chtmlPromise(mathBlock);
 }
 
-async function convertOnLoad(input, output) {
+async function convertOnLoad(input, output, interface) {
     output.innerHTML = '';
 
     let prevMathBlockStartIdx = -1;
@@ -13,12 +13,16 @@ async function convertOnLoad(input, output) {
         let prevNonMathBlock = input.substring(prevMathBlockEndIdx + 1, mathBlockStartIdx);
         let mathBlock = input.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
 
-        // todo: handle errors
-        let node = await convertOnLoadHelper(mathBlock);
-        output.innerHTML += prevNonMathBlock;
-        output.innerHTML += node.innerHTML;
-        MathJax.startup.document.clear();
-        MathJax.startup.document.updateDocument();
+        try {
+            let node = await convertOnLoadHelper(mathBlock);
+            output.innerHTML += prevNonMathBlock;
+            output.innerHTML += node.innerHTML;
+            MathJax.startup.document.clear();
+            MathJax.startup.document.updateDocument();
+        } catch(err) {
+            interface.showToast(err.name + ": " + err.message);
+        }
+
 
         prevMathBlockStartIdx = mathBlockStartIdx;
         prevMathBlockEndIdx = mathBlockEndIdx;

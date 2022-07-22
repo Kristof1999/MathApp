@@ -2,7 +2,7 @@ async function convertHelper(mathBlock) {
     return MathJax.tex2chtmlPromise(mathBlock);
 }
 
-async function convert(inputId, buttonId, outputId) {
+async function convert(inputId, buttonId, outputId, interface) {
     var input = document.getElementById(inputId).value.trim();
 
     var button = document.getElementById(buttonId);
@@ -19,15 +19,16 @@ async function convert(inputId, buttonId, outputId) {
         let prevNonMathBlock = input.substring(prevMathBlockEndIdx + 1, mathBlockStartIdx);
         let mathBlock = input.substring(mathBlockStartIdx + 1, mathBlockEndIdx);
 
-        // TODO: handle errors
-        // ehhez kellhet még egy paraméter,
-        // amely a WebAppInterface lesz.
-        // Ide lehet a hibaüzenetet írni.
-        let node = await convertHelper(mathBlock);
-        output.innerHTML += prevNonMathBlock;
-        output.innerHTML += node.innerHTML;
-        MathJax.startup.document.clear();
-        MathJax.startup.document.updateDocument();
+        try {
+            let node = await convertHelper(mathBlock);
+            output.innerHTML += prevNonMathBlock;
+            output.innerHTML += node.innerHTML;
+            MathJax.startup.document.clear();
+            MathJax.startup.document.updateDocument();
+        } catch(err) {
+            interface.showToast(err.name + ": " + err.message);
+        }
+
 
         prevMathBlockStartIdx = mathBlockStartIdx;
         prevMathBlockEndIdx = mathBlockEndIdx;
