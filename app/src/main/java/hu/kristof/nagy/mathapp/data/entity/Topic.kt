@@ -1,6 +1,7 @@
 package hu.kristof.nagy.mathapp.data.entity
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 /**
@@ -10,7 +11,13 @@ import androidx.room.PrimaryKey
  * might even have exercises where one should categorise a given diff. eq..
  * A summary of the related theory can also be included.
  */
-@Entity
+@Entity(foreignKeys = [ForeignKey(
+    entity = Topic::class,
+    parentColumns = ["id"],
+    childColumns = ["parentTopicId"],
+    onDelete = ForeignKey.CASCADE,
+    onUpdate = ForeignKey.CASCADE
+)])
 data class Topic(
     @PrimaryKey(autoGenerate = true) val id: Long?,
     val topicName: String,
