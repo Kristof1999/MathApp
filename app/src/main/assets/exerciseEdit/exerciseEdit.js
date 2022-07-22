@@ -1,3 +1,5 @@
+"use strict";
+
 function saveEdit() {
     let name = document.getElementById("name").value.trim();
     if (name.length == 0) {

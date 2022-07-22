@@ -1,3 +1,5 @@
+"use strict";
+
 async function convertHelper(mathBlock) {
     return MathJax.tex2chtmlPromise(mathBlock);
 }

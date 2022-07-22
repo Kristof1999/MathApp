@@ -1,3 +1,5 @@
+"use strict";
+
 function onLoad() {
     TopicEditInterface.setName();
     TopicEditInterface.setSummary();
