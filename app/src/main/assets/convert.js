@@ -5,9 +5,9 @@ async function convertHelper(mathBlock) {
 }
 
 async function convert(inputId, buttonId, outputId, interface) {
-    var input = document.getElementById(inputId).value.trim();
+    let input = document.getElementById(inputId).value.trim();
 
-    var button = document.getElementById(buttonId);
+    let button = document.getElementById(buttonId);
     button.disabled = true;
 
     output = document.getElementById(outputId);
