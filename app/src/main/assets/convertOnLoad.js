@@ -4,7 +4,7 @@ async function convertOnLoadHelper(mathBlock) {
     return MathJax.tex2chtmlPromise(mathBlock);
 }
 
-async function convertOnLoad(input, output, interface) {
+async function convertOnLoad(input, output, context) {
     output.innerHTML = '';
 
     let prevMathBlockStartIdx = -1;
@@ -22,7 +22,7 @@ async function convertOnLoad(input, output, interface) {
             MathJax.startup.document.clear();
             MathJax.startup.document.updateDocument();
         } catch(err) {
-            interface.showToast(err.name + ": " + err.message);
+            context.showToast(err.name + ": " + err.message);
         }
 
 

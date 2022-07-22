@@ -4,7 +4,7 @@ async function convertHelper(mathBlock) {
     return MathJax.tex2chtmlPromise(mathBlock);
 }
 
-async function convert(inputId, buttonId, outputId, interface) {
+async function convert(inputId, buttonId, outputId, context) {
     let input = document.getElementById(inputId).value.trim();
 
     let button = document.getElementById(buttonId);
@@ -28,7 +28,7 @@ async function convert(inputId, buttonId, outputId, interface) {
             MathJax.startup.document.clear();
             MathJax.startup.document.updateDocument();
         } catch(err) {
-            interface.showToast(err.name + ": " + err.message);
+            context.showToast(err.name + ": " + err.message);
         }
 
 
