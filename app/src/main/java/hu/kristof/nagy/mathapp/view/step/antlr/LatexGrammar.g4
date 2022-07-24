@@ -8,14 +8,14 @@ expression
     | '\\Vert{' expression '}'                                                       # DoubleStraightParentheses
     | '\\operatorname{' STRING '}' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS     # CustomFunction
     | (SIN | COS) LEFT_PARENTHESIS expression RIGHT_PARENTHESIS                      # SinCos
-    | '\\lim_{' VARIABLE '\\to' VALUE '}' WHITESPACE expression                      # Limit
-    | (SUM | PROD) '_{' expression '}^{' expression '}' WHITESPACE expression        # SumProduct
-    | '\\iint' WHITESPACE expression                                                 # DoubleIndefiniteIntegral
-    | '\\iint_{' expression '}^{' expression '}' WHITESPACE expression               # DoubleDefiniteIntegral
-    | '\\int' WHITESPACE expression                                                  # IndefiniteIntegral
-    | '\\int_{' expression '}^{' expression '}' WHITESPACE expression                # DefiniteIntegral
+    | '\\lim_{' VARIABLE '\\to' VALUE '}{' expression '}'                            # Limit
+    | (SUM | PROD) '_{' expression '}^{' expression '}{' expression '}'              # SumProduct
+    | '\\iint{'  expression '}'                                                      # DoubleIndefiniteIntegral
+    | '\\iint_{' expression '}^{' expression '}{'  expression '}'                    # DoubleDefiniteIntegral
+    | '\\int{' expression '}'                                                        # IndefiniteIntegral
+    | '\\int_{' expression '}^{' expression '}{' expression '}'                      # DefiniteIntegral
     | <assoc=right> expression '^{' expression '}'                                   # Exponentiation
-    | '\\log_{' expression '}' WHITESPACE expression                                 # Logarithm
+    | '\\log_{' expression '}{' expression '}'                                       # Logarithm
     | '\\sqrt{' expression '}'                                                       # SquareRoot
     | '\\sqrt[' expression ']{' expression '}'                                       # NthRoot
     | expression '*' expression                                                      # Multiplication

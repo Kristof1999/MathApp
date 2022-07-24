@@ -4,7 +4,7 @@ data class IndefiniteIntegral(
     val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
-        return """\\int ${variable.toLatex()}"""
+        return """\\int{${variable.toLatex()}}"""
     }
 }
 
@@ -14,7 +14,7 @@ data class DefiniteIntegral(
     val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
-        return """\\int_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"""
+        return """\\int_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}}{${variable.toLatex()}}"""
     }
 }
 
@@ -22,7 +22,7 @@ data class DoubleIndefiniteIntegral(
     val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
-        return """\\iint ${variable.toLatex()}"""
+        return """\\iint{${variable.toLatex()}}"""
     }
 }
 
@@ -32,6 +32,6 @@ data class DoubleDefiniteIntegral(
     val variable: Expression
 ) : Expression {
     override fun toLatex(): String {
-        return """\\iint_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}} ${variable.toLatex()}"""
+        return """\\iint_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}}{${variable.toLatex()}}"""
     }
 }
