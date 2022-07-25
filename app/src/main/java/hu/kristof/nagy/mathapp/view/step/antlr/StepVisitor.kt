@@ -1,6 +1,7 @@
 package hu.kristof.nagy.mathapp.view.step.antlr
 
 import hu.kristof.nagy.mathapp.view.step.model.*
+import LatexGrammarBaseVisitor
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
     override fun visitEquation(ctx: LatexGrammarParser.EquationContext?): Expression {
