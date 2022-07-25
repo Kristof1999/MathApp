@@ -137,11 +137,15 @@ class ExerciseFragment : Fragment() {
             val prevStep = steps[steps.size - 1]
             when (stepType) {
                 "leftOrder" -> {
-                    val transformedStep = LeftOrder.transform(prevStep, null)
+                    val transformedStep = LeftOrder.transform(
+                        StepTransformer.MyBundle(prevStep)
+                    )
                     addStep(transformedStep)
                 }
                 "rightOrder" -> {
-                    val transformedStep = RightOrder.transform(prevStep, null)
+                    val transformedStep = RightOrder.transform(
+                        StepTransformer.MyBundle(prevStep)
+                    )
                     addStep(transformedStep)
                 }
                 "addBothSide" -> {
@@ -161,7 +165,7 @@ class ExerciseFragment : Fragment() {
         }
 
         private fun transformStepByX(
-            transformer: StepTransformer,
+            transformer: StepTransformer<StepTransformer.SingleVariableMyBundle>,
             parsedStep: Expression
         ) {
             val xDialog = TextDialogFragment.instanceOf(
@@ -172,7 +176,8 @@ class ExerciseFragment : Fragment() {
                 xDialog.text.observe(lifecycleOwner) { x ->
                     val parsedX = LatexParser.parse(x)
                     // TODO: handle errors and edge cases
-                    val transformedStep = transformer.transform(parsedStep, parsedX)
+                    val myBundle = StepTransformer.SingleVariableMyBundle(parsedStep, parsedX)
+                    val transformedStep = transformer.transform(myBundle)
                     addStep(transformedStep)
                 }
             }
