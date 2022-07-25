@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "MathApp"
-include ':app'
+include (':app', 'antlr')
