@@ -31,7 +31,7 @@ class ExerciseEditFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_exercise_edit, container, false)
 
-        val webView = view.findViewById<WebView>(R.id.exercise_web_view)
+        val webView = view.findViewById<WebView>(R.id.exercise_edit_web_view)
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireContext()))
