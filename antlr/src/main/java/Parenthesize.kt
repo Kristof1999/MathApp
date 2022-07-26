@@ -1,7 +1,5 @@
-package hu.kristof.nagy.mathapp.view.step
-
-import hu.kristof.nagy.mathapp.view.step.model.Expression
-import hu.kristof.nagy.mathapp.view.step.model.Parentheses
+import model.Expression
+import model.Parentheses
 
 /**
  * Returns the given expression in simple parentheses
