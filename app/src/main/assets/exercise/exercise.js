@@ -13,13 +13,9 @@ function onLoad() {
 function addStep(input) {
     let steps = document.getElementById("steps");
     MathJax.tex2chtmlPromise(input).then(function (node) {
-        node.style.width = "80%";
-        node.style.marginTop = ".75em";
-        node.style.border = "1px solid grey";
-        node.style.height = "50px";
-        node.style.overflow = "auto";
-        node.style.padding = "5px";
-        node.style.margin = "auto";
+        node.style.paddingTop = "8px";
+        node.style.paddingBottom = "8px";
+        node.style.borderTop = "1px solid black";
         steps.appendChild(node);
         MathJax.startup.document.clear();
         MathJax.startup.document.updateDocument();
