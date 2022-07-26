@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp
+package hu.kristof.nagy.mathapp.steptransformer
 
 import hu.kristof.nagy.mathapp.view.step.LatexParser
 import hu.kristof.nagy.mathapp.view.step.model.*
