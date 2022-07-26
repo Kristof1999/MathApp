@@ -1,6 +1,6 @@
-package hu.kristof.nagy.mathapp.view.step.model
+package model
 
-import hu.kristof.nagy.mathapp.view.step.parenthesizeIfNeeded
+import parenthesizeIfNeeded
 
 interface Operator : Expression
 

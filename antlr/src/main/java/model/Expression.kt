@@ -1,4 +1,4 @@
-package hu.kristof.nagy.mathapp.view.step.model
+package model
 
 interface Expression {
     fun toLatex(): String

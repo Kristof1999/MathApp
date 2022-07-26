@@ -1,4 +1,6 @@
-package hu.kristof.nagy.mathapp.view.step.model
+package model
+
+import model.Expression
 
 data class IndefiniteIntegral(
     val variable: Expression
