@@ -3,20 +3,23 @@
         <script id="MathJax-script" async src="../tex-chtml.js"></script>
         <script src="exercise.js"></script>
         <script src="../convertOnLoad.js"></script>
-        <link rel="stylesheet" href="exercise.css">
-        <link rel="stylesheet" href="../convertStyle.css">
+        <link rel="stylesheet" href="../w3.css">
     </head>
     <body onload="onLoad()" >
-        <p>Kérdés:</p>
-        <div id="question" class="output"></div>
+        <div class="w3-container">
+            <p>Kérdés:</p>
+            <div id="question" class="w3-mobile"></div>
+        </div>
 
-        <button onclick="reviewTheory()">
-            Elmélet áttekintés
-        </button>
+        <div class="w3-panel">
+            <button onclick="reviewTheory()" class="w3-button w3-blue">
+                Elmélet áttekintés
+            </button>
+        </div>
 
-        <form>
-            <label for="stepSelect">Lépés felvétel:</label><br>
-            <select name="stepSelect" id="stepSelect" onchange="selectStep(this.value)">
+        <form class="w3-container">
+            <select id="stepSelect" onchange="selectStep(this.value)" class="w3-select">
+                <option value="" disabled selected>Lépés felvétel</option>
                 <optgroup label="Integrálás">
                     <option value="partFractDecomp">Parciális törtekre bontás</option>
                     <option value="partInt">Parciális integrálás</option>
@@ -35,15 +38,18 @@
                 </optgroup>
             </select>
         </form>
-        <p>Lépések:</p>
-        <ul id="steps">
 
-        </ul>
+        <div class="w3-panel">
+            <p>Lépések:</p>
+            <ul id="steps" class="w3-ul w3-card w3-center w3-mobile">
 
-        <p>Válasz:</p>
-        <div class="textarea">
-            <textarea rows="5" cols="5" id="answer"></textarea>
+            </ul>
         </div>
-        <button onclick="checkAnswer()">Ellenőrzés</button>
+
+        <div class="w3-panel">
+            <p>Válasz:</p>
+            <textarea rows="5" cols="5" id="answer" class="w3-mobile"></textarea><br>
+            <button onclick="checkAnswer()" class="w3-mobile w3-button w3-green">Ellenőrzés</button>
+        </div>
     </body>
 </html>

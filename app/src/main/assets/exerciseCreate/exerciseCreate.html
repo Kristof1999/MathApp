@@ -3,37 +3,39 @@
         <script id="MathJax-script" async src="../tex-chtml.js"></script>
         <script src="exerciseCreate.js"></script>
         <script src="../convert.js"></script>
-        <link rel="stylesheet" href="../convertStyle.css">
+        <link rel="stylesheet" href="../w3.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <p>Feladat neve:</p>
-        <input type="text" id="name"><br>
-
-        <p>Feladat kérdése:</p>
-        <div class="textarea">
-            <textarea id="questionInput" rows="5" cols="5"></textarea>
+        <div class="w3-container">
+            <p>Feladat neve:</p>
+            <input type="text" class="w3-input" id="name">
         </div>
-        <button id="renderQuestion"
-                onclick="convert('questionInput', this.id, 'questionOutput', 'ExerciseCreateInterface')">
-            Renderelés
-        </button>
-        <br>
-        <div id="questionOutput" class="output"></div>
-        <br>
 
-        <p>Feladat válasza:</p>
-        <div class="textarea">
-            <textarea id="answerInput" rows="5" cols="5"></textarea>
+        <div class="w3-panel">
+            <p>Feladat kérdése:</p>
+            <textarea id="questionInput" rows="5" cols="5" class="w3-mobile"></textarea>
+            <br>
+            <button id="renderQuestion" class="w3-button w3-blue"
+                    onclick="convert('questionInput', this.id, 'questionOutput', 'ExerciseCreateInterface')">
+                Renderelés
+            </button>
+            <div id="questionOutput" class="w3-mobile w3-panel"></div>
         </div>
-        <button id="renderAnswer"
-                onclick="convert('answerInput', this.id, 'answerOutput', 'ExerciseCreateInterface')">
-            Renderelés
-        </button>
-        <br>
-        <div id="answerOutput" class="output"></div>
-        <br>
 
-        <button onclick="createExercise()">Feladat létrehozása</button>
+        <div class="w3-panel">
+            <p>Feladat válasza:</p>
+            <textarea id="answerInput" rows="5" cols="5" class="w3-mobile"></textarea>
+            <br>
+            <button id="renderAnswer" class="w3-button w3-blue"
+                    onclick="convert('answerInput', this.id, 'answerOutput', 'ExerciseCreateInterface')">
+                Renderelés
+            </button>
+            <div id="answerOutput" class="w3-mobile w3-panel"></div>
+        </div>
+
+        <button onclick="createExercise()" class="w3-button w3-mobile w3-green">
+            Feladat létrehozása
+        </button>
     </body>
 </html>
