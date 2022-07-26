@@ -11,7 +11,7 @@ expression
     | '\\lim_{' VARIABLE '\\to' VALUE '}{' expression '}'                            # Limit
     | (SUM | PROD) '_{' expression '}^{' expression '}{' expression '}'              # SumProduct
     | '\\iint{'  expression '}'                                                      # DoubleIndefiniteIntegral
-    | '\\iint_{' expression '}^{' expression '}{'  expression '}'                    # DoubleDefiniteIntegral
+    | '\\iint_{' expression '}^{' expression '}{' expression '}'                     # DoubleDefiniteIntegral
     | '\\int{' expression '}'                                                        # IndefiniteIntegral
     | '\\int_{' expression '}^{' expression '}{' expression '}'                      # DefiniteIntegral
     | <assoc=right> expression '^{' expression '}'                                   # Exponentiation
