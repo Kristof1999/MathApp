@@ -1,9 +1,9 @@
 package hu.kristof.nagy.mathapp.view.step.transform
 
-import hu.kristof.nagy.mathapp.view.step.model.Equation
-import hu.kristof.nagy.mathapp.view.step.model.Expression
-import hu.kristof.nagy.mathapp.view.step.model.Subtraction
-import hu.kristof.nagy.mathapp.view.step.model.Value
+import model.Equation
+import model.Expression
+import model.Subtraction
+import model.Value
 
 object LeftOrder : StepTransformer<StepTransformer.MyBundle> {
     override fun transform(myBundle: StepTransformer.MyBundle): Expression {

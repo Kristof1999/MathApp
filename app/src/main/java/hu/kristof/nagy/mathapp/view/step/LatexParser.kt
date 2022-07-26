@@ -4,8 +4,8 @@ package hu.kristof.nagy.mathapp.view.step
 
 import LatexGrammarLexer
 import LatexGrammarParser
-import hu.kristof.nagy.mathapp.view.step.antlr.StepVisitor
-import hu.kristof.nagy.mathapp.view.step.model.Expression
+import StepVisitor
+import model.Expression
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 

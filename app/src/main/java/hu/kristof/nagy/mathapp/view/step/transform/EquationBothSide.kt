@@ -1,6 +1,6 @@
 package hu.kristof.nagy.mathapp.view.step.transform
 
-import hu.kristof.nagy.mathapp.view.step.model.*
+import model.*
 
 object AddBothSideByX : StepTransformer<StepTransformer.SingleVariableMyBundle> {
     override fun transform(myBundle: StepTransformer.SingleVariableMyBundle): Expression {

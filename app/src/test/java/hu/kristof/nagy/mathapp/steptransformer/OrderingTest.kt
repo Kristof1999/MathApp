@@ -1,10 +1,10 @@
 package hu.kristof.nagy.mathapp.steptransformer
 
 import hu.kristof.nagy.mathapp.view.step.LatexParser
-import hu.kristof.nagy.mathapp.view.step.model.*
 import hu.kristof.nagy.mathapp.view.step.transform.LeftOrder
 import hu.kristof.nagy.mathapp.view.step.transform.RightOrder
 import hu.kristof.nagy.mathapp.view.step.transform.StepTransformer
+import model.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -16,7 +16,8 @@ class OrderingTest {
         val parsedStep = LatexParser.parse(step)
         val res = LeftOrder.transform(StepTransformer.MyBundle(parsedStep))
 
-        assertEquals(Equation(
+        assertEquals(
+            Equation(
             Subtraction(
                 Addition(Variable("a"), Variable("b")),
                 Value(2)
