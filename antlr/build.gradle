@@ -2,12 +2,30 @@
 
 plugins  {
     id 'antlr'
+    id 'org.jetbrains.kotlin.jvm'
+    id 'application'
 }
 
 dependencies {
     antlr "org.antlr:antlr4:4.10.1"
+    implementation platform('org.jetbrains.kotlin:kotlin-bom')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'com.google.guava:guava:31.0.1-jre'
 }
 
 generateGrammarSource {
     arguments += ["-visitor"]
+}
+
+compileKotlin {
+    dependsOn(generateGrammarSource)
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
