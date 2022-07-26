@@ -2,49 +2,45 @@ package hu.kristof.nagy.mathapp.view.step.model
 
 import hu.kristof.nagy.mathapp.view.step.parenthesizeIfNeeded
 
-abstract class Function(
-    val argument: Expression
-) : Expression
-
-open class CustomFunction(
+data class CustomFunction(
     val name: String,
-    argument: Expression
-) : Function(argument) {
+    val argument: Expression
+) : Expression {
     override fun toLatex(): String =
         """\\operatorname{${name}}${parenthesizeIfNeeded(argument).toLatex()}"""
 }
 
-class Sin(argument: Expression) : Function(argument) {
+data class Sin(val argument: Expression) : Expression {
     override fun toLatex(): String = """\\sin${parenthesizeIfNeeded(argument).toLatex()}"""
 }
 
-class Cos(argument: Expression) : Function(argument) {
+data class Cos(val argument: Expression) : Expression {
     override fun toLatex(): String = """\\cos${parenthesizeIfNeeded(argument).toLatex()}"""
 }
 
-class Limit(
+data class Limit(
     val variable: Variable,
-    argument: Expression,
+    val argument: Expression,
     val limes: Value
-) : Function(argument) {
+) : Expression {
     override fun toLatex(): String =
         """\\lim_{${variable.toLatex()} \\to ${limes.toLatex()}}{${argument.toLatex()}}"""
 }
 
-class Sum(
+data class Sum(
     val lowerLimit: Expression,
     val upperLimit: Expression,
-    argument: Expression
-) : Function(argument) {
+    val argument: Expression
+) : Expression {
     override fun toLatex(): String =
         """\\sum_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}}{${argument.toLatex()}}"""
 }
 
-class Product(
+data class Product(
     val lowerLimit: Expression,
     val upperLimit: Expression,
-    argument: Expression
-) : Function(argument) {
+    val argument: Expression
+) : Expression {
     override fun toLatex(): String =
         """\\prod_{${lowerLimit.toLatex()}}^{${upperLimit.toLatex()}}{${argument.toLatex()}}"""
 }
