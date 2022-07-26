@@ -11,15 +11,15 @@ open class CustomFunction(
     argument: Expression
 ) : Function(argument) {
     override fun toLatex(): String =
-        """\\operatorname{${name}}${parenthesizeIfNeeded(argument)}"""
+        """\\operatorname{${name}}${parenthesizeIfNeeded(argument).toLatex()}"""
 }
 
 class Sin(argument: Expression) : Function(argument) {
-    override fun toLatex(): String = """\\sin${parenthesizeIfNeeded(argument)}"""
+    override fun toLatex(): String = """\\sin${parenthesizeIfNeeded(argument).toLatex()}"""
 }
 
 class Cos(argument: Expression) : Function(argument) {
-    override fun toLatex(): String = """\\cos${parenthesizeIfNeeded(argument)}"""
+    override fun toLatex(): String = """\\cos${parenthesizeIfNeeded(argument).toLatex()}"""
 }
 
 class Limit(
