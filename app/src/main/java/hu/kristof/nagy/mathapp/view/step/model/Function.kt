@@ -11,7 +11,7 @@ open class CustomFunction(
     argument: Expression
 ) : Function(argument) {
     override fun toLatex(): String =
-        """\operatorname{${name}}${parenthesizeIfNeeded(argument)}"""
+        """\\operatorname{${name}}${parenthesizeIfNeeded(argument)}"""
 }
 
 class Sin(argument: Expression) : Function(argument) {
@@ -28,7 +28,7 @@ class Limit(
     val limes: Value
 ) : Function(argument) {
     override fun toLatex(): String =
-        """\lim_{${variable.toLatex()} \\to ${limes.toLatex()}}{${argument.toLatex()}}"""
+        """\\lim_{${variable.toLatex()} \\to ${limes.toLatex()}}{${argument.toLatex()}}"""
 }
 
 class Sum(
