@@ -10,7 +10,7 @@ async function convert(inputId, buttonId, outputId, context) {
     let button = document.getElementById(buttonId);
     button.disabled = true;
 
-    output = document.getElementById(outputId);
+    let output = document.getElementById(outputId);
     output.innerHTML = '';
 
     let prevMathBlockStartIdx = -1;
