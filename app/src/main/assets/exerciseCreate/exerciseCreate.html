@@ -8,34 +8,36 @@
     </head>
     <body>
         <div class="w3-container">
-            <p>Feladat neve:</p>
+            <label>Név</label>
             <input type="text" class="w3-input" id="name">
         </div>
 
         <div class="w3-panel">
-            <p>Feladat kérdése:</p>
+            <label>Kérdés</label>
             <textarea id="questionInput" rows="5" cols="5" class="w3-mobile"></textarea>
             <br>
             <button id="renderQuestion" class="w3-button w3-blue"
                     onclick="convert('questionInput', this.id, 'questionOutput', 'ExerciseCreateInterface')">
                 Renderelés
             </button>
-            <div id="questionOutput" class="w3-mobile w3-panel"></div>
+            <div id="questionOutput" class="w3-mobile w3-panel w3-border w3-padding"></div>
         </div>
 
         <div class="w3-panel">
-            <p>Feladat válasza:</p>
+            <label>Válasz</label>
             <textarea id="answerInput" rows="5" cols="5" class="w3-mobile"></textarea>
             <br>
             <button id="renderAnswer" class="w3-button w3-blue"
                     onclick="convert('answerInput', this.id, 'answerOutput', 'ExerciseCreateInterface')">
                 Renderelés
             </button>
-            <div id="answerOutput" class="w3-mobile w3-panel"></div>
+            <div id="answerOutput" class="w3-mobile w3-panel w3-border w3-padding"></div>
         </div>
 
-        <button onclick="createExercise()" class="w3-button w3-mobile w3-green">
-            Feladat létrehozása
-        </button>
+        <div class="w3-container">
+            <button onclick="createExercise()" class="w3-button w3-mobile w3-green">
+                Létrehozás
+            </button>
+        </div>
     </body>
 </html>

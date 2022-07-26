@@ -3,37 +3,41 @@
         <script id="MathJax-script" async src="../tex-chtml.js"></script>
         <script src="exerciseEdit.js"></script>
         <script src="../convert.js"></script>
-        <link rel="stylesheet" href="exerciseEdit.css">
+        <link rel="stylesheet" href="../w3.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body onload="loadName(); loadQuestion(); loadAnswer();">
-        <p>Feladat neve:</p>
-        <input type="text" id="name"><br>
-
-        <p>Feladat kérdése:</p>
-        <div class="textarea">
-            <textarea id="questionInput" rows="5" cols="5"></textarea>
+        <div class="w3-container">
+            <label>Név</label>
+            <input type="text" class="w3-input" id="name"><br>
         </div>
-        <button id="renderQuestion"
-                onclick="convert('questionInput', this.id, 'questionOutput', 'ExerciseEditInterface')">
-            Renderelés
-        </button>
-        <br>
-        <div id="questionOutput" class="output"></div>
-        <br>
 
-        <p>Feladat válasza:</p>
-        <div class="textarea">
-            <textarea id="answerInput" rows="5" cols="5"></textarea>
+        <div class="w3-panel">
+            <label>Kérdés</label>
+            <textarea id="questionInput" rows="5" cols="5" class="w3-mobile"></textarea>
+            <br>
+            <button id="renderQuestion" class="w3-button w3-blue"
+                    onclick="convert('questionInput', this.id, 'questionOutput', 'ExerciseEditInterface')">
+                Renderelés
+            </button>
+            <div id="questionOutput" class="w3-mobile w3-panel w3-border w3-padding"></div>
         </div>
-        <button id="renderAnswer"
-                onclick="convert('answerInput', this.id, 'answerOutput', 'ExerciseEditInterface')">
-            Renderelés
-        </button>
-        <br>
-        <div id="answerOutput" class="output"></div>
-        <br>
 
-        <button onclick="saveEdit()">Szerkesztés mentése</button>
+        <div class="w3-panel">
+            <label>Válasz</label>
+            <textarea id="answerInput" rows="5" cols="5" class="w3-mobile"></textarea>
+            <br>
+            <button id="renderAnswer" class="w3-button w3-blue"
+                    onclick="convert('answerInput', this.id, 'answerOutput', 'ExerciseEditInterface')">
+                Renderelés
+            </button>
+            <div id="answerOutput" class="w3-mobile w3-panel w3-border w3-padding"></div>
+        </div>
+
+        <div class="w3-container">
+            <button onclick="saveEdit()" class="w3-button w3-mobile w3-green">
+                Mentés
+            </button>
+        </div>
     </body>
 </html>
