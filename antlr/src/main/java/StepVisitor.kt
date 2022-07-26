@@ -1,8 +1,4 @@
-package hu.kristof.nagy.mathapp.view.step.antlr
-
-import LatexGrammarBaseVisitor
-import LatexGrammarParser
-import hu.kristof.nagy.mathapp.view.step.model.*
+import model.*
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
     override fun visitEquation(ctx: LatexGrammarParser.EquationContext?): Expression {
@@ -107,9 +103,8 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
 
     override fun visitLimit(ctx: LatexGrammarParser.LimitContext?): Expression {
         return ctx?.let { limitContext ->
-            // TODO: test
-            val variable = visitOperand(limitContext.VARIABLE() as LatexGrammarParser.OperandContext)
-            val limes = visitOperand(limitContext.VALUE() as LatexGrammarParser.OperandContext)
+            val variable = visit(limitContext.VARIABLE())
+            val limes = visit(limitContext.VALUE())
             val argument = visit(limitContext.expression())
             return Limit(variable as Variable, argument, limes as Value)
         } ?: throw IllegalStateException("Limit is null")
