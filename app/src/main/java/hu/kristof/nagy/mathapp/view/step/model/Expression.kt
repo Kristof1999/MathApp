@@ -13,7 +13,7 @@ data class Equation(
     }
 }
 
-// Note: raw strings (""") are preferable
+// Note: raw strings (""") with double escapes (\\) are preferable
 // when giving back special characters,
 // because with escaped strings (""), these characters
 // are escaped twice (once in Kotlin and once in JS).
