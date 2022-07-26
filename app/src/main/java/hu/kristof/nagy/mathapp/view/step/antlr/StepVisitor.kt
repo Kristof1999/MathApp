@@ -1,7 +1,8 @@
 package hu.kristof.nagy.mathapp.view.step.antlr
 
-import hu.kristof.nagy.mathapp.view.step.model.*
 import LatexGrammarBaseVisitor
+import LatexGrammarParser
+import hu.kristof.nagy.mathapp.view.step.model.*
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
     override fun visitEquation(ctx: LatexGrammarParser.EquationContext?): Expression {
@@ -59,7 +60,7 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
             val upperBound = visit(doubleDefiniteIntegralContext.expression(1))
             val argument = visit(doubleDefiniteIntegralContext.expression(2))
 
-            return DefiniteIntegral(lowerBound, upperBound, argument)
+            return DoubleDefiniteIntegral(lowerBound, upperBound, argument)
         } ?: throw IllegalStateException("DoubleDefiniteIntegral is null")
     }
 
