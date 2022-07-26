@@ -6,7 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class LatexParserOperatorTest {
+class OperatorTest {
     @Test
     fun testAdditionSubtraction() {
         val res = LatexParser.parse("a+b")

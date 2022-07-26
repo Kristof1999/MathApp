@@ -6,7 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class LatexParserIntegralTest {
+class IntegralTest {
     @Test
     fun testIndefinite() {
         val expression = LatexParser.parse("\\int{x}")
