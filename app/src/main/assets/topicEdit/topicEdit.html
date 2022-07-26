@@ -3,24 +3,31 @@
         <script id="MathJax-script" async src="../tex-chtml.js"></script>
         <script src="../convert.js"></script>
         <script src="topicEdit.js"></script>
-        <link rel="stylesheet" href="../convertStyle.css">
+        <link rel="stylesheet" href="../w3.css">
     </head>
     <body onload="onLoad()">
-        <p>Téma neve:</p>
-        <input type="text" id="topicName"><br>
+        <div class="w3-container">
+            <label>Név</label>
+            <input type="text" class="w3-input" id="topicName">
+        </div>
 
         <!--parentTopicName-t select-el lehessen változtatni a hibák elkerülése végett-->
 
-        <p>Összefoglaló:</p>
-        <div class="textarea">
-            <textarea rows="15" cols="5" id="input"></textarea>
+        <div class="w3-panel">
+            <label>Összefoglaló</label>
+            <textarea rows="15" cols="5" class="w3-mobile" id="input"></textarea>
+            <br>
+            <button id="btn" class="w3-button w3-blue"
+                    onclick="convert('input', this.id, 'output', 'TopicEditInterface')">
+                Renderelés
+            </button>
+            <div class="w3-mobile w3-panel w3-border w3-padding" id="output"></div><br>
         </div>
-        <button id="btn"
-            onclick="convert('input', this.id, 'output', 'TopicEditInterface')">
-            Renderelés
-        </button><br>
-        <div class="output" id="output"></div><br>
 
-        <button onclick="save()">Mentés</button>
+        <div class="w3-container">
+            <button onclick="save()" class="w3-button w3-mobile w3-green">
+                Mentés
+            </button>
+        </div>
     </body>
 </html>
