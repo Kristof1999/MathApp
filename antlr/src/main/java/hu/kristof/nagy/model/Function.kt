@@ -1,13 +1,13 @@
-package model
+package hu.kristof.nagy.model
 
-import parenthesizeIfNeeded
+import hu.kristof.nagy.parenthesizeIfNeeded
 
 data class CustomFunction(
-    val name: String,
+    val name: Variable,
     val argument: Expression
 ) : Expression {
     override fun toLatex(): String =
-        """\\operatorname{${name}}${parenthesizeIfNeeded(argument).toLatex()}"""
+        """\\operatorname{${name.toLatex()}}${parenthesizeIfNeeded(argument).toLatex()}"""
 }
 
 data class Sin(val argument: Expression) : Expression {
