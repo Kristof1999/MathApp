@@ -6,7 +6,7 @@ expression
     | LEFT_BLOCK_PARENTHESIS expression RIGHT_BLOCK_PARENTHESIS                      # BlockParentheses
     | LEFT_STRAIGHT_PARENTHESIS expression RIGHT_STRAIGHT_PARENTHESIS                # StraightParentheses
     | '\\Vert{' expression '}'                                                       # DoubleStraightParentheses
-    | '\\operatorname{' STRING '}' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS     # CustomFunction
+    | '\\operatorname{' VARIABLE '}' LEFT_PARENTHESIS expression RIGHT_PARENTHESIS   # CustomFunction
     | (SIN | COS) LEFT_PARENTHESIS expression RIGHT_PARENTHESIS                      # SinCos
     | '\\lim_{' VARIABLE '\\to' VALUE '}{' expression '}'                            # Limit
     | (SUM | PROD) '_{' expression '}^{' expression '}{' expression '}'              # SumProduct
@@ -22,13 +22,13 @@ expression
     | '\\frac{' expression '}{' expression '}'                                       # Division
     | expression (PLUS | MINUS) expression                                           # AdditionSubtraction
     | expression '=' expression                                                      # Equation
-    | OPERAND                                                                        # Operand
+    | (VALUE | VARIABLE)                                                             # Operand
     ;
 
-fragment DIGIT        : [0-9] ;
-fragment INFINITY     : '\\infty' ;
-fragment PI           : '\\pi' ;
-fragment VALUE: DIGIT+ ('.' DIGIT+)?
+fragment DIGIT    : [0-9] ;
+fragment INFINITY : '\\infty' ;
+fragment PI       : '\\pi' ;
+VALUE: DIGIT+ ('.' DIGIT+)?
     | INFINITY | PI
     ;
 
@@ -41,13 +41,11 @@ fragment VAREPSILON: '\\varepsilon' ;
 fragment PHI       : '\\phi' ;
 fragment VARPHI    : '\\varphi' ;
 fragment STRING    : [a-zA-Z]+ ;
-fragment VARIABLE: STRING
+VARIABLE: STRING
     | ALPHA | BETA | GAMMA | OMEGA
     | EPSILON | VAREPSILON
     | PHI | VARPHI
     ;
-
-OPERAND: VALUE | VARIABLE ;
 
 LEFT_PARENTHESIS          : '\\left('  | '(' ;
 RIGHT_PARENTHESIS         : '\\right)' | ')' ;
