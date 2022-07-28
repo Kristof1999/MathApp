@@ -2,6 +2,7 @@ package hu.kristof.nagy
 
 import LatexGrammarBaseVisitor
 import LatexGrammarParser
+import com.google.errorprone.annotations.Var
 import hu.kristof.nagy.model.*
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
@@ -107,10 +108,10 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
 
     override fun visitLimit(ctx: LatexGrammarParser.LimitContext?): Expression {
         return ctx?.let { limitContext ->
-            val variable = visit(limitContext.getChild(0))
-            val limes = visit(limitContext.getChild(1))
+            val variable = parseVariableText(limitContext.VARIABLE().text)
+            val limes = parseValueText(limitContext.VALUE().text)
             val argument = visit(limitContext.expression())
-            return Limit(variable as Variable, argument, limes as Value)
+            return Limit(variable, argument, limes)
         } ?: throw IllegalStateException("Limit is null")
     }
 
@@ -205,39 +206,47 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
             if (operandContext.VARIABLE() != null) {
                 val leafText = operandContext.VARIABLE().text
 
-                if (leafText.matches(Regex("[a-zA-Z]+"))) {
-                    return Variable(leafText)
-                }
-
-                return when(leafText) {
-                    "\\alpha" -> Alpha()
-                    "\\beta" -> Beta()
-                    "\\gamma" -> Gamma()
-                    "\\omega" -> Omega()
-                    "\\epsilon" -> Epsilon()
-                    "\\varepsilon" -> VarEpsilon()
-                    "\\phi" -> Phi()
-                    "\\varphi" -> VarPhi()
-                    else -> throw IllegalArgumentException("Unknown variable: $leafText")
-                }
+                return parseVariableText(leafText)
             } else if (operandContext.VALUE() != null) {
                 val leafText = operandContext.VALUE().text
 
-                if (leafText.matches(Regex("[0-9]+"))) {
-                    return Value(leafText.toInt())
-                }
-                if (leafText.matches(Regex("[0-9]+(\\.[0-9]+)+"))) {
-                    return Value(leafText.toDouble())
-                }
-
-                return when(leafText) {
-                    "\\infty" -> Infinity()
-                    "\\pi" -> Pi()
-                    else -> throw IllegalArgumentException("Unknown value: $leafText")
-                }
+                return parseValueText(leafText)
             }
 
             throw IllegalArgumentException("Unknown operand")
         } ?: throw IllegalStateException("Operand is null")
+    }
+
+    private fun parseVariableText(text: String): Variable {
+        if (text.matches(Regex("[a-zA-Z]+"))) {
+            return Variable(text)
+        }
+
+        return when(text) {
+            "\\alpha" -> Alpha()
+            "\\beta" -> Beta()
+            "\\gamma" -> Gamma()
+            "\\omega" -> Omega()
+            "\\epsilon" -> Epsilon()
+            "\\varepsilon" -> VarEpsilon()
+            "\\phi" -> Phi()
+            "\\varphi" -> VarPhi()
+            else -> throw IllegalArgumentException("Unknown variable: $text")
+        }
+    }
+
+    private fun parseValueText(text: String): Value {
+        if (text.matches(Regex("[0-9]+"))) {
+            return Value(text.toInt())
+        }
+        if (text.matches(Regex("[0-9]+(\\.[0-9]+)+"))) {
+            return Value(text.toDouble())
+        }
+
+        return when(text) {
+            "\\infty" -> Infinity()
+            "\\pi" -> Pi()
+            else -> throw IllegalArgumentException("Unknown value: $text")
+        }
     }
 }
