@@ -1,4 +1,8 @@
-import model.*
+package hu.kristof.nagy
+
+import LatexGrammarBaseVisitor
+import LatexGrammarParser
+import hu.kristof.nagy.model.*
 
 class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
     override fun visitEquation(ctx: LatexGrammarParser.EquationContext?): Expression {
@@ -103,8 +107,8 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
 
     override fun visitLimit(ctx: LatexGrammarParser.LimitContext?): Expression {
         return ctx?.let { limitContext ->
-            val variable = visit(limitContext.VARIABLE())
-            val limes = visit(limitContext.VALUE())
+            val variable = visit(limitContext.getChild(0))
+            val limes = visit(limitContext.getChild(1))
             val argument = visit(limitContext.expression())
             return Limit(variable as Variable, argument, limes as Value)
         } ?: throw IllegalStateException("Limit is null")
@@ -127,7 +131,7 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
 
     override fun visitCustomFunction(ctx: LatexGrammarParser.CustomFunctionContext?): Expression {
         return ctx?.let { customFunctionContext ->
-            val name = customFunctionContext.STRING().text
+            val name = visit(customFunctionContext.VARIABLE()) as Variable
             val argument = visit(customFunctionContext.expression())
             return CustomFunction(name, argument)
         } ?: throw IllegalStateException("CustomFunction is null")
@@ -198,33 +202,42 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
 
     override fun visitOperand(ctx: LatexGrammarParser.OperandContext?): Expression {
         return ctx?.let { operandContext ->
-            val leafText = operandContext.OPERAND().text
+            if (operandContext.VARIABLE() != null) {
+                val leafText = operandContext.VARIABLE().text
 
-            if (leafText.matches(Regex("[0-9]+"))) {
-                return Value(leafText.toInt())
-            }
-            if (leafText.matches(Regex("[0-9]+(\\.[0-9]+)+"))) {
-                return Value(leafText.toDouble())
-            }
-            if (leafText.matches(Regex("[a-zA-Z]+"))) {
-                return Variable(leafText)
+                if (leafText.matches(Regex("[a-zA-Z]+"))) {
+                    return Variable(leafText)
+                }
+
+                return when(leafText) {
+                    "\\alpha" -> Alpha()
+                    "\\beta" -> Beta()
+                    "\\gamma" -> Gamma()
+                    "\\omega" -> Omega()
+                    "\\epsilon" -> Epsilon()
+                    "\\varepsilon" -> VarEpsilon()
+                    "\\phi" -> Phi()
+                    "\\varphi" -> VarPhi()
+                    else -> throw IllegalArgumentException("Unknown variable: $leafText")
+                }
+            } else if (operandContext.VALUE() != null) {
+                val leafText = operandContext.VALUE().text
+
+                if (leafText.matches(Regex("[0-9]+"))) {
+                    return Value(leafText.toInt())
+                }
+                if (leafText.matches(Regex("[0-9]+(\\.[0-9]+)+"))) {
+                    return Value(leafText.toDouble())
+                }
+
+                return when(leafText) {
+                    "\\infty" -> Infinity()
+                    "\\pi" -> Pi()
+                    else -> throw IllegalArgumentException("Unknown value: $leafText")
+                }
             }
 
-            return when(leafText) {
-                "\\infty" -> Infinity()
-                "\\pi" -> Pi()
-
-                "\\alpha" -> Alpha()
-                "\\beta" -> Beta()
-                "\\gamma" -> Gamma()
-                "\\omega" -> Omega()
-                "\\epsilon" -> Epsilon()
-                "\\varepsilon" -> VarEpsilon()
-                "\\phi" -> Phi()
-                "\\varphi" -> VarPhi()
-
-                else -> throw IllegalArgumentException("Unknown operand: $leafText")
-            }
+            throw IllegalArgumentException("Unknown operand")
         } ?: throw IllegalStateException("Operand is null")
     }
 }
