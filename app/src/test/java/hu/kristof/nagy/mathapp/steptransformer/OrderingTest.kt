@@ -4,7 +4,6 @@ import hu.kristof.nagy.mathapp.view.step.LatexParser
 import hu.kristof.nagy.mathapp.view.step.transform.LeftOrder
 import hu.kristof.nagy.mathapp.view.step.transform.RightOrder
 import hu.kristof.nagy.mathapp.view.step.transform.StepTransformer
-import model.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -17,12 +16,15 @@ class OrderingTest {
         val res = LeftOrder.transform(StepTransformer.MyBundle(parsedStep))
 
         assertEquals(
-            Equation(
-            Subtraction(
-                Addition(Variable("a"), Variable("b")),
-                Value(2)
-            ), Value(0)
-        ), res)
+            hu.kristof.nagy.model.Equation(
+                hu.kristof.nagy.model.Subtraction(
+                    hu.kristof.nagy.model.Addition(
+                        hu.kristof.nagy.model.Variable("a"),
+                        hu.kristof.nagy.model.Variable("b")
+                    ),
+                    hu.kristof.nagy.model.Value(2)
+                ), hu.kristof.nagy.model.Value(0)
+            ), res)
     }
 
     @Test
@@ -32,11 +34,15 @@ class OrderingTest {
         val parsedStep = LatexParser.parse(step)
         val res = RightOrder.transform(StepTransformer.MyBundle(parsedStep))
 
-        assertEquals(Equation(
-            Value(0), Subtraction(
-                Value(2),
-                Addition(Variable("a"), Variable("b"))
-            )
-        ), res)
+        assertEquals(
+            hu.kristof.nagy.model.Equation(
+                hu.kristof.nagy.model.Value(0), hu.kristof.nagy.model.Subtraction(
+                    hu.kristof.nagy.model.Value(2),
+                    hu.kristof.nagy.model.Addition(
+                        hu.kristof.nagy.model.Variable("a"),
+                        hu.kristof.nagy.model.Variable("b")
+                    )
+                )
+            ), res)
     }
 }

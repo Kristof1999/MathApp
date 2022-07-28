@@ -1,7 +1,7 @@
 package hu.kristof.nagy.mathapp.latexparser
 
 import hu.kristof.nagy.mathapp.view.step.LatexParser
-import model.*
+import hu.kristof.nagy.model.*
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
