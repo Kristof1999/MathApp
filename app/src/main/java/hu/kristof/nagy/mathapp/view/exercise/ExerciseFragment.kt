@@ -24,9 +24,9 @@ import hu.kristof.nagy.mathapp.data.entity.Exercise
 import hu.kristof.nagy.mathapp.view.TextDialogFragment
 import hu.kristof.nagy.mathapp.view.step.LatexParser
 import hu.kristof.nagy.mathapp.view.step.transform.*
+import hu.kristof.nagy.model.Expression
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import model.Expression
 
 class ExerciseFragment : Fragment() {
     override fun onCreateView(
