@@ -1,15 +1,34 @@
 package hu.kristof.nagy.model
 
-interface Expression {
-    fun toLatex(): String
+abstract class Expression {
+    abstract fun toLatex(): String
+
+    abstract fun simplify(): Expression
+
+    protected fun simplifyUntilUnchanged(expr: Expression): Expression {
+        var oldExpr = expr
+        var simplifiedExpr = expr.simplify()
+        while (simplifiedExpr != oldExpr) {
+            oldExpr = simplifiedExpr
+            simplifiedExpr = simplifiedExpr.simplify()
+        }
+        return simplifiedExpr
+    }
 }
 
 data class Equation(
     val leftSide: Expression,
     val rightSide: Expression
-) : Expression {
+) : Expression() {
     override fun toLatex(): String {
         return "${leftSide.toLatex()}=${rightSide.toLatex()}"
+    }
+
+    override fun simplify(): Expression {
+        return Equation(
+            simplifyUntilUnchanged(leftSide),
+            simplifyUntilUnchanged(rightSide.simplify())
+        )
     }
 }
 
@@ -25,40 +44,57 @@ data class Equation(
 // and in JS, it becomes: "\left(x\right)".
 data class Parentheses(
     private val expr: Expression
-) : Expression {
+) : Expression() {
     override fun toLatex(): String {
         return """\\left(${expr.toLatex()}\\right)"""
+    }
+
+    override fun simplify(): Expression {
+        return Parentheses(simplifyUntilUnchanged(expr))
     }
 }
 
 data class SquareParentheses(
     private val expr: Expression
-) : Expression {
+) : Expression() {
     override fun toLatex(): String {
         return """\\left[${expr.toLatex()}\\right]"""
+    }
+
+    override fun simplify(): Expression {
+        return SquareParentheses(simplifyUntilUnchanged(expr))
     }
 }
 
 data class BlockParentheses(
     private val expr: Expression
-) : Expression {
+) : Expression() {
     override fun toLatex(): String {
         return """\\left\\{${expr.toLatex()}\\right\\}"""
     }
+
+    override fun simplify(): Expression =
+        BlockParentheses(simplifyUntilUnchanged(expr))
 }
 
 data class StraightParentheses(
     private val expr: Expression
-) : Expression {
+) : Expression() {
     override fun toLatex(): String {
         return """\\left|${expr.toLatex()}\\right|"""
     }
+
+    override fun simplify(): Expression =
+        StraightParentheses(simplifyUntilUnchanged(expr))
 }
 
 data class DoubleStraightParentheses(
     private val expr: Expression
-) : Expression {
+) : Expression() {
     override fun toLatex(): String {
         return """\\Vert{${expr.toLatex()}}"""
     }
+
+    override fun simplify(): Expression =
+        DoubleStraightParentheses(simplifyUntilUnchanged(expr))
 }
