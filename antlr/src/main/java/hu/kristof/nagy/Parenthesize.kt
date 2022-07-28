@@ -1,5 +1,7 @@
-import model.Expression
-import model.Parentheses
+package hu.kristof.nagy
+
+import hu.kristof.nagy.model.Expression
+import hu.kristof.nagy.model.Parentheses
 
 /**
  * Returns the given expression in simple parentheses

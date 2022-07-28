@@ -1,4 +1,4 @@
-package model
+package hu.kristof.nagy.model
 
 interface Expression {
     fun toLatex(): String

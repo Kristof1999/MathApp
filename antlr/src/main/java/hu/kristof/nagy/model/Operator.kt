@@ -1,6 +1,6 @@
-package model
+package hu.kristof.nagy.model
 
-import parenthesizeIfNeeded
+import hu.kristof.nagy.parenthesizeIfNeeded
 
 interface Operator : Expression
 

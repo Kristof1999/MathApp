@@ -1,6 +1,4 @@
-package model
-
-import model.Expression
+package hu.kristof.nagy.model
 
 data class IndefiniteIntegral(
     val variable: Expression
