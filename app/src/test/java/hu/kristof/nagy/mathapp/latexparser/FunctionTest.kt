@@ -47,6 +47,6 @@ class FunctionTest {
         val expression = LatexParser.parse("\\prod_{0}^{1}{x}")
 
         assertTrue(expression is Product)
-        assertEquals(Product(Value(0), Value(0), Variable("x")), expression)
+        assertEquals(Product(Value(0), Value(1), Variable("x")), expression)
     }
 }
