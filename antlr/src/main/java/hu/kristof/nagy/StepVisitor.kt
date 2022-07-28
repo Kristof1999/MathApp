@@ -132,7 +132,7 @@ class StepVisitor : LatexGrammarBaseVisitor<Expression>() {
 
     override fun visitCustomFunction(ctx: LatexGrammarParser.CustomFunctionContext?): Expression {
         return ctx?.let { customFunctionContext ->
-            val name = visit(customFunctionContext.VARIABLE()) as Variable
+            val name = parseVariableText(customFunctionContext.VARIABLE().text)
             val argument = visit(customFunctionContext.expression())
             return CustomFunction(name, argument)
         } ?: throw IllegalStateException("CustomFunction is null")
