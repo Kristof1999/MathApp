@@ -13,9 +13,7 @@ function onLoad() {
 function addStep(input) {
     let steps = document.getElementById("steps");
     MathJax.tex2chtmlPromise(input).then(function (node) {
-        node.style.paddingTop = "8px";
-        node.style.paddingBottom = "8px";
-        node.style.borderTop = "1px solid black";
+        node = styleStepNode(node);
         steps.appendChild(node);
         MathJax.startup.document.clear();
         MathJax.startup.document.updateDocument();
@@ -24,18 +22,31 @@ function addStep(input) {
     });
 }
 
+function addSimplifiedStep(input) {
+    let steps = document.getElementById("steps");
+    MathJax.tex2chtmlPromise(input).then(function (node) {
+        node = styleStepNode(node);
+        node.innerHTML = "E: " + node.innerHTML;
+        steps.appendChild(node);
+        MathJax.startup.document.clear();
+        MathJax.startup.document.updateDocument();
+    }).catch(function (err) {
+        ExerciseInterface.showToast(err.message);
+    });
+}
+
+function styleStepNode(node) {
+    node.style.paddingTop = "8px";
+    node.style.paddingBottom = "8px";
+    node.style.borderTop = "1px solid black";
+    return node;
+}
+
 function selectStep(stepType) {
     if (steps.childNodes.length <= 1) {
         ExerciseInterface.setFirstStep();
     }
     ExerciseInterface.selectStep(stepType);
-}
-
-function simplifyIdentities(value) {
-    value = value.replace(/[+-]\(?0\)?/g, "");
-    value = value.replace(/\*\(?1\)?/g, "");
-    // replace \frac{...}{1} with ...
-    return value
 }
 
 function checkAnswer() {
