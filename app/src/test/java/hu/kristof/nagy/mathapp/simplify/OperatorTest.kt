@@ -1,9 +1,6 @@
 package hu.kristof.nagy.mathapp.simplify
 
-import hu.kristof.nagy.model.Addition
-import hu.kristof.nagy.model.Multiplication
-import hu.kristof.nagy.model.Subtraction
-import hu.kristof.nagy.model.Value
+import hu.kristof.nagy.model.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -62,6 +59,46 @@ class OperatorTest {
 
     @Test
     fun testDivision() {
+        val expr1 = Division(Value(2), Value(2))
+        val expr2 = Division(Value(2), Value(1))
 
+        val simplified1 = expr1.simplify()
+        val simplified2 = expr2.simplify()
+
+        assertEquals(Value(1), simplified1)
+        assertEquals(Value(2), simplified2)
+    }
+
+    @Test
+    fun testExponentiation() {
+        val expr1 = Exponentiation(Value(2), Value(1))
+        val expr2 = Exponentiation(Value(1), Value(2))
+
+        val simplified1 = expr1.simplify()
+        val simplified2 = expr2.simplify()
+
+        assertEquals(Value(2), simplified1)
+        assertEquals(Value(1), simplified2)
+    }
+
+    @Test
+    fun testSquareRoot() {
+        val expr1 = SquareRoot(Value(1))
+
+        val simplified1 = expr1.simplify()
+
+        assertEquals(Value(1), simplified1)
+    }
+
+    @Test
+    fun testNthRoot() {
+        val expr1 = NthRoot(Value(2), Value(1))
+        val expr2 = NthRoot(Value(1), Value(2))
+
+        val simplified1 = expr1.simplify()
+        val simplified2 = expr2.simplify()
+
+        assertEquals(Value(2), simplified1)
+        assertEquals(Value(1), simplified2)
     }
 }
