@@ -189,6 +189,16 @@ class ExerciseFragment : Fragment() {
                     "addStep(\"${transformedStep.toLatex()}\")", null
                 )
             }
+
+            val simplifiedStep = transformedStep.simplify()
+            if (transformedStep != simplifiedStep) {
+                steps.add(simplifiedStep)
+                exerciseWebView.post {
+                    exerciseWebView.evaluateJavascript(
+                        "addSimplifiedStep(\"${simplifiedStep.toLatex()}\")", null
+                    )
+                }
+            }
         }
     }
 }
